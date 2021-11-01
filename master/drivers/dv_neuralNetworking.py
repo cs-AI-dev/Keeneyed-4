@@ -23,11 +23,19 @@ class Datalattice:
 		this.items = {}
 		for key, val in kwargs.items():
 			this.items[key] = {
-				currentValue: val[0],
-				modifyConditions
+				"currentValue": val[0],
+				"modifyCondition": val[1],
+				"modifyCallback": val[2]
 			}
-			
+		this.feedback = None
+
+	def SelfModify(this):
+		for key in this.items:
+			if this.items[key]["modifyCondition"]:
+				this.items[key]["modifyCallback"]()
+
 	def FunctionalDatalattice(this):
+		this.SelfModify()
 		return this.items
 
 class OutputCache:
@@ -36,10 +44,10 @@ class OutputCache:
 		this.label = fromName
 		this.target = feedToTarget
 		this.value = val
-		
+
 	def extract(this):
 		return (str(this.label + "_ts:" + str(this.timestamp) + ">" + this.target), this.value)
-	
+
 	def expunge(this):
 		del this
 
@@ -48,8 +56,13 @@ class Neuron:
 		this.name = name
 		this.operation = function
 		this.feedTo = feedTo
-		this.getFrom = getFrom
+		this.getFrom = getFrom # as obj
 		this.datalattice = datalattice
 
-	def execute(this, args):
-		return OutputCache(this.name, this.operation(regularArgs=args, datalatticeArgs=this.datalattice), this.feedTo)
+	def execute(this):
+		return OutputCache(this.name, this.operation(regularArgs=this.getFrom.execute(), datalatticeArgs=this.datalattice.FunctionalDatalattice()), this.feedTo)
+
+	def getBackpropagation(this, bp):
+		this.datalattice.feedback = bp
+
+class NeuralNetwork
