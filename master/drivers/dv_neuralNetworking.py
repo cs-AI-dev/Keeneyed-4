@@ -20,8 +20,15 @@ import time
 
 class Datalattice:
 	def __init__(this, **kwargs): # DL passed as "data=[initial value, modify conditions, modify]
+		this.items = {}
 		for key, val in kwargs.items():
+			this.items[key] = {
+				currentValue: val[0],
+				modifyConditions
+			}
 			
+	def FunctionalDatalattice(this):
+		return this.items
 
 class OutputCache:
 	def __init__(this, fromName, val, feedToTarget):
@@ -45,4 +52,4 @@ class Neuron:
 		this.datalattice = datalattice
 
 	def execute(this, args):
-		return OutputCache(this.name, this.operation(regularArgs=args), this.feedTo)
+		return OutputCache(this.name, this.operation(regularArgs=args, datalatticeArgs=this.datalattice), this.feedTo)
