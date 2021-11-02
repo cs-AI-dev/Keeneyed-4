@@ -18,51 +18,56 @@
 import sys
 import time
 
-class Datalattice:
-	def __init__(this, **kwargs): # DL passed as "data=[initial value, modify conditions, modify]
-		this.items = {}
-		for key, val in kwargs.items():
-			this.items[key] = {
-				"currentValue": val[0],
-				"modifyCondition": val[1],
-				"modifyCallback": val[2]
-			}
-		this.feedback = None
+OUTPUT = "sentinel_output"
+INPUT = "sentinel_input"
+HIDDEN = "sentinel_hidden"
+NEXT_LAYER = "sentinel_next_layer"
 
-	def SelfModify(this):
-		for key in this.items:
-			if this.items[key]["modifyCondition"]:
-				this.items[key]["modifyCallback"]()
-
-	def FunctionalDatalattice(this):
-		this.SelfModify()
-		return this.items
-
-class OutputCache:
-	def __init__(this, fromName, val, feedToTarget):
-		this.timestamp = time.time()
-		this.label = fromName
-		this.target = feedToTarget
-		this.value = val
-
-	def extract(this):
-		return (str(this.label + "_ts:" + str(this.timestamp) + ">" + this.target), this.value)
-
-	def expunge(this):
-		del this
-
-class Neuron:
-	def __init__(this, parent, name, function, feedTo, getFrom, datalattice): # Datalatt
-		this.name = name
-		this.operation = function
-		this.feedTo = feedTo
-		this.getFrom = getFrom # as obj
-		this.datalattice = datalattice
-
-	def execute(this):
-		return OutputCache(this.name, this.operation(regularArgs=this.getFrom.execute(), datalatticeArgs=this.datalattice.FunctionalDatalattice()), this.feedTo)
-
-	def getBackpropagation(this, bp):
-		this.datalattice.feedback = bp
-
-class NeuralNetwork
+class neuron:
+	# Input layer neuron has GetInput function
+	# Necessarily feeds into hidden neuron
+	class input:
+		def __init__(this, name, feedto, evolvingArgumentsDictionary, function, layer=None):
+			this.type = INPUT
+			this.name = name
+			this.target = feedto
+			this.evolvingArguments = evolvingArgumentsDictionary
+			this.function = function
+			this.layer = layer
+			
+		def SendInitialData(this, inputValuesDictionary):
+			this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=inputValuesDictionary)
+		
+	class hidden:
+		def __init__(this, name, feedto, evolvingArgumentsDictionary, function, layer=None):
+			this.type = HIDDEN
+			this.name = name
+			this.target = feedto
+			this.evolvingArguments = evolvingArgumentsDictionary
+			this.function = function
+			this.standardInputs = None
+			this.layer = layer
+			
+		def SendData(this):
+			this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
+			
+	class output:
+		def __init__(this, name, evolvingArgumentsDictionary, function, layer=None):
+			this.type = OUTPUT
+			this.name = name
+			this.evolvingArguments = evolvingArgumentsDictionary
+			this.function = function
+			this.standardInputs = None
+			this.layer = layer
+			
+		def GetFinalData(this):
+			return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
+		
+class FeedforwardNeuralNetwork:
+	def __init__(this, neuronObjectList):
+		this.neurons = {}
+		for neuron in neuronObjectsList:
+			assert type(neuron.layer) == type(1), "[ERROR] LAYER NUMBER MUST BE INTEGER OR SIMILAR"
+			if not (neuron.layer in this.neurons.keys()):
+				this.neurons[neuron.layer] = []
+			this.neurons[neuron.layer].append(neuron)
