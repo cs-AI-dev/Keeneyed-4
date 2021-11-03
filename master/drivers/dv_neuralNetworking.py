@@ -1,19 +1,11 @@
 # Copyright 2021-2022 Jacob Bodell
 
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# Licensed with a unique EULA license.
+# This system may only be used in accordance
+# with its EULA agreement.
 
-#     http://www.apache.org/licenses/LICENSE-2.0
-
-# or at the "LICENSE" file stored at the root directory in this
-# repository (Keeneyed-4/LICENSE).
-
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# Please read the EULA in its entirety
+# before using this system.
 
 import sys
 import time
@@ -27,19 +19,29 @@ class neuron:
 	# Input layer neuron has GetInput function
 	# Necessarily feeds into hidden neuron
 	class input:
-		def __init__(this, name, feedto, evolvingArgumentsDictionary, function, layer=None):
+		def __init__(this, name, feedto=NEXT_LAYER, evolvingArgumentsDictionary, function, layer=None):
 			this.type = INPUT
 			this.name = name
 			this.target = feedto
 			this.evolvingArguments = evolvingArgumentsDictionary
 			this.function = function
+			this.standardInputs = None
 			this.layer = layer
 			
-		def SendInitialData(this, inputValuesDictionary):
-			this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=inputValuesDictionary)
+		def GetInitialData(this, inputValuesDictionary=None): # For FNNs
+			if inputValuesDictionary == None:
+				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=inputValuesDictionary)
+			else:
+				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
+			
+		def SendInitialData(this, inputValuesDictionary=None): # For ANNs
+			if inputValuesDictionary == None:
+				this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=inputValuesDictionary)
+			else:
+				this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
 		
 	class hidden:
-		def __init__(this, name, feedto, evolvingArgumentsDictionary, function, layer=None):
+		def __init__(this, name, feedto=NEXT_LAYER, evolvingArgumentsDictionary, function, layer=None):
 			this.type = HIDDEN
 			this.name = name
 			this.target = feedto
@@ -48,7 +50,13 @@ class neuron:
 			this.standardInputs = None
 			this.layer = layer
 			
-		def SendData(this):
+		def GetInitialData(this, inputValuesDictionary=None): # For FNNs
+			if inputValuesDictionary == None:
+				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=inputValuesDictionary)
+			else:
+				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
+			
+		def SendData(this): # For ANNs
 			this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
 			
 	class output:
@@ -60,16 +68,23 @@ class neuron:
 			this.standardInputs = None
 			this.layer = layer
 			
-		def GetFinalData(this):
+		def GetFinalData(this): # For any NN type
 			return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
 		
 class FeedforwardNeuralNetwork:
 	def __init__(this, neuronObjectList):
 		this.neurons = {}
+		this.availableLayers = []
 		for neuron in neuronObjectsList:
 			assert type(neuron.layer) == type(1), "Layer number must be an integer"
 			if not (neuron.layer in this.neurons.keys()):
 				this.neurons[neuron.layer] = []
 			this.neurons[neuron.layer].append(neuron)
+			pal = []
+			if not (neuron.layer in pal):
+				pal.append(neuron.layer)
+			[this.availableLayers.append(x) for x in pal if x not in this.availableLayers]
 			
-	def FeedInputData(this, stdin)
+	def SetInputs(this, stdin):
+		for neuron in this.neurons[this.availableLayers[0]]:
+			neuron.
