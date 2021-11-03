@@ -87,4 +87,24 @@ class FeedforwardNeuralNetwork:
 			
 	def SetInputs(this, stdin):
 		for neuron in this.neurons[this.availableLayers[0]]:
-			neuron.
+			neuron.standardInputs = stdin
+			
+	def MasterCallback():
+		first = True
+		for layer in this.availableLayers:
+			# Get dict
+			ldict = {}
+			odict = {}
+			for neuron in this.neurons[layer]:
+				if neuron.type != OUTPUT:
+					if:
+						odict[neuron.name] = neuron.GetInitialData()
+					else:
+						odict[neuron.name] = neuron.GetInitialData(inputValuesDictionary = ldict)
+				else:
+					return neuron.GetFinalData()
+					
+			# Cleanup & prep for next layer
+			ldict = odict
+			if first == True:
+				first = False
