@@ -8,20 +8,25 @@ Please read this EULA agreement carefully before completing the installation pro
 
 This EULA agreement is written in the Markdown (.md) rich text format. If you are unable to view this file properly on your device, you can view it on GitHub.  
 
-## Definitions
+## Section 1 - Definitions
 The following terms in this end-user license agreement, when the first letter of the term is capitalized, shall refer to the corresponding object, software, or person -  
-• "We", "Our", "Us", and "the Developers" shall all refer to the registered contributors to the development of the Keeneyed-4 artificial intelligence system;
-• "You" and "Your" shall both refer to the user, distributor, reseller, or any other person who is in possession of the Keeneyed-4 artificial intelligence system;
-• "the System" shall refer to the Keeneyed-4 artificial intelligence system's software in its entirety as well as any associated hardware or other software; and
-• "EULA agreement", "EULA", and "Agreement" shall all refer to this end-user license agreement.
+- "We", "Our", "Us", and "the Developers" shall all refer to the registered contributors to the development of the Keeneyed-4 artificial intelligence system;
+- "You" and "Your" shall both refer to the user, distributor, reseller, or any other person who is in possession of the Keeneyed-4 artificial intelligence system;
+- "the System" shall refer to the Keeneyed-4 artificial intelligence system's software in its entirety as well as any associated hardware or other software; and
+- "EULA agreement", "EULA", and "Agreement" shall all refer to this end-user license agreement.
 
+## Section 2 - Representation
+### Subsection 2.1 - Free Trials
 If you register for a free trial of the System, this EULA agreement will also govern that trial. By clicking "accept" or installing and/or using the System, you are confirming your acceptance of the Software and agreeing to become bound by the terms of this EULA agreement.  
 
+### Subsection 2.2 - Representing a Legal Entity
 If you are entering into this EULA agreement on behalf of a company or other legal entity, you represent that you have the authority to bind such entity and its affiliates to these terms and conditions. If you do not have such authority or if you do not agree with the terms and conditions of this EULA agreement, do not install or use the Software, and you cannot accept this EULA agreement.  
 
+### Subsection 2.3
 This EULA agreement shall apply only to the Software supplied by the Developers herewith regardless of whether other software is referred to or described herein. The terms also apply to any of the Developers' updates, supplements, Internet-based services, and support services for the Software, unless other terms accompany those items on delivery. If so, those terms apply.  
 
-## License Grant
+## Section 3 - License Grant
+### Subsection 3.1
 The Developers hereby grant You a personal, non-transferable, non-exclusive license to use the the System's software on your devices in accordance with the terms of this EULA agreement.  
 
 You are permitted to load the the System's software (for example on a PC, laptop, mobile or tablet) under your control. You are responsible for ensuring Your device meets the minimum requirements of the the System's software and for ensuring that Your device on which you load the System's software is configured properly to support the System's software.  
