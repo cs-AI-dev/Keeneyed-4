@@ -67,7 +67,9 @@ class FeedforwardNeuralNetwork:
 	def __init__(this, neuronObjectList):
 		this.neurons = {}
 		for neuron in neuronObjectsList:
-			assert type(neuron.layer) == type(1), "[ERROR] LAYER NUMBER MUST BE INTEGER OR SIMILAR"
+			assert type(neuron.layer) == type(1), "Layer number must be an integer"
 			if not (neuron.layer in this.neurons.keys()):
 				this.neurons[neuron.layer] = []
 			this.neurons[neuron.layer].append(neuron)
+			
+	def FeedInputData(this, stdin)
