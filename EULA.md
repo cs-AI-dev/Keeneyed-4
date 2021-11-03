@@ -10,11 +10,11 @@ This EULA is written in the Markdown (.md) rich text format. If you are unable t
 
 ## Section 1 - Definitions
 The following terms in this end-user license agreement, when the first letter of the term is capitalized, shall refer to the corresponding object, software, or person -  
-- **1.1**: "We", "Our", "Us", and "the Developers" shall all refer to the registered contributors to the development of the Keeneyed-4 artificial intelligence system;
-- **1.2**: "You" and "Your" shall both refer to the user, distributor, reseller, or any other person who is in possession of the Keeneyed-4 artificial intelligence system;
-- **1.3**: "the System" shall refer to the Keeneyed-4 artificial intelligence system's software in its entirety as well as any associated hardware or other software;
-- **1.4**: "EULA agreement", "EULA", "License", and "Agreement" shall all refer to this end-user license agreement; and  
-- **1.5**: "Reseller" and "Distributor" shall both refer to sources of indirect reception of the Keeneyed-4 artificial intelligence system's hardware or software components that have received written authorization from the Developers to resell and/or distribute the hardware or software components.
+- **Article 1.1**: "We", "Our", "Us", and "the Developers" shall all refer to the registered contributors to the development of the Keeneyed-4 artificial intelligence system;
+- **Article 1.2**: "You" and "Your" shall both refer to the user, distributor, reseller, or any other person who is in possession of the Keeneyed-4 artificial intelligence system;
+- **Article 1.3**: "the System" shall refer to the Keeneyed-4 artificial intelligence system's software in its entirety as well as any associated hardware or other software;
+- **Article 1.4**: "EULA agreement", "EULA", "License", and "Agreement" shall all refer to this end-user license agreement; and  
+- **Article 1.5**: "Reseller" and "Distributor" shall both refer to sources of indirect reception of the Keeneyed-4 artificial intelligence system's hardware or software components that have received written authorization from the Developers to resell and/or distribute the hardware or software components.
 
 ## Section 2 - Applications of This EULA
 ### Section 2.1 - Free Trials
@@ -35,26 +35,26 @@ You are permitted to load the the System's software (for example on a PC, laptop
 
 ### Section 3.3 - Permissions Grant
 Under only the circumstance that the Developers dictate You must for any reason and under no other circumstances are You permitted by the Developers to:  
-- **3.3.1**: Edit, alter, modify, adapt, translate or otherwise change the whole or any part of the Software nor permit the whole or any part of the Software to be combined with or become incorporated in any other software, nor decompile, disassemble or reverse engineer the Software or attempt to do any such things;  
-- **3.3.2**: Reproduce, copy, distribute, resell or otherwise use the Software for any commercial purpose;  
-- **3.3.3**: Allow any third party to use the Software on behalf of or for the benefit of any third party;  
-- **3.3.4**: Use the Software in any way which breaches any applicable local, national or international law; and  
-- **3.3.5**: Use the Software for any purpose that the Developers consider is a breach of this EULA.  
+- **Article 3.3.1**: Edit, alter, modify, adapt, translate or otherwise change the whole or any part of the Software nor permit the whole or any part of the Software to be combined with or become incorporated in any other software, nor decompile, disassemble or reverse engineer the Software or attempt to do any such things;  
+- **Article 3.3.2**: Reproduce, copy, distribute, resell or otherwise use the Software for any commercial purpose;  
+- **Article 3.3.3**: Allow any third party to use the Software on behalf of or for the benefit of any third party;  
+- **Article 3.3.4**: Use the Software in any way which breaches any applicable local, national or international law; and  
+- **Article 3.3.5**: Use the Software for any purpose that the Developers consider is a breach of this EULA.  
 
 ### Section 3.4 - Responsibilities
 Except in violation of Section 3.3 of this EULA, You are permitted by the Developers to and required by the Developers to:  
-- **3.4.1**: Ensure the legality of the usage of the System's software, electronic, physical, or otherwise;  
-- **3.4.2**: Ensure that at all times Your copy of the System's software component has received and properly installed 
-- **3.4.3**: Ensure that no redistribution, usage, editing, nor any other interaction with the System's software or hardware components violates any term of this EULA;  
-- **3.4.4**: Ensure the safety and stability of any entity created by or being simulated by the System's software;  
-- **3.4.5**: Ensure that any entity created by or being simulated by the System's software does not violate any of the terms described in the Restrictions subsection of the License Grant clause of this EULA, or any terms of this EULA other than those described in Section 3.4 of this EULA; and   
-- **3.4.6**: Ensure that the System’s hardware and software components comply with all applicable local, national, and international laws, state and federal policies, and any other applicable legal restrictions including other end-user license agreements separate from this document.
+- **Article 3.4.1**: Ensure the legality of the usage of the System's software, electronic, physical, or otherwise;  
+- **Article 3.4.2**: Ensure that at all times Your copy of the System's software component has received and properly installed 
+- **Article 3.4.3**: Ensure that no redistribution, usage, editing, nor any other interaction with the System's software or hardware components violates any term of this EULA;  
+- **Article 3.4.4**: Ensure the safety and stability of any entity created by or being simulated by the System's software;  
+- **Article 3.4.5**: Ensure that any entity created by or being simulated by the System's software does not violate any of the terms described in the Restrictions subsection of the License Grant clause of this EULA, or any terms of this EULA other than those described in Section 3.4 of this EULA; and   
+- **Article 3.4.6**: Ensure that the System’s hardware and software components comply with all applicable local, national, and international laws, state and federal policies, and any other applicable legal restrictions including other end-user license agreements separate from this document.
 
 ### Section 3.5 - Conditions of Permissions Grant
 You cannot accept, enter into, and/or be legally bound by the terms of this EULA if You:  
-- **3.5.1**: Cannot or do not agree with and/or fulfill to the best of your ability all legally binding terms described herein;  
-- **3.5.2**: Have received the System's software components from a source that is not affiliated with the Developers or a Reseller; and/or  
-- **3.5.3**: Have entered into this EULA at least once before and have had Your EULA terminated for any reason described under Section 5.2 of this EULA
+- **Article 3.5.1**: Cannot or do not agree with and/or fulfill to the best of your ability all legally binding terms described herein;  
+- **Article 3.5.2**: Have received the System's software components from a source that is not affiliated with the Developers or a Reseller; and/or  
+- **Article 3.5.3**: Have entered into this EULA at least once before and have had Your EULA terminated for any reason described under Section 5.2 of this EULA
 
 ## Section 4 - Intellectual Property and Ownership
 The Developers shall at all times retain ownership of the System's software as originally downloaded by You and all subsequent downloads of the System's software by You. The System's software (and the copyright, and other intellectual property rights of whatever nature in the System's software, including any modifications made thereto) are and shall remain the property of the Developers.  
