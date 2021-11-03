@@ -22,16 +22,17 @@ If you register for a free trial of the System, this EULA agreement will also go
 ### Subsection 2.2 - Representing a Legal Entity
 If you are entering into this EULA agreement on behalf of a company or other legal entity, you represent that you have the authority to bind such entity and its affiliates to these terms and conditions. If you do not have such authority or if you do not agree with the terms and conditions of this EULA agreement, do not install or use the Software, and you cannot accept this EULA agreement.  
 
-### Subsection 2.3
+### Subsection 2.3 - Scope of This EULA
 This EULA agreement shall apply only to the Software supplied by the Developers herewith regardless of whether other software is referred to or described herein. The terms also apply to any of the Developers' updates, supplements, Internet-based services, and support services for the Software, unless other terms accompany those items on delivery. If so, those terms apply.  
 
 ## Section 3 - License Grant
-### Subsection 3.1
+### Subsection 3.1 - License Grant
 The Developers hereby grant You a personal, non-transferable, non-exclusive license to use the the System's software on your devices in accordance with the terms of this EULA agreement.  
 
+### Subsection 3.2 - Permissions of Use
 You are permitted to load the the System's software (for example on a PC, laptop, mobile or tablet) under your control. You are responsible for ensuring Your device meets the minimum requirements of the the System's software and for ensuring that Your device on which you load the System's software is configured properly to support the System's software.  
 
-### Requirements
+### Subsection 3.3 - Requirements
 Under only the circumstance that the Developers dictate You must for any reason and under no other circumstances are You permitted by the Developers to:  
 - Edit, alter, modify, adapt, translate or otherwise change the whole or any part of the Software nor permit the whole or any part of the Software to be combined with or become incorporated in any other software, nor decompile, disassemble or reverse engineer the Software or attempt to do any such things;  
 - Reproduce, copy, distribute, resell or otherwise use the Software for any commercial purpose;  
@@ -39,7 +40,7 @@ Under only the circumstance that the Developers dictate You must for any reason 
 - Use the Software in any way which breaches any applicable local, national or international law; or  
 - Use the Software for any purpose that the Developers consider is a breach of this EULA agreement.  
 
-### Responsibilities
+### Subsection 3.4 - Responsibilities
 Except in violation of the Restrictions subsection of the License Grant clause of this EULA agreement You are permitted by the Developers to and required by the Developers to:  
 - Ensure the legality of the usage of the System's software, electronic, physical, or otherwise;  
 - Ensure that no redistribution, usage, editing, nor any other interaction with the System's software or hardware components violates any term of this EULA agreement;  
