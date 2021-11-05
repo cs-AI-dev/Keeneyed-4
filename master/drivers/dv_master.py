@@ -40,5 +40,8 @@ class routinesObject:
 						function = nns.programs.v1.simpleEdge,
 						layer = 0
 						),
-					nns.neuron.hidden()
+					nns.neuron.hidden(
+						name="SubjectPredicate",
+						
+					        )
 				])
