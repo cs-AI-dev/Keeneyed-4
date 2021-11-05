@@ -102,7 +102,7 @@ class FeedforwardNeuralNetwork:
 			odict = {}
 			for neuron in this.neurons[layer]:
 				if neuron.type != OUTPUT:
-					if:
+					if neuron.type == INPUT:
 						odict[neuron.name] = neuron.GetInitialData()
 					else:
 						odict[neuron.name] = neuron.GetInitialData(inputValuesDictionary = ldict)
