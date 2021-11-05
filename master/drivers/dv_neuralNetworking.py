@@ -15,6 +15,11 @@ INPUT = "sentinel_input"
 HIDDEN = "sentinel_hidden"
 NEXT_LAYER = "sentinel_next_layer"
 
+class programs:
+	class v1:
+		def simpleEdge(evolvingArguments, standardArguments):
+			return standardArguments
+
 class neuron:
 	# Input layer neuron has GetInput function
 	# Necessarily feeds into hidden neuron
