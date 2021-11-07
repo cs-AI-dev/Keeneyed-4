@@ -25,7 +25,7 @@ class Cache:
 	def generateCacheContents(this, cacheId="ID_UNKNOWN"):
 		return f"//KE4 CC LB>{this.name} ID>{cacheId}//\n//ENCODETYPE ASCII-HEX v1.0.0//\n//BEGINCACHE//\n{this.content}\n//ENDCACHE//\n"
 
-	def generateCacheFile(this, cacheId="ID_UNKNOWN", directory):
+	def generateCacheFile(this, directory, cacheId="ID_UNKNOWN"):
 		f = open(directory, "w")
 		f.write(this.generateCacheContents(cacheId=cacheId))
 		f.close()

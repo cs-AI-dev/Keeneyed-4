@@ -15,6 +15,12 @@ INPUT = "sentinel_input"
 HIDDEN = "sentinel_hidden"
 NEXT_LAYER = "sentinel_next_layer"
 
+SIGMOID = "sentinel_sigmoid"
+LINEAR = "sentinel_linear"
+LIMITING = "sentinel_limiting"
+SPIKING = "sentinel_spiking"
+SCALAR = "sentinel_scalar"
+
 class programs:
 	class v1:
 		def simpleEdge(evolvingArguments, standardArguments):
@@ -24,7 +30,7 @@ class neuron:
 	# Input layer neuron has GetInput function
 	# Necessarily feeds into hidden neuron
 	class input:
-		def __init__(this, name, evolvingArgumentsDictionary, function, layer=None, feedto=NEXT_LAYER):
+		def __init__(this, name, evolvingArgumentsDictionary, function, layer=None, feedto=NEXT_LAYER, activationFunction=SCALAR):
 			this.type = INPUT
 			this.name = name
 			this.target = feedto
@@ -32,6 +38,7 @@ class neuron:
 			this.function = function
 			this.standardInputs = None
 			this.layer = layer
+			this.activationFunction = activationFunction
 
 		def GetInitialData(this, inputValuesDictionary=None): # For FNNs
 			if inputValuesDictionary == None:
@@ -45,8 +52,10 @@ class neuron:
 			else:
 				this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
 
+	# Multi-network type hidden neuron
+	# with multi-purpose output functions
 	class hidden:
-		def __init__(this, name, evolvingArgumentsDictionary, function, layer=None, feedto=NEXT_LAYER):
+		def __init__(this, name, evolvingArgumentsDictionary, function, layer=None, feedto=NEXT_LAYER, activationFunction=SCALAR):
 			this.type = HIDDEN
 			this.name = name
 			this.target = feedto
@@ -54,6 +63,7 @@ class neuron:
 			this.function = function
 			this.standardInputs = None
 			this.layer = layer
+			this.activationFunction = activationFunction
 
 		def GetInitialData(this, inputValuesDictionary=None): # For FNNs
 			if inputValuesDictionary == None:
@@ -64,14 +74,18 @@ class neuron:
 		def SendData(this): # For ANNs
 			this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
 
+	# Output neuron, also compatible
+	# with FNNs, RNNs, and ANNs.
+	# Generally universal output function.
 	class output:
-		def __init__(this, name, evolvingArgumentsDictionary, function, layer=None):
+		def __init__(this, name, evolvingArgumentsDictionary, function, layer=None, activationFunction=SCALAR):
 			this.type = OUTPUT
 			this.name = name
 			this.evolvingArguments = evolvingArgumentsDictionary
 			this.function = function
 			this.standardInputs = None
 			this.layer = layer
+			this.activationFunction = activationFunction
 
 		def GetFinalData(this): # For any NN type
 			return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)

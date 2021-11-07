@@ -32,10 +32,11 @@ class routinesObject:
 
 		class ArtificialGeneralIntelligence:
 			def __init__(this,
-						 debug = false,
-						 neuralNetworkingVersion = 1.0,
-						 selfDestructEnabled = false,
-						 simulationInjectTarget = None
+						 debug = false, # Necessarily Boolean statement
+						 neuralNetworkingVersion = 1.0, # Necessarily Valid NNing version float
+						 selfDestructEnabled = false, # Necessarily Boolean statement
+						 simulationInjectTarget = None, # Necessarily any simulation object (TextOnlySimulation, AspacialSimulation, ThreeDimensionalSimulation)
+						 preformattingRedprint = None, # Necessarily any valid AGI preformat (i.e. Keeneyed-4, Razorclawed-N, Ozymandias-0) installed on the preformatting driver
 						):
 				print("[AGI_INSTANTIATION] INITIALIZING ARTIFICIAL GENERAL INTELLIGENCE INSTANTIATION PROCESS.")
 				if debug == true: print("[AGI_INSTANTIATION] DEBUG MODE ENABLED.")
