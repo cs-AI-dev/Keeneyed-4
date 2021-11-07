@@ -4,7 +4,7 @@
 # This system may only be used in accordance
 # with its EULA agreement.
 
-# Please read the EULA in its entirety
+# Please read and agree to the EULA in its entirety
 # before using this system.
 
 import sys
@@ -24,7 +24,7 @@ class neuron:
 	# Input layer neuron has GetInput function
 	# Necessarily feeds into hidden neuron
 	class input:
-		def __init__(this, name, feedto=NEXT_LAYER, evolvingArgumentsDictionary, function, layer=None):
+		def __init__(this, name, evolvingArgumentsDictionary, function, layer=None, feedto=NEXT_LAYER):
 			this.type = INPUT
 			this.name = name
 			this.target = feedto
@@ -32,21 +32,21 @@ class neuron:
 			this.function = function
 			this.standardInputs = None
 			this.layer = layer
-			
+
 		def GetInitialData(this, inputValuesDictionary=None): # For FNNs
 			if inputValuesDictionary == None:
 				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=inputValuesDictionary)
 			else:
 				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
-			
+
 		def SendInitialData(this, inputValuesDictionary=None): # For ANNs
 			if inputValuesDictionary == None:
 				this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=inputValuesDictionary)
 			else:
 				this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
-		
+
 	class hidden:
-		def __init__(this, name, feedto=NEXT_LAYER, evolvingArgumentsDictionary, function, layer=None):
+		def __init__(this, name, evolvingArgumentsDictionary, function, layer=None, feedto=NEXT_LAYER):
 			this.type = HIDDEN
 			this.name = name
 			this.target = feedto
@@ -54,16 +54,16 @@ class neuron:
 			this.function = function
 			this.standardInputs = None
 			this.layer = layer
-			
+
 		def GetInitialData(this, inputValuesDictionary=None): # For FNNs
 			if inputValuesDictionary == None:
 				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=inputValuesDictionary)
 			else:
 				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
-			
+
 		def SendData(this): # For ANNs
 			this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
-			
+
 	class output:
 		def __init__(this, name, evolvingArgumentsDictionary, function, layer=None):
 			this.type = OUTPUT
@@ -72,10 +72,10 @@ class neuron:
 			this.function = function
 			this.standardInputs = None
 			this.layer = layer
-			
+
 		def GetFinalData(this): # For any NN type
 			return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
-		
+
 class FeedforwardNeuralNetwork:
 	def __init__(this, neuronObjectList):
 		this.neurons = {}
@@ -89,11 +89,11 @@ class FeedforwardNeuralNetwork:
 			if not (neuron.layer in pal):
 				pal.append(neuron.layer)
 			[this.availableLayers.append(x) for x in pal if x not in this.availableLayers]
-			
+
 	def SetInputs(this, stdin):
 		for neuron in this.neurons[this.availableLayers[0]]:
 			neuron.standardInputs = stdin
-			
+
 	def MasterCallback():
 		first = True
 		for layer in this.availableLayers:
@@ -108,7 +108,7 @@ class FeedforwardNeuralNetwork:
 						odict[neuron.name] = neuron.GetInitialData(inputValuesDictionary = ldict)
 				else:
 					return neuron.GetFinalData()
-					
+
 			# Cleanup & prep for next layer
 			ldict = odict
 			if first == True:
