@@ -88,7 +88,8 @@ class neuron:
 			this.activationFunction = activationFunction
 
 		def GetFinalData(this): # For any NN type
-			return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
+			if this.activationFunction == LINEAR or this.activationFunction == SCALAR:
+				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs)
 
 class FeedforwardNeuralNetwork:
 	def __init__(this, neuronObjectList):
