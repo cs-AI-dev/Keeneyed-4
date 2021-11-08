@@ -21,6 +21,10 @@ LIMITING = "sentinel_limiting"
 SPIKING = "sentinel_spiking"
 SCALAR = "sentinel_scalar"
 
+class NeuralNetworkError(Exception): pass
+
+class NeuronError(Exception): pass
+
 class programs:
 	class v1:
 		def simpleEdge(evolvingArguments, standardArguments):
@@ -96,7 +100,8 @@ class FeedforwardNeuralNetwork:
 		this.neurons = {}
 		this.availableLayers = []
 		for neuron in neuronObjectsList:
-			assert type(neuron.layer) == type(1), "Layer number must be an integer"
+			if not type(neuron.layer) == type(1):
+				raise NeuronError("Neuron layer must be an integer")
 			if not (neuron.layer in this.neurons.keys()):
 				this.neurons[neuron.layer] = []
 			this.neurons[neuron.layer].append(neuron)
