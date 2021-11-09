@@ -24,6 +24,7 @@ class routinesObject:
 
 		import dv_neuralNetworking as nns
 		import dv_cacheGeneration as cg
+		import dv_preformattingRedprints as pfr
 
 	def Secondary(this):
 		# Secondary routine prepares the AGI
@@ -36,22 +37,22 @@ class routinesObject:
 						 neuralNetworkingVersion = 1.0, # Necessarily Valid NNing version float
 						 selfDestructEnabled = false, # Necessarily Boolean statement
 						 simulationInjectTarget = None, # Necessarily any simulation object (TextOnlySimulation, AspacialSimulation, ThreeDimensionalSimulation)
-						 preformattingRedprint = None, # Necessarily any valid AGI preformat (i.e. Keeneyed-4, Razorclawed-N, Ozymandias-0) installed on the preformatting driver
+						 preformattingRedprint = None, # Necessarily any valid AGI preformat (i.e. Keeneyed-4, Razorclawed-N, Ozymandias-0, etc.) installed on the preformatting driver
+						 preformatKey = pfr.maximum
 						):
 				print("[AGI_INSTANTIATION] INITIALIZING ARTIFICIAL GENERAL INTELLIGENCE INSTANTIATION PROCESS.")
-				if debug == true: print("[AGI_INSTANTIATION] DEBUG MODE ENABLED.")
-				print(" > | Initializing neural networking systems ...")
-				print("   | > | Initializing input neural network ...", end="")
-
-				this.InputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
-					nns.neuron.input(
-						name = "TextualInput",
-						evolvingArgumentsDictionary = {},
-						function = nns.programs.v1.simpleEdge,
-						layer = 0
-						),
-					nns.neuron.hidden(
-						name="SubjectPredicate",
-
-					        )
-				])
+				if debug == true: 
+					print("[AGI_INSTANTIATION] DEBUG MODE ENABLED.")
+				
+				if preformattingRedprint == None:
+					pfr.install.preformattedAGIs.keeneyed_4(this)
+				else:
+					if preformattingRedprint in pfr.preformats:
+						if preformattingRedprint == "keeneyed":
+							pfr.install.preformattedAGIs.keeneyed(this, preformatKey)
+						elif preformattingRedprint == "sharpclawed":
+							pfr.install.preformattedAGIs.sharpclawed(this, preformatKey)
+						elif preformattingRedprint == "allknowing":
+							pfr.install.
+					else:
+						raise pfr.InvalidPreformat(f"'{preformattingRedprint}' is not a valid preformat.")
