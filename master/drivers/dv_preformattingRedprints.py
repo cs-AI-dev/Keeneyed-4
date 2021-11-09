@@ -14,14 +14,27 @@ import dv_neuralNetworking as nns
 class InvalidPreformat(Exception):
 	pass
 
+class InvalidVersionNumber(Exception):
+	pass
+
+preformats = ["keeneyed", "sharpclawed", "ozymandias"]
+maximum = "sentinel_maximum"
+
 class install:
 	class preformattedAGIs:
-		def keeneyed_4(parent):
+		class versions:
+			keeneyed = [4]
+		def keeneyed_4(parent, version):
 			
 			# The namesake of this entire engine, the Keeneyed-4 general intelligence is
 			# designed to support 7 neural nets, each leading into a central cortex which
-			# controls the thought of the system. For a text-only interface,  only 
+			# controls the thought of the system. For a text-only interface,  only 2 NNs
+			# are functional
 			
-			print("[ke4_install] beginning preformatted installation of the Keeneyed-4 AGI system ...", end="")
-			parent.InputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
-				])
+			if not version in install.preformattedAGIs.versions.keeneyed:
+				raise InvalidVersionNumber(f"'{version}' is not a valid version for the Keeneyed AGI system.")
+			
+			if version == 4:
+				print("[ke4_install] beginning preformatted installation of the Keeneyed-4 AGI system ...", end="")
+				parent.InputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
+					])
