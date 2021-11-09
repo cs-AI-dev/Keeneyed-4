@@ -11,6 +11,9 @@ import sys
 import os
 import dv_neuralNetworking as nns
 
+class InvalidPreformat(Exception):
+	pass
+
 class install:
 	class preformattedAGIs:
 		def keeneyed_4(parent):
