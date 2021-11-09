@@ -12,8 +12,8 @@ import os
 import dv_neuralNetworking as nns
 
 class install:
-	class preformatted:
-		def keeneyed_4_agi(parent):
+	class preformattedAGIs:
+		def keeneyed_4(parent):
 			
 			# The namesake of this entire engine, the Keeneyed-4 general intelligence is
 			# designed to support 7 neural nets, each leading into a central cortex which
