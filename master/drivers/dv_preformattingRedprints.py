@@ -24,7 +24,7 @@ class install:
 	class preformattedAGIs:
 		class versions:
 			keeneyed = [4]
-		def keeneyed_4(parent, version):
+		def keeneyed_4(parent, version, textOnly=True):
 			
 			# The namesake of this entire engine, the Keeneyed-4 general intelligence is
 			# designed to support 7 neural nets, each leading into a central cortex which
@@ -36,5 +36,15 @@ class install:
 			
 			if version == 4:
 				print("[ke4_install] beginning preformatted installation of the Keeneyed-4 AGI system ...", end="")
-				parent.InputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
+				print(" > beginning neural network instantiation ...")
+				parent.SensoryInputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
 					])
+				parent.AffectorOutputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
+					])
+				parent.MemoryRetrievalNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
+					])
+				parent.MemoryGenerationNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
+					])
+				parent.CentralCortexNeuralNetwork - nns.FeedforwardNeuralNetwork(neuronObjectsList = [
+					])
+				
