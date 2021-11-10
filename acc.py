@@ -25,28 +25,31 @@ from time import sleep as wait
 drivers = ["cacheGeneration", "master", "neuralNetworking", "preformattingRedprints", "simulationEngine"]
 
 def process(args):
-    if args[0] == "test":
-        if args[1] == "dv":
-            if args[2] == "all":
-                print("[ke4_acc] testing all drivers ...")
-                for driver in drivers:
-                    process(["test", "dv", driver])
-            else:
-                print("[ke4_acc] testing compilation of driver under " + args[2] + " ...")
-                try:
-                    exec(open(sys.argv[0].split("acc.py")[0] + "master/drivers/dv_" + args[2] + ".py", "r").read())
-                    print("[ke4_acc] testing successful, no errors found in driver.")
-                except Exception as e:
-                    print("[ke4_acc] testing failed due to error:")
-                    print(" > " + str(e))
-        else:
-            print(f"[ke4_acc] invalid command argument '{args[1]}'.")
-    elif args[0] == "q" or args[0] == "quit":
-        exit()
-    else:
-        print(f"[ke4_acc] invalid command '{args[0]}'.")
+	if args[0] == "test":
+		if args[1] == "dv":
+			if args[2] == "all":
+				print("[ke4_acc] testing all drivers ...")
+					for driver in drivers:
+						process(["test", "dv", driver])
+			else:
+				print("[ke4_acc] testing compilation of driver under " + args[2] + " ...")
+				try:
+					exec(open(sys.argv[0].split("acc.py")[0] + "master/drivers/dv_" + args[2] + ".py", "r").read())
+					print("[ke4_acc] testing successful, no errors found in driver.")
+				except Exception as e:
+					print("[ke4_acc] testing failed due to error:")
+					print(" > " + str(e))
+		else:
+		print(f"[ke4_acc] invalid command argument '{args[1]}'.")
+
+	elif args[0] == "load"
+
+	elif args[0] == "q" or args[0] == "quit":
+		exit()
+	else:
+		print(f"[ke4_acc] invalid command '{args[0]}'.")
 
 
 while True:
-    print(" ")
-    process(input("@" + str(argv[0]) + " ").split(" "))
+	print(" ")
+	process(input("@" + str(argv[0]) + " ").split(" "))
