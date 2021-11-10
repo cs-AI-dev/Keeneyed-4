@@ -114,7 +114,7 @@ class FeedforwardNeuralNetwork:
 		for neuron in this.neurons[this.availableLayers[0]]:
 			neuron.standardInputs = stdin
 
-	def MasterCallback():
+	def MasterCallback(this):
 		first = True
 		for layer in this.availableLayers:
 			# Get dict
