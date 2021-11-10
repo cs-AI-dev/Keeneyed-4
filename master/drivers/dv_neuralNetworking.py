@@ -133,3 +133,20 @@ class FeedforwardNeuralNetwork:
 			ldict = odict
 			if first == True:
 				first = False
+
+class TheseusLimiter:
+	def __init__(this, targetNeuron):
+		pass
+	
+	def log():
+		pass
+	
+	def limit():
+		pass
+	
+class TheseusLimitationModule:
+	def __init__(this, theseusLimiters):
+		pass
+	
+	def regulate():
+		pass
