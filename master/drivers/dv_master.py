@@ -56,3 +56,9 @@ class routinesObject:
 							pfr.install.
 					else:
 						raise pfr.InvalidPreformat(f"'{preformattingRedprint}' is not a valid preformat.")
+
+executeRoutine = routinesObject()
+
+def LoadAGIs():
+	executeRoutine.Primary()
+	executeRoutine.Secondary()
