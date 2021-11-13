@@ -39,14 +39,24 @@ class universal:
 
         def call(bid, targetFunction, argsList=None):
             if targetFunction in bid.functions:
-                targetFunction(item, argsList)
+                targetFunction(bid, argsList)
 
 class standard:
     class functions:
         def clearBlock(targetBlock):
             targetBlock.id = standard.bids.elements.air
 
-    class colors:
+		def displaceFluid(targetBlock):
+			# Deletes block, but then replaces a nearby air block with a fluid block
+			pass
+
+		class door: # BUG: This doesn't do anything yet
+			def toggleState(targetBlock):
+				targetBlock.id = None
+
+    class colors: # BUG: Colors sometimes misbehave (sometimes). Fix RGB codes.
+		generate = lambda rgbHash, reflectancePercentage : {"rgb": rgbHash, "reflectance": reflectancePercentage}
+
         white = "FFFFFF"
         gray = "808080"
         black = "000000"
@@ -66,54 +76,60 @@ class standard:
         class chromatic:
 			chromaticReflectance = 0
 
-            white = {"rgb"="FFFFFF", "reflectance"=standard.colors.chromatic.chromaticReflectance}
-            gray = {"rgb"="808080", "reflectance"=standard.colors.chromatic.chromaticReflectance}
-            black = {"rgb"="000000", "reflectance"=standard.colors.chromatic.chromaticReflectance}
+            white = {"rgb": "FFFFFF", "reflectance": standard.colors.chromatic.chromaticReflectance}
+            gray = {"rgb": "808080", "reflectance": standard.colors.chromatic.chromaticReflectance}
+            black = {"rgb": "000000", "reflectance": standard.colors.chromatic.chromaticReflectance}
 
-            red = {"rgb"="FF0000", "reflectance"=standard.colors.chromatic.chromaticReflectance}
-            blood_red = {"rgb"="800000", "reflectance"=standard.colors.chromatic.chromaticReflectance}
-            orange = {"rgb"="FF8000", "reflectance"=standard.colors.chromatic.chromaticReflectance}
-            yellow = {"rgb"="FFFF00", "reflectance"=standard.colors.chromatic.chromaticReflectance}
-            green = {"rgb"="008000", "reflectance"=standard.colors.chromatic.chromaticReflectance}
-            lime = {"rgb"="00FF00", "reflectance"=standard.colors.chromatic.chromaticReflectance}
-            blue = {"rgb"="0000FF", "reflectance"=standard.colors.chromatic.chromaticReflectance}
-            cyan = {"rgb"="00FFFF", "reflectance"=standard.colors.chromatic.chromaticReflectance0}
-            indigo = {"rgb"="000080", "reflectance"=standard.colors.chromatic.chromaticReflectance}
-            violet = {"rgb"="800080", "reflectance"=standard.colors.chromatic.chromaticReflectance}
-            magenta = {"rgb"="FF00FF", "reflectance"=standard.colors.chromatic.chromaticReflectance}
+            red = {"rgb": "FF0000", "reflectance": standard.colors.chromatic.chromaticReflectance}
+            blood_red = {"rgb": "800000", "reflectance": standard.colors.chromatic.chromaticReflectance}
+            orange = {"rgb": "FF8000", "reflectance": standard.colors.chromatic.chromaticReflectance}
+            yellow = {"rgb": "FFFF00", "reflectance": standard.colors.chromatic.chromaticReflectance}
+            green = {"rgb": "008000", "reflectance": standard.colors.chromatic.chromaticReflectance}
+            lime = {"rgb": "00FF00", "reflectance": standard.colors.chromatic.chromaticReflectance}
+            blue = {"rgb": "0000FF", "reflectance": standard.colors.chromatic.chromaticReflectance}
+            cyan = {"rgb": "00FFFF", "reflectance": standard.colors.chromatic.chromaticReflectance0}
+            indigo = {"rgb": "000080", "reflectance": standard.colors.chromatic.chromaticReflectance}
+            violet = {"rgb": "800080", "reflectance": standard.colors.chromatic.chromaticReflectance}
+            magenta = {"rgb": "FF00FF", "reflectance": standard.colors.chromatic.chromaticReflectance}
 
         class metallic:
             metallicReflectance = 50
 
-            mirror = lambda rgbColor : {"rgb"=rgbColor, "reflectance"=100}
-			silver = {"rgb"="808080", "reflectance"=standard.colors.metallic.metallicReflectance}
-			gold = {"rgb"="F8F800", "reflectance"=standard.colors.metallic.metallicReflectance}
-			pink_gold = {"rgb"="FFE800", "reflectance"=standard.colors.metallic.metallicReflectance}
+            mirror = lambda rgbColor : {"rgb": "rgbColor", "reflectance": 100}
+			silver = {"rgb": "808080", "reflectance": standard.colors.metallic.metallicReflectance}
+			gold = {"rgb": "F8F800", "reflectance": standard.colors.metallic.metallicReflectance}
+			pink_gold = {"rgb": "FFE800", "reflectance": standard.colors.metallic.metallicReflectance}
 
         class gem:
 			# Uses classic (popular) colors based on gem
             gemReflectance = 75
 
-			diamond = {"rgb"="EEEEFF", "reflectance"=standard.colors.gem.gemReflectance}
-			onyx = {"rgb"="000000", "reflectance"=standard.colors.gem.gemReflectance}
+			diamond = {"rgb": "EEEEFF", "reflectance": standard.colors.gem.gemReflectance}
+			onyx = {"rgb": "000000", "reflectance": standard.colors.gem.gemReflectance}
 
-			ruby = {"rgb"="FF0000", "reflectance"=standard.colors.gem.gemReflectance}
-			topaz = {"rgb"="FF8000", "reflectance"=standard.colors.gem.gemReflectance}
-			emerald = {"rgb"="00FF00", "reflectance"=standard.colors.gem.gemReflectance}
-			sapphire = {"rgb"="0000FF", "reflectance"=standard.colors.gem.gemReflectance}
-			amethyst
+			ruby = {"rgb": "FF0000", "reflectance": standard.colors.gem.gemReflectance}
+			topaz = {"rgb": "FF8000", "reflectance": standard.colors.gem.gemReflectance}
+			emerald = {"rgb": "00FF00", "reflectance": standard.colors.gem.gemReflectance}
+			sapphire = {"rgb": "0000FF", "reflectance": standard.colors.gem.gemReflectance}
+			amethyst = {"rgb": "800080", "reflectance": standard.colors.gem.gemReflectance}
 
     class bids: # Tensile strength represented in kilonewtons
         class elements:
-            air = BlockId("air", standard.functions.clearBlock, physicalTransparency=1, tensileStrength=0, color=None)
+            air = universal.BlockId("air", standard.functions.clearBlock, physicalTransparency=1, tensileStrength=0, color=None)
 
         class simulant:
-            base_simulant = BlockId("base_simulant", standard.functions.clearBlock, physicalTransparency=0, tensileStrength=1, color=)
+            standard_simulant = universal.BlockId("standard_simulant", standard.functions.clearBlock, physicalTransparency=0, tensileStrength=1, color=standard.colors.chromatic.white)
+			reinforced_simulant = universal.BlockId("standard_simulant", standard.functions.clearBlock, physicalTransparency=0, tensileStrength=10, color=standard.colors.chromatic.gray)
+			indestructible_simulant = universal.BlockId("indestructible_simulant", standard.functions.clearBlock, physicalTransparency=0, tensileStrength=infinite, standard.colors.chromatic.black)
+			liquid_simulant = universal.BlockId("liquid_simulant", standard.functions.clearBlock, standard.functions.displaceFluid, physicalTransparency=0.40, tensileStrength=0)
 
 class axonometry:
 	class Block:
 		def __init__(block, blockId):
             this.id = blockId
+			this.blockType = blockId.name
+			this.bl
+			this.functions = blockId.
 
 	class Layer:
 		def __init__(layer, *blockStrings, euclideanZCoordinate=None):
