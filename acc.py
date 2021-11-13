@@ -29,8 +29,8 @@ def process(args):
 		if args[1] == "dv":
 			if args[2] == "all":
 				print("[ke4_acc] testing all drivers ...")
-					for driver in drivers:
-						process(["test", "dv", driver])
+				for driver in drivers:
+					process(["test", "dv", driver])
 			else:
 				print("[ke4_acc] testing compilation of driver under " + args[2] + " ...")
 				try:
@@ -40,9 +40,10 @@ def process(args):
 					print("[ke4_acc] testing failed due to error:")
 					print(" > " + str(e))
 		else:
-		print(f"[ke4_acc] invalid command argument '{args[1]}'.")
+			print(f"[ke4_acc] invalid command argument '{args[1]}'.")
 
-	elif args[0] == "load"
+	elif args[0] == "load":
+		pass
 
 	elif args[0] == "q" or args[0] == "quit":
 		exit()
