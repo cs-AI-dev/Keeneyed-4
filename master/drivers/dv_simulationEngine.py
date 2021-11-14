@@ -42,8 +42,12 @@ class Item:
 class BlockId:
 	def __init__(bid, name, *functions, **properties):
 		bid.functions = []
+		bid.tickCallback = None
 		for function in functions:
-			bid.functions.append(function)
+			if type(function) == type([1, 2]) or type(function) == type((1, 2)):
+				bid.tickCallback = function[0]
+			else:
+				bid.functions.append(function)
 
 		bid.properties = {}
 		for propertyName in properties.keys():
@@ -133,18 +137,37 @@ class standard:
 			air = universal.BlockId("air", standard.functions.clearBlock, physicalTransparency=1, tensileStrength=0, color=None)
 
 		class simulant:
-			standard_simulant = universal.BlockId("standard_simulant", standard.functions.clearBlock, physicalTransparency=0, tensileStrength=1, color=standard.colors.chromatic.white)
-			reinforced_simulant = universal.BlockId("standard_simulant", standard.functions.clearBlock, physicalTransparency=0, tensileStrength=10, color=standard.colors.chromatic.gray)
-			indestructible_simulant = universal.BlockId("indestructible_simulant", standard.functions.clearBlock, physicalTransparency=0, tensileStrength=infinite, color=standard.colors.chromatic.black)
-			liquid_simulant = universal.BlockId("liquid_simulant", standard.functions.clearBlock, standard.functions.displaceFluid, physicalTransparency=0.40, tensileStrength=0, color=standard)
+			standard_simulant = BlockId("standard_simulant", standard.functions.clearBlock, 
+												  physicalTransparency=0, 
+												  tensileStrength=1, 
+												  color=standard.colors.chromatic.white,
+												  friction=10)
+			reinforced_simulant = BlockId("standard_simulant", standard.functions.clearBlock, 
+													physicalTransparency=0,
+													tensileStrength=10, 
+													color=standard.colors.chromatic.gray,
+												    friction=10)
+			indestructible_simulant = BlockId("indestructible_simulant", standard.functions.clearBlock, 
+														physicalTransparency=0, 
+														tensileStrength=infinite, 
+														color=standard.colors.chromatic.black,
+													    friction=10)
+			liquid_simulant = BlockId("liquid_simulant", standard.functions.clearBlock, standard.functions.displaceFluid, 
+												physicalTransparency=0.40, 
+												tensileStrength=0, 
+												color=standard.colors.gem.sapphire,
+											    friction=50)
 
 class axonometry:
 	class Block:
 		def __init__(block, blockId):
 			this.id = blockId
 			this.blockType = blockId.name
-			this.bl
-			this.functions = blockId.
+			this.functions = blockId.functions
+			this.properties = blockId.properties
+			
+		def executeTickCallback(block, argsList):
+			this.id.tickCallback(parent, argsList)
 
 	class Layer:
 		def __init__(layer, *blockStrings, euclideanZCoordinate=None):
@@ -158,5 +181,31 @@ class axonometry:
 				for block in blockString:
 					yc += 1
 					layer.block[xc][yc]
+					
+	class AxonometricPhysicsEngine:
+		def __init__(physics, physicsEngineOverride):
+			law = {
+				"ambient_gravity": 9.80243, # Gravity (in meters/second squared) defaults to gravity at 45 degrees latitude with elevation 1,220 meters (abt 4,000 feet)
+				"ambient_temperature": 20, # Ambient temperature (in Celsius) defaults to room temperature, approximately 68 degrees Fahrenheit.
+				"ambient_atmospheric_density": 1.2041, # Ambient atmospheric density (in kilograms/meter) defaults to the normal temp at 20 C and 101.325 kPa.
+				"ambient_atmospheric_pressure": 101.325, # Ambient atmospheric density (in Pascals) defaults to the standard 101.325 kilopascals.
+				"enable_day_night_cycle": True, # The day/night cycle defaults to be enabled.
+				"toggle_always_day": True # Only matters if 'enable_day_night_cycle' is False. If day/night is disabled and this is also disabled, the simulation will resemble space.
+				"day_ticks": 45000, # The number of ticks until nighttime from dawn defaults to 45 kiloticks.
+				"night_ticks": 45000, # The number of ticks until daytime from dusk defaults to 45 kiloticks.
+				"dawn_dusk_transition_ticks": 10000, # The number of ticks for night to transition to day and vice versa defaults to 10 kiloticks.
+				"sun_brightness": 10752 # The measure of the simulation's sun's brightness (in lux) defaults to the Earth's sun's average brightness.
+				"minimum_tick_length": 10 # The minimum time for a tick to take defaults to 10 milliseconds, making each second max out at 100 ticks/second.
+			}
 
 	class AxonometricSimulation:
+		def __init__(simulation, *layers, **physicsOverride):
+			simulationPhysics = None
+			
+			if len(physicsOverride.keys()) > 0:
+				simulationPhysics = axonometry.AxonometricPhysicsEngine()
+				simulationPhysics.law.update(physicsOverride)
+			else:
+				simulationPhysics = axonometry.AxonometricPhysicsEngine()
+			
+		
