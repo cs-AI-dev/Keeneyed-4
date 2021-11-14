@@ -121,7 +121,7 @@ class standard:
 		class gem:
 			# Uses classic (popular) colors based on gem
 			gemReflectance = 75
-			gemTransparency = 20
+			gemTransparency = 25
 
 			diamond = {"rgb": "EEEEFF", "reflectance": standard.colors.gem.gemReflectance, "transparency": standard.colors.gem.gemTransparency}
 			onyx = {"rgb": "000000", "reflectance": standard.colors.gem.gemReflectance, "transparency": standard.colors.gem.gemTransparency}
@@ -138,25 +138,36 @@ class standard:
 
 		class simulant:
 			standard_simulant = BlockId("standard_simulant", standard.functions.clearBlock, 
+												  density=1,
 												  physicalTransparency=0, 
 												  tensileStrength=1, 
 												  color=standard.colors.chromatic.white,
 												  friction=10)
-			reinforced_simulant = BlockId("standard_simulant", standard.functions.clearBlock, 
+			reinforced_simulant = BlockId("standard_simulant", standard.functions.clearBlock, standard.functions.displaceFluid, 
+										  			density=1,
 													physicalTransparency=0,
 													tensileStrength=10, 
 													color=standard.colors.chromatic.gray,
 												    friction=10)
-			indestructible_simulant = BlockId("indestructible_simulant", standard.functions.clearBlock, 
+			indestructible_simulant = BlockId("indestructible_simulant", standard.functions.clearBlock, standard.functions.displaceFluid, 
+											  			density=1
 														physicalTransparency=0, 
 														tensileStrength=infinite, 
 														color=standard.colors.chromatic.black,
 													    friction=10)
 			liquid_simulant = BlockId("liquid_simulant", standard.functions.clearBlock, standard.functions.displaceFluid, 
-												physicalTransparency=0.40, 
+									  			density=1,
+												physicalTransparency=0.50, 
 												tensileStrength=0, 
 												color=standard.colors.gem.sapphire,
 											    friction=50)
+			
+			biological_simulant = BlockId("biological_simulant", standard.functions.clearBlock, standard.functions.displaceFluid,
+										  density=1,
+										  physicalTransparency=0,
+										  tensileStrength=0.25,
+										  color=standard.colors.generate("008000", 0, 0),
+										  friction=25)
 
 class axonometry:
 	class Block:
@@ -197,6 +208,27 @@ class axonometry:
 				"sun_brightness": 10752 # The measure of the simulation's sun's brightness (in lux) defaults to the Earth's sun's average brightness.
 				"minimum_tick_length": 10 # The minimum time for a tick to take defaults to 10 milliseconds, making each second max out at 100 ticks/second.
 			}
+			
+	class InputChannel:
+		def __init__(channel):
+			pass
+		
+	class OutputChannel:
+		def __init__(channel):
+			pass
+			
+	class AxonometricArtificialGeneralIntelligenceCharacter:
+		def __init__(chara, centralIntelligenceCortex, *layers, **channelsInputOutput): # Channels necessarily se.axonometry.InputChannel or .OutputChannel
+			this.cortex = centralIntelligenceCortex
+			
+	class AxonometricPlayerCharacter:
+		def __init_(chara, *layers, **keybinds):
+			pass
+		
+	class AxonometricObjectsManager:
+		def __init__(this, *objects, **entities):
+			this.objects = objects
+			this.entities = entities
 
 	class AxonometricSimulation:
 		def __init__(simulation, *layers, **physicsOverride):
@@ -207,5 +239,8 @@ class axonometry:
 				simulationPhysics.law.update(physicsOverride)
 			else:
 				simulationPhysics = axonometry.AxonometricPhysicsEngine()
+				
+			simulationObjects = axonometry.AxonometricObjectsManager()
 			
-		
+		def InjectArtificialGeneralIntelligence(simulation):
+			
