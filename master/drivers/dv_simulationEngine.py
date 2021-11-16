@@ -11,6 +11,7 @@ import sys
 import os
 
 infinity = infinite = "sentinel_infinity"
+default = "sentinel_default"
 
 class ItemError(Exception):
 	pass
@@ -19,6 +20,12 @@ class ItemCallbackError(Exception):
 	pass
 
 class BlockError(Exception):
+	pass
+
+class VectorAdditionError(Exception):
+	pass
+
+class VectorConstructionError(Exception):
 	pass
 
 class Item:
@@ -232,15 +239,39 @@ class axonometry:
 
 	class AxonometricSimulation:
 		def __init__(simulation, *layers, **physicsOverride):
-			simulationPhysics = None
+			simulation.simulationPhysics = None
 			
 			if len(physicsOverride.keys()) > 0:
-				simulationPhysics = axonometry.AxonometricPhysicsEngine()
-				simulationPhysics.law.update(physicsOverride)
+				simulation.simulationPhysics = axonometry.AxonometricPhysicsEngine()
+				simulation.simulationPhysics.law.update(physicsOverride)
 			else:
-				simulationPhysics = axonometry.AxonometricPhysicsEngine()
+				simulation.simulationPhysics = axonometry.AxonometricPhysicsEngine()
 				
-			simulationObjects = axonometry.AxonometricObjectsManager()
+			simulation.simulationObjects = axonometry.AxonometricObjectsManager()
 			
 		def InjectArtificialGeneralIntelligence(simulation):
+			
+class euclidean:
+	
+	class Vector:
+		def __init__(vector, **directionalVelocities):
+			vector.velocity = {}
+			for key in directionalVelocities.keys():
+				vector.velocity[key] = directionalVelocities[key]
+			vector.netVelocity = 0
+			for key in vector.velocity.keys():
+				vector.netVelocity += vector.velocity[key]
+			vector.history = []
+		
+		def add(vector, additionVector):
+			for key in additionVector.velocity.keys():
+				if key in vector.velocity.keys():
+					vector.velocity[key] += additionVector.velocity[key]
+			
+	class EuclideanPhysicsEngine:
+		def __init__(physics):
+			pass
+	
+	class UnboundEuclideanSpace:
+		def __init__(space, dimensions=3, dimensionNames=default, gravity):
 			
