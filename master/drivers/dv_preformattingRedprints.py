@@ -17,6 +17,9 @@ class InvalidPreformat(Exception):
 class InvalidVersionNumber(Exception):
 	pass
 
+class FormattingError(Exception):
+	pass
+
 preformats = ["keeneyed", "sharpclawed", "ozymandias"]
 maximum = "sentinel_maximum"
 
@@ -24,7 +27,7 @@ class install:
 	class preformattedAGIs:
 		class versions:
 			keeneyed = [4]
-		def keeneyed_4(parent, version, textOnly=True):
+		def keeneyed(parent, version):
 			
 			# The namesake of this entire engine, the Keeneyed-4 general intelligence is
 			# designed to support 7 neural nets, each leading into a central cortex which
@@ -37,14 +40,14 @@ class install:
 			if version == 4:
 				print("[ke4_install] beginning preformatted installation of the Keeneyed-4 AGI system ...", end="")
 				print(" > beginning neural network instantiation ...")
-				parent.SensoryInputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
+				parent.TextInputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList  = [
+					nns.neuron.input("text", 
 					])
-				parent.AffectorOutputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
-					])
-				parent.MemoryRetrievalNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
+				parent.TextOutputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
 					])
 				parent.MemoryGenerationNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
 					])
-				parent.CentralCortexNeuralNetwork - nns.FeedforwardNeuralNetwork(neuronObjectsList = [
+				parent.MemoryRetrievalNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
 					])
-				
+	class preformattedAGIModules:
+		pass
