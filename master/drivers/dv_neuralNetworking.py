@@ -46,15 +46,15 @@ class neuron:
 
 		def GetInitialData(this, inputValuesDictionary=None): # For FNNs
 			if inputValuesDictionary == None:
-				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=inputValuesDictionary, activationFunction=this.activationFunction)
+				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=inputValuesDictionary, activationFunction=this.activationFunction, parent=this)
 			else:
-				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs, activationFunction=this.activationFunction)
+				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs, activationFunction=this.activationFunction, parent=this)
 
 		def SendInitialData(this, inputValuesDictionary=None): # For ANNs
 			if inputValuesDictionary == None:
-				this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=inputValuesDictionary, activationFunction=this.activationFunction)
+				this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=inputValuesDictionary, activationFunction=this.activationFunction, parent=this)
 			else:
-				this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs, activationFunction=this.activationFunction)
+				this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs, activationFunction=this.activationFunction, parent=this)
 
 	# Multi-network type hidden neuron
 	# with multi-purpose output functions
@@ -71,12 +71,12 @@ class neuron:
 
 		def GetInitialData(this, inputValuesDictionary=None): # For FNNs
 			if inputValuesDictionary == None:
-				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=inputValuesDictionary, activationFunction=this.activationFunction)
+				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=inputValuesDictionary, activationFunction=this.activationFunction, parent=this)
 			else:
-				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs, activationFunction=this.activationFunction)
+				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs, activationFunction=this.activationFunction, parent=this)
 
 		def SendData(this): # For ANNs
-			this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs, activationFunction=this.activationFunction)
+			this.target.standardInputs = this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs, activationFunction=this.activationFunction, parent=this)
 
 	# Output neuron, also compatible
 	# with FNNs, RNNs, and ANNs.
@@ -93,7 +93,7 @@ class neuron:
 
 		def GetFinalData(this): # For any NN type
 			if this.activationFunction == LINEAR or this.activationFunction == SCALAR:
-				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs, activationFunction=this.activationFunction)
+				return this.function(evolvingArguments=this.evolvingArguments, standardArguments=this.standardInputs, activationFunction=this.activationFunction, parent=this)
 
 class FeedforwardNeuralNetwork:
 	def __init__(this, neuronObjectList):
