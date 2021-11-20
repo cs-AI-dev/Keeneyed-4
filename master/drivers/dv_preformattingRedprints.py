@@ -155,10 +155,10 @@ class install:
 								"when": [implicit_return_type.time],
 								"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.object],
 								"how": [implicit_return_type.method],
-								"why": []
+								"why": [implicit_return_type.reason],
+								"who": [implicit_return_type.object]
 							},
 							"end": {
-
 							}
 						},
 						function = function.keeneyed_4.StartFinishTokenDetection,
