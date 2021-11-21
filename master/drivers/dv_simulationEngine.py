@@ -28,6 +28,9 @@ class VectorAdditionError(Exception):
 class VectorConstructionError(Exception):
 	pass
 
+class EuclideanSpaceError(Exception):
+	pass
+
 class Item:
 	def __init__(item, parentSimulation, *functions, **properties): # Input functions need a parent arg
 		item.functions = []
@@ -264,14 +267,39 @@ class euclidean:
 			vector.history = []
 		
 		def add(vector, additionVector):
+			vector.history.append(vector.velocity)
 			for key in additionVector.velocity.keys():
 				if key in vector.velocity.keys():
 					vector.velocity[key] += additionVector.velocity[key]
-			
+					
+		def clearHistory(vector):
+			vector.history = []
+					
+	def EuclideanDefaultMainloop(engine):
+		pass
+	
 	class EuclideanPhysicsEngine:
-		def __init__(physics):
-			pass
+		def __init__(physics, parentSpace, mainloop=default):
+			physics.mainloop = mainloop
 	
 	class UnboundEuclideanSpace:
-		def __init__(space, dimensions=3, dimensionNames=default, gravity):
+		def __init__(space, 
+					 physicsEngineCallback = euclidean.EuclideanDefaultMainloop,
+					 dimensions = 3, 
+					 dimensionNames = default, 
+					 gravityVector = None, 
+					 lightspeed = 299792458, 
+					 timeDilationEnabled = False):
+			space.dimensionNames = dimensionNames
 			
+			vsv = {}
+			for name in space.dimensionNames:
+				vsv[name] = 0
+			space.ZeroVector = euclidean.Vector(**vsv)
+			del vsv
+			
+			space.lightspeed = lightspeed
+			
+			space.physicsEngine = euclidean.EuclideanPhysicsEngine(space, physicsEngineCallback)
+			
+	
