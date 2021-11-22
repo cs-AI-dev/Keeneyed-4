@@ -10,6 +10,7 @@
 import sys
 import os
 import time
+import math
 
 infinity = infinite = "sentinel_infinity"
 default = "sentinel_default"
@@ -39,6 +40,9 @@ class SurfaceError(Exception):
 	pass
 
 class AssetError(Exception):
+	pass
+
+class MathError(Exception):
 	pass
 
 class Vector:
@@ -114,9 +118,24 @@ class Point:
 			return True
 		else:
 			raise PointError(f"Selected coordinate '{coord}' not registered on selected point.")
+			
+	def rotate(point, axis1, axis2, theta):
+		if not axis1 in point.coordinate.keys():
+			raise PointError(f"Invalid rotation axis '{axis1}'.")
+		if not axis2 in point.coordinate.keys():
+			raise PointError(f"Invalid rotation axis '{axis2}'.")
+			
+		try:
+			axis1prime = (point.coordinate[axis1] * math.cos(theta)) - (point.coordinate[axis2] * math.sin(theta))
+			axis2prime = (point.coordinate[axis1] * math.sin(theta)) + (point.coordinate[axis2] * math.cos(theta))
+			point.coordinate[axis1] = axis1prime
+			point.coordinate[axis2] = axis2prime
+			return True
+		except Exception as e:
+			raise MathError("Error occurred in calculation: " + str(e))
 
 class Surface:
-	def __init__(surface, *points, **properties):
+	def __init__(surface, name=None, *points, **properties):
 		if not ( ( len(points) == 3 ) or ( len(points) == 4 ) ):
 			raise SurfaceError(f"Invalid number of points ({str(len(points))}) for surface, to render more see howto.")
 		else:
@@ -128,8 +147,32 @@ class Surface:
 		for coord in coordinateTranslations.keys():
 			for x in surface.points:
 				if not coord in x.coordinate.keys():
-					raise SurfaceError(f"Translation coordinate '{coord}' not registered in one of the surface's point.")
+					raise SurfaceError(f"Translation coordinate '{coord}' not registered in one of the surface's points.")
 
 		for coord in coordinateTranslations.keys():
 			for point in surface.points:
 				point.coordinate[coord] += coordinateTranslations[coord]
+				
+	def rotate(surface, axis1, axis2, theta):
+		for point in surface.points:
+			point.rotate(axis1, axis2, theta)
+			return True
+				
+class Asset:
+	def __init__(asset, name, rigidBindObjects=True, immovable=False, *objects, **tags):
+		# Ensure validity
+		if type(name) != type(str()):
+			raise AssetError("Asset name is not a string.")
+		if type(rigidBindObjects) != type(True):
+			raise AssetError("Asset rigid-bind toggle is not a Boolean.")
+		if type(immovable) != type(True):
+			raise AssetError("Asset immovability toggle is not a Boolean.")
+			
+		asset.name = name
+		asset.immovable = immovable
+		asset.tags = tags
+		
+		asset.objects = {}
+		
+		for object in objects:
+			asset.objects[object.name] = object
