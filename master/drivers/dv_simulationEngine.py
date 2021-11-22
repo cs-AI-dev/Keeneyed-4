@@ -9,6 +9,7 @@
 
 import sys
 import os
+import time
 
 infinity = infinite = "sentinel_infinity"
 default = "sentinel_default"
@@ -28,278 +29,93 @@ class VectorAdditionError(Exception):
 class VectorConstructionError(Exception):
 	pass
 
-class EuclideanSpaceError(Exception):
+class SpaceError(Exception):
 	pass
 
-class Item:
-	def __init__(item, parentSimulation, *functions, **properties): # Input functions need a parent arg
-		item.functions = []
-		for function in functions:
-			item.functions.append(function)
-		item.properties = {}
-		for propertyName in properties.keys():
-			item.properties[propertyName] = properties[propertyName]
+class PointError(Exception):
+	pass
 
-	def call(item, targetFunction, argsList=None):
-		if targetFunction in item.functions:
-			try:
-				targetFunction(item, argsList)
-			except Exception as e:
-				raise ItemCallbackError("Exception occurred in item callback: " + str(e))
+class SurfaceError(Exception):
+	pass
+
+class AssetError(Exception):
+	pass
+
+class Vector:
+	def __init__(vector, **directionalVelocities):
+		vector.velocity = {}
+		for key in directionalVelocities.keys():
+			vector.velocity[key] = directionalVelocities[key]
+		vector.netVelocity = 0
+		for key in vector.velocity.keys():
+			vector.netVelocity += vector.velocity[key]
+		vector.history = []
+
+	def add(vector, additionVector):
+		vector.history.append(vector.velocity)
+		for key in additionVector.velocity.keys():
+			if key in vector.velocity.keys():
+				vector.velocity[key] += additionVector.velocity[key]
+
+	def clearHistory(vector):
+		vector.history = []
+
+class PhysicsEngine:
+	def __init__(physics, parentSpace, mainloop="sentinel_default", tickDelay=10):
+		physics.mainloop = mainloop
+		physics.nextTickEpoch = time.time()
+		physics.tickdelay = tickDelay # delays x ms
+
+	def tick(physics, **auxiliaryArgs):
+		if time.time <= physics.nextTickEpoch:
+			physics.nextTickEpoch = time.time() + ( physics.tickDelay / 1000 )
+			physics.mainloop(**auxiliaryArgs)
+			return True
 		else:
-			raise ItemError("Target function not registered in item functions.")
+			return False
 
-class BlockId:
-	def __init__(bid, name, *functions, **properties):
-		bid.functions = []
-		bid.tickCallback = None
-		for function in functions:
-			if type(function) == type([1, 2]) or type(function) == type((1, 2)):
-				bid.tickCallback = function[0]
-			else:
-				bid.functions.append(function)
-
-		bid.properties = {}
-		for propertyName in properties.keys():
-			bid.properties[propertyName] = properties[propertyName]
-
-	def call(bid, targetFunction, argsList=None):
-		if targetFunction in bid.functions:
-			targetFunction(bid, argsList)
-
-class standard:
-	class functions:
-		def clearBlock(targetBlock):
-			targetBlock.id = standard.bids.elements.air
-
-		def displaceFluid(targetBlock):
-			# Deletes block, but then replaces a nearby air block with a fluid block
-			pass
-
-		class door: # BUG: This doesn't do anything yet
-			def toggleState(targetBlock):
-				targetBlock.id = None
-
-	class colors: # BUG: Colors sometimes misbehave (sometimes). Fix RGB codes.
-		generate = lambda rgbHash, reflectancePercentage, transparencyPercentage : {"rgb": rgbHash, "reflectance": reflectancePercentage}
-
-		white = "FFFFFF"
-		gray = "808080"
-		black = "000000"
-
-		red = "FF0000"
-		blood_red = "800000"
-		orange = "FF8000"
-		yellow = "FFFF00"
-		green = "008000"
-		lime = "00FF00"
-		blue = "0000FF"
-		cyan = "00FFFF"
-		indigo = "000080"
-		violet = "800080"
-		magenta = "FF00FF"
-
-		class chromatic:
-			chromaticReflectance = 0
-			chromaticTransparency = 0
-
-			white = {"rgb": "FFFFFF", "reflectance": standard.colors.chromatic.chromaticReflectance, "transparency": standard.colors.chromatic.chromaticTransparency}
-			gray = {"rgb": "808080", "reflectance": standard.colors.chromatic.chromaticReflectance, "transparency": standard.colors.chromatic.chromaticTransparency}
-			black = {"rgb": "000000", "reflectance": standard.colors.chromatic.chromaticReflectance, "transparency": standard.colors.chromatic.chromaticTransparency}
-
-			red = {"rgb": "FF0000", "reflectance": standard.colors.chromatic.chromaticReflectance, "transparency": standard.colors.chromatic.chromaticTransparency}
-			blood_red = {"rgb": "800000", "reflectance": standard.colors.chromatic.chromaticReflectance, "transparency": standard.colors.chromatic.chromaticTransparency}
-			orange = {"rgb": "FF8000", "reflectance": standard.colors.chromatic.chromaticReflectance, "transparency": standard.colors.chromatic.chromaticTransparency}
-			yellow = {"rgb": "FFFF00", "reflectance": standard.colors.chromatic.chromaticReflectance, "transparency": standard.colors.chromatic.chromaticTransparency}
-			green = {"rgb": "008000", "reflectance": standard.colors.chromatic.chromaticReflectance, "transparency": standard.colors.chromatic.chromaticTransparency}
-			lime = {"rgb": "00FF00", "reflectance": standard.colors.chromatic.chromaticReflectance, "transparency": standard.colors.chromatic.chromaticTransparency}
-			blue = {"rgb": "0000FF", "reflectance": standard.colors.chromatic.chromaticReflectance, "transparency": standard.colors.chromatic.chromaticTransparency}
-			cyan = {"rgb": "00FFFF", "reflectance": standard.colors.chromatic.chromaticReflectance, "transparency": standard.colors.chromatic.chromaticTransparency}
-			indigo = {"rgb": "000080", "reflectance": standard.colors.chromatic.chromaticReflectance, "transparency": standard.colors.chromatic.chromaticTransparency}
-			violet = {"rgb": "800080", "reflectance": standard.colors.chromatic.chromaticReflectance, "transparency": standard.colors.chromatic.chromaticTransparency}
-			magenta = {"rgb": "FF00FF", "reflectance": standard.colors.chromatic.chromaticReflectance, "transparency": standard.colors.chromatic.chromaticTransparency}
-
-		class metallic:
-			metallicReflectance = 50
-			metallicTransparency = 0
-
-			mirror = lambda rgbColor : {"rgb": "rgbColor", "reflectance": 100, "transparency": standard.colors.metallic.metallicTransparency}
-			silver = {"rgb": "808080", "reflectance": standard.colors.metallic.metallicReflectance, "transparency": standard.colors.metallic.metallicTransparency}
-			gold = {"rgb": "F8F800", "reflectance": standard.colors.metallic.metallicReflectance, "transparency": standard.colors.metallic.metallicTransparency}
-			pink_gold = {"rgb": "FFE800", "reflectance": standard.colors.metallic.metallicReflectance, "transparency": standard.colors.metallic.metallicTransparency}
-
-		class gem:
-			# Uses classic (popular) colors based on gem
-			gemReflectance = 75
-			gemTransparency = 25
-
-			diamond = {"rgb": "EEEEFF", "reflectance": standard.colors.gem.gemReflectance, "transparency": standard.colors.gem.gemTransparency}
-			onyx = {"rgb": "000000", "reflectance": standard.colors.gem.gemReflectance, "transparency": standard.colors.gem.gemTransparency}
-
-			ruby = {"rgb": "FF0000", "reflectance": standard.colors.gem.gemReflectance, "transparency": standard.colors.gem.gemTransparency}
-			topaz = {"rgb": "FF8000", "reflectance": standard.colors.gem.gemReflectance, "transparency": standard.colors.gem.gemTransparency}
-			emerald = {"rgb": "00FF00", "reflectance": standard.colors.gem.gemReflectance, "transparency": standard.colors.gem.gemTransparency}
-			sapphire = {"rgb": "0000FF", "reflectance": standard.colors.gem.gemReflectance, "transparency": standard.colors.gem.gemTransparency}
-			amethyst = {"rgb": "800080", "reflectance": standard.colors.gem.gemReflectance, "transparency": standard.colors.gem.gemTransparency}
-
-	class bids: # Tensile strength represented in kilonewtons
-		class elements:
-			air = universal.BlockId("air", standard.functions.clearBlock, physicalTransparency=1, tensileStrength=0, color=None)
-
-		class simulant:
-			standard_simulant = BlockId("standard_simulant", standard.functions.clearBlock, 
-												  density=1,
-												  physicalTransparency=0, 
-												  tensileStrength=1, 
-												  color=standard.colors.chromatic.white,
-												  friction=10)
-			reinforced_simulant = BlockId("standard_simulant", standard.functions.clearBlock, standard.functions.displaceFluid, 
-										  			density=1,
-													physicalTransparency=0,
-													tensileStrength=10, 
-													color=standard.colors.chromatic.gray,
-												    friction=10)
-			indestructible_simulant = BlockId("indestructible_simulant", standard.functions.clearBlock, standard.functions.displaceFluid, 
-											  			density=1
-														physicalTransparency=0, 
-														tensileStrength=infinite, 
-														color=standard.colors.chromatic.black,
-													    friction=10)
-			liquid_simulant = BlockId("liquid_simulant", standard.functions.clearBlock, standard.functions.displaceFluid, 
-									  			density=1,
-												physicalTransparency=0.50, 
-												tensileStrength=0, 
-												color=standard.colors.gem.sapphire,
-											    friction=50)
-			
-			biological_simulant = BlockId("biological_simulant", standard.functions.clearBlock, standard.functions.displaceFluid,
-										  density=1,
-										  physicalTransparency=0,
-										  tensileStrength=0.25,
-										  color=standard.colors.generate("008000", 0, 0),
-										  friction=25)
-
-class axonometry:
-	class Block:
-		def __init__(block, blockId):
-			this.id = blockId
-			this.blockType = blockId.name
-			this.functions = blockId.functions
-			this.properties = blockId.properties
-			
-		def executeTickCallback(block, argsList):
-			this.id.tickCallback(parent, argsList)
-
-	class Layer:
-		def __init__(layer, *blockStrings, euclideanZCoordinate=None):
-			layer.height = euclideanZCoordinate
-			xc = -1
-			yc = -1
-			layer.block = {}
-			for blockString in blockStrings:
-				xc += 1
-				layer.block[xc] = {}
-				for block in blockString:
-					yc += 1
-					layer.block[xc][yc]
-					
-	class AxonometricPhysicsEngine:
-		def __init__(physics, physicsEngineOverride):
-			law = {
-				"ambient_gravity": 9.80243, # Gravity (in meters/second squared) defaults to gravity at 45 degrees latitude with elevation 1,220 meters (abt 4,000 feet)
-				"ambient_temperature": 20, # Ambient temperature (in Celsius) defaults to room temperature, approximately 68 degrees Fahrenheit.
-				"ambient_atmospheric_density": 1.2041, # Ambient atmospheric density (in kilograms/meter) defaults to the normal temp at 20 C and 101.325 kPa.
-				"ambient_atmospheric_pressure": 101.325, # Ambient atmospheric density (in Pascals) defaults to the standard 101.325 kilopascals.
-				"enable_day_night_cycle": True, # The day/night cycle defaults to be enabled.
-				"toggle_always_day": True # Only matters if 'enable_day_night_cycle' is False. If day/night is disabled and this is also disabled, the simulation will resemble space.
-				"day_ticks": 45000, # The number of ticks until nighttime from dawn defaults to 45 kiloticks.
-				"night_ticks": 45000, # The number of ticks until daytime from dusk defaults to 45 kiloticks.
-				"dawn_dusk_transition_ticks": 10000, # The number of ticks for night to transition to day and vice versa defaults to 10 kiloticks.
-				"sun_brightness": 10752 # The measure of the simulation's sun's brightness (in lux) defaults to the Earth's sun's average brightness.
-				"minimum_tick_length": 10 # The minimum time for a tick to take defaults to 10 milliseconds, making each second max out at 100 ticks/second.
-			}
-			
-	class InputChannel:
-		def __init__(channel):
-			pass
-		
-	class OutputChannel:
-		def __init__(channel):
-			pass
-			
-	class AxonometricArtificialGeneralIntelligenceCharacter:
-		def __init__(chara, centralIntelligenceCortex, *layers, **channelsInputOutput): # Channels necessarily se.axonometry.InputChannel or .OutputChannel
-			this.cortex = centralIntelligenceCortex
-			
-	class AxonometricPlayerCharacter:
-		def __init_(chara, *layers, **keybinds):
-			pass
-		
-	class AxonometricObjectsManager:
-		def __init__(this, *objects, **entities):
-			this.objects = objects
-			this.entities = entities
-
-	class AxonometricSimulation:
-		def __init__(simulation, *layers, **physicsOverride):
-			simulation.simulationPhysics = None
-			
-			if len(physicsOverride.keys()) > 0:
-				simulation.simulationPhysics = axonometry.AxonometricPhysicsEngine()
-				simulation.simulationPhysics.law.update(physicsOverride)
-			else:
-				simulation.simulationPhysics = axonometry.AxonometricPhysicsEngine()
-				
-			simulation.simulationObjects = axonometry.AxonometricObjectsManager()
-			
-		def InjectArtificialGeneralIntelligence(simulation):
-			
-class euclidean:
-	
-	class Vector:
-		def __init__(vector, **directionalVelocities):
-			vector.velocity = {}
-			for key in directionalVelocities.keys():
-				vector.velocity[key] = directionalVelocities[key]
-			vector.netVelocity = 0
-			for key in vector.velocity.keys():
-				vector.netVelocity += vector.velocity[key]
-			vector.history = []
-		
-		def add(vector, additionVector):
-			vector.history.append(vector.velocity)
-			for key in additionVector.velocity.keys():
-				if key in vector.velocity.keys():
-					vector.velocity[key] += additionVector.velocity[key]
-					
-		def clearHistory(vector):
-			vector.history = []
-					
-	def EuclideanDefaultMainloop(engine):
-		pass
-	
-	class EuclideanPhysicsEngine:
-		def __init__(physics, parentSpace, mainloop=default):
-			physics.mainloop = mainloop
-	
-	class UnboundEuclideanSpace:
-		def __init__(space, 
-					 physicsEngineCallback = euclidean.EuclideanDefaultMainloop,
-					 dimensions = 3, 
-					 dimensionNames = default, 
-					 gravityVector = None, 
-					 lightspeed = 299792458, 
-					 timeDilationEnabled = False):
+class UnboundEuclideanSpace:
+	def __init__(space,
+				 physicsEngineCallback = None,
+				 dimensions = 3,
+				 dimensionNames = "sentinel_default",
+				 gravityVector = None,
+				 lightspeed = 299792458,
+				 timeDilationEnabled = False):
+		if space.dimensionNames == "sentinel_default":
+			space.dimensionNames = ["x", "y", "z"]
+		else:
 			space.dimensionNames = dimensionNames
-			
-			vsv = {}
-			for name in space.dimensionNames:
-				vsv[name] = 0
-			space.ZeroVector = euclidean.Vector(**vsv)
-			del vsv
-			
-			space.lightspeed = lightspeed
-			
-			space.physicsEngine = euclidean.EuclideanPhysicsEngine(space, physicsEngineCallback)
-			
-	
+
+		vsv = {}
+		for name in space.dimensionNames:
+			vsv[name] = 0
+		space.ZeroVector = Vector(**vsv)
+		del vsv
+
+		space.lightspeed = lightspeed
+
+		if physicsEngineCallback == None:
+			raise SpaceError("No physics engine callback declared (see howto for a default).")
+		else:
+			space.physicsEngine = PhysicsEngine(space, physicsEngineCallback)
+
+	def tick(space, **auxiliaryArgsX):
+		space.physicsEngine.tick(**auxiliaryArgsX)
+
+class Point:
+	def __init__(point, name=None, **coordValues):
+		point.name
+		point.coordinate = coordValues
+
+	def add(point, coord, value):
+		if coord in point.coordinate.keys():
+			point.coordinate[coord] += value
+			return True
+		else:
+			raise PointError(f"Selected coordinate '{coord}' not registered on selected point.")
+
+class Surface:
+	def __init__(surface, *points):
+		if not ( ( len(points) == 3 ) or ( len(points) == 4 ) ):
+			raise SurfaceError(f"Invalid number of points ({str(len(points))}) for surface, to render more see howto.")
