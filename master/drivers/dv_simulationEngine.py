@@ -116,6 +116,20 @@ class Point:
 			raise PointError(f"Selected coordinate '{coord}' not registered on selected point.")
 
 class Surface:
-	def __init__(surface, *points):
+	def __init__(surface, *points, **properties):
 		if not ( ( len(points) == 3 ) or ( len(points) == 4 ) ):
 			raise SurfaceError(f"Invalid number of points ({str(len(points))}) for surface, to render more see howto.")
+		else:
+			surface.points = points
+			surface.properties = properties
+
+	def translate(surface, **coordinateTranslations):
+		# Ensure operation validity
+		for coord in coordinateTranslations.keys():
+			for x in surface.points:
+				if not coord in x.coordinate.keys():
+					raise SurfaceError(f"Translation coordinate '{coord}' not registered in one of the surface's point.")
+
+		for coord in coordinateTranslations.keys():
+			for point in surface.points:
+				point.coordinate[coord] += coordinateTranslations[coord]
