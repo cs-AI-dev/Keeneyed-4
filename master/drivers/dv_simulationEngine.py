@@ -138,9 +138,9 @@ class Surface:
 	def __init__(surface, name=None, *points, **properties):
 		if not ( ( len(points) == 3 ) or ( len(points) == 4 ) ):
 			raise SurfaceError(f"Invalid number of points ({str(len(points))}) for surface, to render more see howto.")
-		else:
-			surface.points = points
-			surface.properties = properties
+			
+		surface.points = points
+		surface.properties = properties
 
 	def translate(surface, **coordinateTranslations):
 		# Ensure operation validity
@@ -176,3 +176,48 @@ class Asset:
 		
 		for object in objects:
 			asset.objects[object.name] = object
+			
+		buildupVectorAxes = {}
+		for x in asset.objects:
+			for y in x.points:
+				for z in y.coordValues.keys():
+					if z not in buildupVectorAxes.keys():
+						buildupVectorAxes[z] = 0
+						
+		asset.vector = Vector(**buildupVectorAxes)
+		
+		del buildupVectorAxes
+
+	# Easy data access functions
+			
+	def allObjects(asset):
+		return asset.objects.keys()
+	
+	def objectsIndex(asset):
+		return [asset.objects.keys(), asset.objects.values()]
+	
+	# Asset operation functions
+	
+	def deleteObject(asset, objectName):
+		if not objectName in asset.objects.keys():
+			raise AssetError(f"Object '{objectName}' not found in asset.")
+		del asset.objects[objectName]
+		
+	def translate(asset, **coordinateTranslations):
+		# Ensure translation validity
+		for object in asset.objects:
+			for coord in coordinateTranslations.keys():
+				for x in object.points():
+					if not coord in x.coordinate.keys():
+						raise AssetError(f"Coordinate axis '{coord}' not registered in asset's surfaces.")
+						
+		for object in asset.objects:
+			for coord in coordinateTranslations.keys():
+				for point in object.points:
+					point.coordinate[coord] += coordinateTranslations[coord]
+					
+	def rotate(asset, axis1, axis2, theta):
+		for object in asset.objects:
+			object.rotate(axis1, axis2, theta)
+			
+	# 
