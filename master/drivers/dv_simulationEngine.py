@@ -104,8 +104,16 @@ class UnboundEuclideanSpace:
 		else:
 			space.physicsEngine = PhysicsEngine(space, physicsEngineCallback)
 
+		space.assets = 
+
 	def tick(space, **auxiliaryArgsX):
-		space.physicsEngine.tick(**auxiliaryArgsX)
+		space.physicsEngine.tick(space, **auxiliaryArgsX)
+
+	def generateAsset(space, assetName, asset):
+		space.assets[assetName] = asset
+
+	def addAsset(space, asset):
+		space.generateAsset(asset.name, asset)
 
 class Point:
 	def __init__(point, name=None, **coordValues):
@@ -118,13 +126,13 @@ class Point:
 			return True
 		else:
 			raise PointError(f"Selected coordinate '{coord}' not registered on selected point.")
-			
+
 	def rotate(point, axis1, axis2, theta):
 		if not axis1 in point.coordinate.keys():
 			raise PointError(f"Invalid rotation axis '{axis1}'.")
 		if not axis2 in point.coordinate.keys():
 			raise PointError(f"Invalid rotation axis '{axis2}'.")
-			
+
 		try:
 			axis1prime = (point.coordinate[axis1] * math.cos(theta)) - (point.coordinate[axis2] * math.sin(theta))
 			axis2prime = (point.coordinate[axis1] * math.sin(theta)) + (point.coordinate[axis2] * math.cos(theta))
@@ -138,7 +146,7 @@ class Surface:
 	def __init__(surface, name=None, *points, **properties):
 		if not ( ( len(points) == 3 ) or ( len(points) == 4 ) ):
 			raise SurfaceError(f"Invalid number of points ({str(len(points))}) for surface, to render more see howto.")
-			
+
 		surface.points = points
 		surface.properties = properties
 
@@ -152,12 +160,12 @@ class Surface:
 		for coord in coordinateTranslations.keys():
 			for point in surface.points:
 				point.coordinate[coord] += coordinateTranslations[coord]
-				
+
 	def rotate(surface, axis1, axis2, theta):
 		for point in surface.points:
 			point.rotate(axis1, axis2, theta)
 			return True
-				
+
 class Asset:
 	def __init__(asset, name, rigidBindObjects=True, immovable=False, *objects, **tags):
 		# Ensure validity
@@ -167,42 +175,40 @@ class Asset:
 			raise AssetError("Asset rigid-bind toggle is not a Boolean.")
 		if type(immovable) != type(True):
 			raise AssetError("Asset immovability toggle is not a Boolean.")
-			
+
 		asset.name = name
 		asset.immovable = immovable
 		asset.tags = tags
-		
-		asset.objects = {}
-		
+
 		for object in objects:
 			asset.objects[object.name] = object
-			
+
 		buildupVectorAxes = {}
 		for x in asset.objects:
 			for y in x.points:
 				for z in y.coordValues.keys():
 					if z not in buildupVectorAxes.keys():
 						buildupVectorAxes[z] = 0
-						
+
 		asset.vector = Vector(**buildupVectorAxes)
-		
+
 		del buildupVectorAxes
 
 	# Easy data access functions
-			
+
 	def allObjects(asset):
 		return asset.objects.keys()
-	
+
 	def objectsIndex(asset):
 		return [asset.objects.keys(), asset.objects.values()]
-	
+
 	# Asset operation functions
-	
+
 	def deleteObject(asset, objectName):
 		if not objectName in asset.objects.keys():
 			raise AssetError(f"Object '{objectName}' not found in asset.")
 		del asset.objects[objectName]
-		
+
 	def translate(asset, **coordinateTranslations):
 		# Ensure translation validity
 		for object in asset.objects:
@@ -210,14 +216,16 @@ class Asset:
 				for x in object.points():
 					if not coord in x.coordinate.keys():
 						raise AssetError(f"Coordinate axis '{coord}' not registered in asset's surfaces.")
-						
+
 		for object in asset.objects:
 			for coord in coordinateTranslations.keys():
 				for point in object.points:
 					point.coordinate[coord] += coordinateTranslations[coord]
-					
+
 	def rotate(asset, axis1, axis2, theta):
 		for object in asset.objects:
 			object.rotate(axis1, axis2, theta)
-			
-	# 
+
+	# Rendering functions
+
+	def render(asset):
