@@ -45,6 +45,9 @@ class AssetError(Exception):
 class MathError(Exception):
 	pass
 
+class RenderingError(Exception):
+	pass
+
 class Vector:
 	def __init__(vector, **directionalVelocities):
 		vector.velocity = {}
@@ -100,20 +103,79 @@ class UnboundEuclideanSpace:
 		space.lightspeed = lightspeed
 
 		if physicsEngineCallback == None:
-			raise SpaceError("No physics engine callback declared (see howto for a default).")
+			raise SpaceError(" [ERROR CODE 01] No physics engine callback declared (see howto for a default).")
 		else:
 			space.physicsEngine = PhysicsEngine(space, physicsEngineCallback)
+			
+		space.defaultAssetNameNumber = 0
 
-		space.assets = 
+		space.allAssets = {}
+		
+		space.renderedAssets = []
+		
+	# Ease of access
+	
+	def allAssets(space):
+		return space.allAssets
+	
+	def assets(space):
+		return space.allAssets.keys()
+	
+	def renderedAssets(space):
+		return space.renderedAssets
+		
+	# Simulation functionality
 
 	def tick(space, **auxiliaryArgsX):
 		space.physicsEngine.tick(space, **auxiliaryArgsX)
 
 	def generateAsset(space, assetName, asset):
-		space.assets[assetName] = asset
+		try:
+			space.allAssets[assetName] = asset
+		except Exception as e:
+			raise RenderingError(f" [ERROR CODE 02] Error occurred during asset loading: {e}")
 
 	def addAsset(space, asset):
-		space.generateAsset(asset.name, asset)
+		if asset.name == None:
+			try:
+				space.generateAsset("unnamed_asset_" + str(space.defaultAssetNameNumber), asset)
+			except Exception as e:
+				raise AssetError(f" [ERROR CODE 03] Error occurred during asset loading: {e}")
+		else:
+			try:
+				space.generateAsset(asset.name, asset)
+			except Exception as e:
+				raise AssetError(f" [ERROR CODE 04] Error occurred during asset loading: {e}")
+				
+	def renderAsset(space, assetName):
+		if not assetName in space.allAssets.keys():
+			raise RenderingError(f" [ERROR CODE 05] Asset with name '{assetName}' not found in simulation.")
+		try:
+			space.renderedAssets.append(assetName)
+		except Exception as e:
+			raise RenderingError(f" [ERROR CODE 06] Error occurred during rendering: {e}")
+		
+	def unrenderAsset(space, assetName):
+		if not assetName in space.renderedAssets:
+			raise RenderingError(f" [ERROR CODE 07] Asset with name '{assetName}' not found in rendered assets.")
+		try:
+			space.renderedAssets = [value for value in space.renderedAssets if value != assetName]
+		except Exception as e:
+			raise RenderingError(f" [ERROR CODE 08] Error occurred during unrendering: {e}")
+			
+	def deleteAsset(space, assetName):
+		if not assetName in space.allAssets.keys():
+			raise AssetError(f" [ERROR CODE 09] Asset with name {assetName} not found in simulation.")
+		if assetName in space.renderedAssets:
+			try:
+				space.unrenderAsset(assetName)
+			except Exception as e:
+				raise RenderingError(f" [ERROR CODE 10] Error occurred while unrendering asset with name '{assetName}' during object deletion: {e}")
+		
+		try:
+			del space.allAssets[assetName]
+		except Exception as e:
+			raise AssetError(f" [ERROR CODE 1] Error occurred during deletion of object '{assetName}': {e}")
 
 class Point:
 	def __init__(point, name=None, **coordValues):
@@ -167,7 +229,7 @@ class Surface:
 			return True
 
 class Asset:
-	def __init__(asset, name, rigidBindObjects=True, immovable=False, *objects, **tags):
+	def __init__(asset, name=None, rigidBindObjects=True, immovable=False, *objects, **tags):
 		# Ensure validity
 		if type(name) != type(str()):
 			raise AssetError("Asset name is not a string.")
@@ -228,4 +290,12 @@ class Asset:
 
 	# Rendering functions
 
-	def render(asset):
+	def render(asset, parentSpace):
+		if asset.name == None:
+			raise AssetError("Rendering operations can't be completed from an unnamed asset.")
+		else:
+			parentSpace.renderAsset(asset.name)
+			
+	def unrender(asset, parentSpace):
+		if asset.name == None:
+			raise AssetError("Rendering operations can't be completed from an unnamed assert.")
