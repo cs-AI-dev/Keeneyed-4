@@ -51,6 +51,9 @@ class RenderingError(Exception):
 class SimulationError(Exception):
 	pass
 
+class UnreachableStateError(Exception):
+	pass
+
 class Vector:
 	def __init__(vector, **directionalVelocities):
 		vector.velocity = {}
@@ -69,6 +72,43 @@ class Vector:
 
 	def clearHistory(vector):
 		vector.history = []
+		
+class physicsObject:
+	def __init__(physics):
+		pass
+	
+	def euclidean(physics, parentSpace):
+		try:
+			# Iterates through all rendered assets.
+			# For this reason, in the standard Euclidean
+			# physics environment, unrendering an asset
+			# makes it totally invisible while frozen
+			# in time.
+			for asset in parentSpace.renderedAssets:
+				# Movement control
+				if asset.immovable == True:
+					continue
+				elif asset.immovable == False:
+					# Vector additions come before movement
+					# checks, for stability purposes
+					translationVector = {}
+					for key in asset.vector.velocity.keys():
+						translationVector[key] = asset.vector.velocity[key] + ( parentSpace.gravityVector.velocity[key] / parentSpace.ticksPerSecond )
+					
+					asset.translate(**translationVector)
+				else:
+					raise UnreachableStateError('''
+					Hello. This is the dev.
+					If you're seeing this error message, then you have
+					somehow managed to get your copy of my module to 
+					reach a state which I thought originally unreachable.
+					
+					Not only have you most likely irreparably damaged
+					both your computer and your Python environment, but
+					you've shown me at a deep level I'm not up to the task.
+					
+					I'm sorry.
+					''')
 
 class PhysicsEngine:
 	def __init__(physics, parentSpace, mainloop="sentinel_default", tickDelay=10):
@@ -92,8 +132,11 @@ class UnboundEuclideanSpace:
 				 dimensionNames = "sentinel_default",
 				 gravityVector = None,
 				 lightspeed = 299792458,
-				 timeDilationEnabled = False):
+				 timeDilationEnabled = False,
+				internalSeconds = 1000):
 		space.name = name
+		
+		space.ticksPerSecond = internalSeconds
 		
 		if space.dimensionNames == "sentinel_default":
 			space.dimensionNames = ["x", "y", "z"]
@@ -105,6 +148,8 @@ class UnboundEuclideanSpace:
 			vsv[name] = 0
 		space.ZeroVector = Vector(**vsv)
 		del vsv
+		
+		space.gravityVector = gravityVector
 
 		space.lightspeed = lightspeed
 
@@ -235,7 +280,7 @@ class Surface:
 			return True
 
 class Asset:
-	def __init__(asset, name=None, rigidBindObjects=True, immovable=False, *objects, **tags):
+	def __init__(asset, name=None, rigidBindObjects=True, immovable=False, elastic=True, *objects, **tags):
 		# Ensure validity
 		if type(name) != type(str()):
 			raise AssetError("[ERROR CODE 18] Asset name is not a string.")
@@ -243,10 +288,15 @@ class Asset:
 			raise AssetError("[ERROR CODE 19] Asset rigid-bind toggle is not a Boolean.")
 		if type(immovable) != type(True):
 			raise AssetError("[ERROR CODE 20] Asset immovability toggle is not a Boolean.")
+		
+		# Remove when inelastic collisions supported
+		if elastic == False:
+			raise AssetError("[ERROR CODE 21-501] Inelasticity not yet supported.")
 
 		asset.name = name
 		asset.immovable = immovable
 		asset.tags = tags
+		asset.elastic = elastic
 
 		for object in objects:
 			asset.objects[object.name] = object
@@ -274,7 +324,7 @@ class Asset:
 
 	def deleteObject(asset, objectName):
 		if not objectName in asset.objects.keys():
-			raise AssetError(f"[ERROR CODE 21] Object '{objectName}' not found in asset.")
+			raise AssetError(f"[ERROR CODE 22] Object '{objectName}' not found in asset.")
 		del asset.objects[objectName]
 
 	def translate(asset, **coordinateTranslations):
@@ -283,7 +333,7 @@ class Asset:
 			for coord in coordinateTranslations.keys():
 				for x in object.points():
 					if not coord in x.coordinate.keys():
-						raise AssetError(f"[ERROR CODE 22] Coordinate axis '{coord}' not registered in asset's surfaces.")
+						raise AssetError(f"[ERROR CODE 23] Coordinate axis '{coord}' not registered in asset's surfaces.")
 
 		for object in asset.objects:
 			for coord in coordinateTranslations.keys():
@@ -298,15 +348,29 @@ class Asset:
 
 	def render(asset, parentSpace):
 		if asset.name == None:
-			raise AssetError("[ERROR CODE 23] Rendering operations can't be completed from an unnamed asset.")
+			raise AssetError("[ERROR CODE 24] Rendering operations can't be completed from an unnamed asset.")
 		else:
 			parentSpace.renderAsset(asset.name)
 
 	def unrender(asset, parentSpace):
 		if asset.name == None:
-			raise AssetError("[ERROR CODE 24] Rendering operations can't be completed from an unnamed assert.")
+			raise AssetError("[ERROR CODE 25] Rendering operations can't be completed from an unnamed assert.")
 		else:
 			parentSpace.unrenderAsset(asset.name)
+			
+class SimulationOperationObject:
+	def __init__(operations, spacesList):
+		pass
+	
+	def operateSimulation(operations, parent):
+		try:
+			for space in parent.spaces:
+				try:
+					space.tick()
+				except Exception as e:
+					raise SimulationError(f"[ERROR CODE 26] Error in simulation operation: {e}")
+		except Exception as e:
+			raise SimulationError(f"[ERROR CODE 27] Error in simulation operation: {e}")
 			
 class Simulation:
 	def __init__(simulation, simulationName, *spaces):
@@ -315,6 +379,7 @@ class Simulation:
 		for space in spaces:
 			if str(type(space)).split("'")[1].split(".")[1] == UnboundEuclideanSpace:
 				simulation.spaces.append(space)
+		simulation.operation = SimulationOperationObject(simulation)
 				
 	# Ease of access functions
 	def allSpaces(simulation):
@@ -327,7 +392,7 @@ class Simulation:
 			else:
 				continue
 				
-		raise SimulationError("[ERROR CODE 25] Space not found in parent simulation.")
+		raise SimulationError("[ERROR CODE 28] Space not found in parent simulation.")
 		
 	# Functionality
 	def addSpace(simulation, *spaces):
@@ -336,6 +401,8 @@ class Simulation:
 				try:
 					simulation.spaces.append(space)
 				except Exception as e:
-					raise SimulationError(f"[ERROR CODE 26] Error in adding space to simulation: {e}")
+					raise SimulationError(f"[ERROR CODE 29] Error in adding space to simulation: {e}")
 		except Exception as e:
+			raise SimulationError(f"[ERROR CODE 30] Error in adding space to simulation: {e}")
 			
+	
