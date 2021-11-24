@@ -159,11 +159,67 @@ class install:
 								"who": [implicit_return_type.object]
 							},
 							"end": {
+								".": None,
+								"!": None
 							}
 						},
 						function = function.keeneyed_4.StartFinishTokenDetection,
 						layer = 2
-					)
+					),
+					
+					nns.neuron.hidden(
+						name = "keeneyed_4_forward_tokenization",
+						evolvingArgumentsDictionary = {
+							"rigidity": 50 # Range between 1 and 100
+						},
+						function = function.keeneyed_4.Keeneyed4Tokenization,
+						layer = 2
+					),
+					
+					nns.neuron.hidden(
+						name = "tone_analysis",
+						evolvingArgumentsDictionary = {
+							"rigidity": 50 # Range between 1 and 100
+						},
+						function = function.keeneyed_4.ToneDetection,
+						layer = 3
+					),
+					
+					nns.neuron.hidden(
+						name = "sentence_construction_analysis",
+						evolvingArgumentsDictionary = {},
+						function = function.keeneyed_4.SentenceConstruction,
+						layer = 3
+					),
+					
+					nns.neuron.hidden(
+						name = "syntactic_analysis",
+						evolvingArgumentsDictionary = {
+							"specificity": 50 # Range between 1 and 100
+						},
+						function = function.keeneyed_4.SyntacticLanguageConstruction,
+						layer = 4
+					),
+					
+					nns.neuron.hidden(
+						name = "implicit_return_type_analysis",
+						evolvingArgumentsDictionary = {
+							"when": [implicit_return_type.time],
+							"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.object],
+							"how": [implicit_return_type.method],
+							"why": [implicit_return_type.reason],
+							"who": [implicit_return_type.object]
+						},
+						function = function.keeneyed_4.ImplicitReturnTypeDetection,
+						layer = 4
+					),
+					
+					nns.neuron.output(
+						name = "output",
+						evolvingArgumentsDictionary = {},
+						function = function.keeneyed_4.PassFunction,
+						layer = 5
+					),
 					])
 				parent.TextOutputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
 					])
