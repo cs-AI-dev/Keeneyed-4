@@ -48,6 +48,9 @@ class MathError(Exception):
 class RenderingError(Exception):
 	pass
 
+class SimulationError(Exception):
+	pass
+
 class Vector:
 	def __init__(vector, **directionalVelocities):
 		vector.velocity = {}
@@ -83,12 +86,15 @@ class PhysicsEngine:
 
 class UnboundEuclideanSpace:
 	def __init__(space,
+		     		 name,
 				 physicsEngineCallback = None,
 				 dimensions = 3,
 				 dimensionNames = "sentinel_default",
 				 gravityVector = None,
 				 lightspeed = 299792458,
 				 timeDilationEnabled = False):
+		space.name = name
+		
 		if space.dimensionNames == "sentinel_default":
 			space.dimensionNames = ["x", "y", "z"]
 		else:
@@ -232,11 +238,11 @@ class Asset:
 	def __init__(asset, name=None, rigidBindObjects=True, immovable=False, *objects, **tags):
 		# Ensure validity
 		if type(name) != type(str()):
-			raise AssetError("Asset name is not a string.")
+			raise AssetError("[ERROR CODE 18] Asset name is not a string.")
 		if type(rigidBindObjects) != type(True):
-			raise AssetError("Asset rigid-bind toggle is not a Boolean.")
+			raise AssetError("[ERROR CODE 19] Asset rigid-bind toggle is not a Boolean.")
 		if type(immovable) != type(True):
-			raise AssetError("Asset immovability toggle is not a Boolean.")
+			raise AssetError("[ERROR CODE 20] Asset immovability toggle is not a Boolean.")
 
 		asset.name = name
 		asset.immovable = immovable
@@ -268,7 +274,7 @@ class Asset:
 
 	def deleteObject(asset, objectName):
 		if not objectName in asset.objects.keys():
-			raise AssetError(f"Object '{objectName}' not found in asset.")
+			raise AssetError(f"[ERROR CODE 21] Object '{objectName}' not found in asset.")
 		del asset.objects[objectName]
 
 	def translate(asset, **coordinateTranslations):
@@ -277,7 +283,7 @@ class Asset:
 			for coord in coordinateTranslations.keys():
 				for x in object.points():
 					if not coord in x.coordinate.keys():
-						raise AssetError(f"Coordinate axis '{coord}' not registered in asset's surfaces.")
+						raise AssetError(f"[ERROR CODE 22] Coordinate axis '{coord}' not registered in asset's surfaces.")
 
 		for object in asset.objects:
 			for coord in coordinateTranslations.keys():
@@ -292,10 +298,44 @@ class Asset:
 
 	def render(asset, parentSpace):
 		if asset.name == None:
-			raise AssetError("Rendering operations can't be completed from an unnamed asset.")
+			raise AssetError("[ERROR CODE 23] Rendering operations can't be completed from an unnamed asset.")
 		else:
 			parentSpace.renderAsset(asset.name)
 
 	def unrender(asset, parentSpace):
 		if asset.name == None:
-			raise AssetError("Rendering operations can't be completed from an unnamed assert.")
+			raise AssetError("[ERROR CODE 24] Rendering operations can't be completed from an unnamed assert.")
+		else:
+			parentSpace.unrenderAsset(asset.name)
+			
+class Simulation:
+	def __init__(simulation, simulationName, *spaces):
+		simulation.name = simulationName
+		simulation.spaces = []
+		for space in spaces:
+			if str(type(space)).split("'")[1].split(".")[1] == UnboundEuclideanSpace:
+				simulation.spaces.append(space)
+				
+	# Ease of access functions
+	def allSpaces(simulation):
+		return simulation.spaces
+	
+	def space(simulation, spaceName):
+		for space in simulation.spaces:
+			if space.name == spaceName:
+				return space
+			else:
+				continue
+				
+		raise SimulationError("[ERROR CODE 25] Space not found in parent simulation.")
+		
+	# Functionality
+	def addSpace(simulation, *spaces):
+		try:
+			for space in spaces:
+				try:
+					simulation.spaces.append(space)
+				except Exception as e:
+					raise SimulationError(f"[ERROR CODE 26] Error in adding space to simulation: {e}")
+		except Exception as e:
+			
