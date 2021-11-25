@@ -97,10 +97,30 @@ For the implementation of updates which will improve the System’s software com
 - Article 8.3.3: You are required to ensure that the transfer of information is secure and that no information is damaged, lost, or otherwise affected in any way which the Developers deem to render the information irrelevant or obsolete; and
 - Article 8.3.4: Ensure that the information is valid and correct, any incorrect information or falsified information violating Section 8.3 of this EULA.
 
-## Article 9 - Warranty Information
-At any time within 60 days (1,440 hours) of Your acquisition of the System’s software components or the “renewal” of Article 9 of this EULA (see below), You may require the Developers to grant You an unused copy of the System’s software components, such that this EULA is not terminated upon Your uninstallation and deletion of the System’s software components and that You can download and reinstall the System’s software components, continuing Your usage of the System without violating any terms of this EULA. Any other term that would be violated in terminating this EULA in this manner shall be null and void from the time at which the problem which causes You to require a new copy of the System’s software components comes to Your attention to the time at which either a) You have installed the new copy of the System’s software components or b) the problem in question has been resolved and no new copy is required.
-This article can be “renewed”, allowing for the terms above to be applied for an additional 30 days with a $2,500 USD payment made to the Developers as a whole, paid in real dollar bills of any denomination or transferred to the Developer’s collective bank account.
+## Section 9 - Warranty Information
 
-## Section 10 - Agreeing to this EULA
+### Section 9.1 - Grant of Warranty
+The Developers grant You a revocable, personal, non-transferable right to, at any time within sixty days (1,440 hours) of a) Your acquisition of the System’s software components or b) the “renewal” of Article 9.1 of this EULA (see Article 9.2 below), require the Developers to grant You an unused copy of the System’s software components, such that:
+- Article 9.1.1: This EULA is not terminated upon Your uninstallation and deletion of the System’s software components; and 
+- Article 9.1.2: That You can download and reinstall the System’s software components, as well as continue use of Your original copy of the System's software components, continuing Your usage of the System without violating any terms of this EULA. 
+Any other term that would be violated in terminating this EULA in this manner shall be null and void from the time at which the problem which causes You to require a new copy of the System’s software components comes to Your attention to the time at which either a) You have installed the new copy of the System’s software components or b) the problem in question has been resolved and no new copy is required. 
 
-To agree to this EULA, please check any box which describes an article or section of this EULA which You would like to be exempt of (effectively but not literally or legally removing it from the EULA), mark the check-box confirming Your understanding of this EULA, then sign and print Your full name below and print the name of any legal entity which You are representing in entering into this EULA (see Article 2.2). Once You have completed these steps, You are legally bound by the terms of this EULA. The document which requires Your signing should appear upon Your attempt to install the System's software components.
+### Article 9.2 - Renewal of Warranty
+The “renewal” of Section 9.1 of this EULA shall occur when, after at least sixty-seven days (1,440 hours) of a) Your acquisition of the System’s software components or b) the “renewal” of Section 9.1 of this EULA as described within this article, an explanation for the requirement of the “renewal” of the terms stated in Article 9.1 of this EULA written by You or the legal entity which You represent in entering into this EULA and ten thousand United States dollars ($10,000 USD) are confirmed by a person or legal entity who has been authorized by the Developers to have been received by the Developers.
+
+### Article 9.3 - Retainment of the Software during Warranty Extension
+If this EULA would be terminated for a reason which would, were the warranty “renewal” completed, be nullified by Articles 9.1.1 or 9.1.2 of this EULA while you have requested the renewal of the warranty, you may continue your use of the System's software components and any associated hardware components as though Articles 9.1.1 and 9.1.2 were still in effect.
+
+## Section 10 - Agreeing to this EULA  
+
+### Article 10.1 - Agreement  
+To agree to this EULA, please check any box which describes an article or section of this EULA which You would like to be exempt of (effectively but not literally or legally removing it from the EULA), mark the check-box confirming Your understanding of this EULA, then begin proper usage of the System's software components. 
+
+### Article 10.2 - Improper Installation  
+If the System's software components are improperly installed, then both You and the Developers are exempt from all terms described in all subsections of Section 8 of this EULA.
+
+### Article 10.3 - Repairing an Improper Installation  
+The Developers grant you a revocable, personal, non-transferable right to require the Developers at any time to grant You an additional and undamaged copy of the System's software components so that You can install that copy of the System's software components on the computer or other device which you attempted to load a damaged copy of the System's software components on ("Your Device") if:
+- Article 10.3.1: Your Device's software components were damaged by the attempt made by You to install the System onto Your Device;
+- Article 10.3.2: Your Device was for an unforeseeable reason unable to properly complete the installation of the System onto Your Device; or
+- Article 10.3.3: Your Device was for an unforeseeable reason already performing another task which required the same prerequisite softwares as the System's software components, which caused Your installed copy of the System's software components to become corrupted or damaged.
