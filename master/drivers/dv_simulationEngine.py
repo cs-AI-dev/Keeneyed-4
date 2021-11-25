@@ -54,6 +54,13 @@ class SimulationError(Exception):
 class UnreachableStateError(Exception):
 	pass
 
+class ParsingError(Exception):
+	pass
+
+death_message = bytearray.fromhex(
+	"0a48656c6c6f2e205468697320697320746865206465762e0a496620796f7527726520736565696e672074686973206572726f72206d6573736167652c207468656e20796f7520686176650a736f6d65686f77206d616e6167656420746f2067657420796f757220636f7079206f66206d79206d6f64756c6520746f200a7265616368206120737461746520776869636820492074686f75676874206f726967696e616c6c7920756e726561636861626c652e0a0a4e6f74206f6e6c79206861766520796f75206d6f7374206c696b656c79206972726570617261626c792064616d616765640a626f746820796f757220636f6d707574657220616e6420796f757220507974686f6e20656e7669726f6e6d656e742c206275740a796f752776652073686f776e206d6520617420612064656570206c6576656c2049276d206e6f7420757020746f20746865207461736b2e0a0a49276d20736f7272792e"
+).decode()
+
 class Vector:
 	def __init__(vector, **directionalVelocities):
 		vector.velocity = {}
@@ -97,18 +104,7 @@ class physicsObject:
 					
 					asset.translate(**translationVector)
 				else:
-					raise UnreachableStateError('''
-					Hello. This is the dev.
-					If you're seeing this error message, then you have
-					somehow managed to get your copy of my module to 
-					reach a state which I thought originally unreachable.
-					
-					Not only have you most likely irreparably damaged
-					both your computer and your Python environment, but
-					you've shown me at a deep level I'm not up to the task.
-					
-					I'm sorry.
-					''')
+					raise UnreachableStateError(death_message)
 
 class PhysicsEngine:
 	def __init__(physics, parentSpace, mainloop="sentinel_default", tickDelay=10):
@@ -405,4 +401,91 @@ class Simulation:
 		except Exception as e:
 			raise SimulationError(f"[ERROR CODE 30] Error in adding space to simulation: {e}")
 			
+def parseSimulationFile(ldir, infotext=False): # ldir must have a / at the end, like "C:/Users/name/simulationName/".
+	# Parses a simulation location at
+	# the `ldir` parameter. The simulation
+	# needs to be properly structured.
+	# See howto for more on that.
+	
+	sfile = lambda fileName : ldir + fileName
+	it = infotext
+	
+	print(f"[parsing @{ldir}] Initializing simulation parse.\n")
+	print(f"[parsing @{ldir}] Checking simulation structure ...", end="")
+	
+	try:
+		try:
+			tf = open(sfile("master.ke4.exec"), "x")
+			tf.close()
+			os.remove(sfile("master.ke4.exec"))
+			raise ParsingError("31-404] Master simulation setup file not found.")
+		except FileExistsError:
+			pass
+		except Exception as e:
+			raise ParsingError(f"32] Error during parsing: {e}")
+		finally:
+			if it: print("\n |-> Located master simulation setup file.")
+
+		try:
+			tf = open(sfile("simulation_data.ke4.dat"), "x")
+			tf.close()
+			os.remove(sfile("simulation_data.ke4.dat"), "x")
+			raise ParsingError("33-404] Master simulation data file not found.")
+		except FileExistsError:
+			pass
+		except Exception as e:
+			raise ParsingError(f"34] Error during parsing: {e}")
+		finally:
+			if it: print(" |-> Located master simulation data file.")
+
+		try:
+			tf = open(sfile("assets/asset_data.ke4.dat"), "x")
+			tf.close()
+			os.remove(sfile("assets/asset_data.ke4.dat"))
+			raise ParsingError("35-404] Master asset data file not found.")
+		except FileExistsError:
+			pass
+		except Exception as e:
+			raise ParsingError(f"36] Error during parsing: {e}")
+		finally:
+			print(" |-> Located master asset data file.")
+
+		try:
+			tf = open(sfile("physics/physics_data.ke4.dat"), "x")
+			tf.close()
+			os.remove(sfile("physics/physics_data.ke4.dat"), "x")
+			raise ParsingError("37-404] Master physics data file not found.")
+		except FileExistsError:
+			pass
+		except Exception as e:
+			raise ParsingError(f"38] Error during parsing: {e}")
+		finally:
+			print(" |-> Located master physics data file.")
+
+		try:
+			tf = open(sfile("subroutines/subroutine_data.ke4.dat"), "x")
+			tf.close()
+			os.remove(sfile("subroutines/subroutine_data.ke4.dat"))
+			raise ParsingError("39-404] Master subroutine data file not found.")
+		except FileExistsError:
+			pass
+		except Exception as e:
+			raise ParsingError(f"40] Error during parsing: {e}")
+		finally:
+			print(" |-> Located master subroutine data file.")
+			
+	except ParsingError as pe:
+		raise ParsingError(f"[ERROR CODE 41-{pe}")
+		
+	except FileExistsError:
+		raise UnreachableStateError(death_message)
+			
+	except Exception as e:
+		raise ParsingError(f"[ERROR CODE 42] Error during parsing: {e}")
+		
+	finally:
+		if it:
+			print(f"[parsing @{ldir}] Simulation structure check complete.")
+		else:
+			print("simulation structure check complete.")
 	
