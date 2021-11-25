@@ -1,8 +1,5 @@
 # Keeneyed-4
 ### An AGI engine heavily rewritten but based on the KE3 system.  
-This is the repository for the Keeneyed-4 artificial general intelligence agent engine. The engine allows for the instantiation of AGI agents into any Python program. I've been working for a while on trying to compile the Python into C and then into machine code; then you could use it in any C-based program.
-***By using this software you agree to its EULA!***  
-Proper installation will ask you to confirm your acceptance.
-As of right now, the AGI agents are recurrent neural network-based. The agents can be instantiated as follows-
-### The `ArtificialGeneralIntelligence()` Class
-This module provides a simple object that allows for the instantiation of intelligent agents.
+This is the *fourth* iteration of my artificial general intelligence software. It's not actually my first attempt at an AI; the original CS AIs all failed, there were 5 of those, and I wrote several spinoff tests that worked decently well, but this is my first fully functional AGI engine.  
+Not only does this engine incorporate the science-fiction concept of AGI, but it also includes a simulation engine with which to allow your AGI to understand the three-dimensional world even if you don't have incredibly complex animatronica to plug it into. Information on how to work both the AGI and simulation engine can be found under "howto", as well as information on how to install this package.  
+> WARNING: BY USING THIS SOFTWARE YOU AGREE TO THE EULA WHICH GOVERNS ITS USE!  
