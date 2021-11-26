@@ -117,6 +117,8 @@ class physicsObject:
 					asset.translate(**translationVector)
 				else:
 					raise UnreachableStateError(death_message)
+		except Exception as e:
+		    raise UnreachableStateError(death_message)
 
 class PhysicsEngine:
 	def __init__(physics, parentSpace, mainloop="sentinel_default", tickDelay=10):
@@ -539,7 +541,7 @@ def parse(ldir, infotext=False): # ldir must have a / at the end, like "C:/Users
 						try:
 							if it:
 								if first == 0:
-									first ++
+									first += 1
 									print(f"\n |-> Loading from category {currentDataSubject} data {cmd[1]} ...")
 								else:
 									print(f" |-> Loading from category {currentDataSubject} data {cmd[1]} ...")
@@ -610,4 +612,3 @@ def parse(ldir, infotext=False): # ldir must have a / at the end, like "C:/Users
 		raise Keeneyed4SyntaxError("[ERROR CODE 51] Parent simulation named 'SIMULATION' not defined in any files, loading failed.")
 	except Exception as e:
 		raise Keeneyed4ParsingError(f"[ERROR CODE 52] Error occurred in simulation load completion: {e}")
-	
