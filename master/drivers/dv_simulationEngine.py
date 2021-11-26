@@ -15,6 +15,12 @@ import math
 infinity = infinite = "sentinel_infinity"
 default = "sentinel_default"
 
+def stringify(t):
+	o = ""
+	for x in t:
+		o = o + x
+	return o
+
 class ItemError(Exception):
 	pass
 
@@ -57,9 +63,15 @@ class UnreachableStateError(Exception):
 class ParsingError(Exception):
 	pass
 
-death_message = bytearray.fromhex(
+class Keeneyed4SyntaxError(Exception):
+	pass
+
+class Keeneyed4ParsingError(Exception):
+	pass
+
+death_message = "[ERROR CODE 0] " + str(bytearray.fromhex(
 	"0a48656c6c6f2e205468697320697320746865206465762e0a496620796f7527726520736565696e672074686973206572726f72206d6573736167652c207468656e20796f7520686176650a736f6d65686f77206d616e6167656420746f2067657420796f757220636f7079206f66206d79206d6f64756c6520746f200a7265616368206120737461746520776869636820492074686f75676874206f726967696e616c6c7920756e726561636861626c652e0a0a4e6f74206f6e6c79206861766520796f75206d6f7374206c696b656c79206972726570617261626c792064616d616765640a626f746820796f757220636f6d707574657220616e6420796f757220507974686f6e20656e7669726f6e6d656e742c206275740a796f752776652073686f776e206d6520617420612064656570206c6576656c2049276d206e6f7420757020746f20746865207461736b2e0a0a49276d20736f7272792e"
-).decode()
+).decode())
 
 class Vector:
 	def __init__(vector, **directionalVelocities):
@@ -401,7 +413,7 @@ class Simulation:
 		except Exception as e:
 			raise SimulationError(f"[ERROR CODE 30] Error in adding space to simulation: {e}")
 			
-def parseSimulationFile(ldir, infotext=False): # ldir must have a / at the end, like "C:/Users/name/simulationName/".
+def parse(ldir, infotext=False): # ldir must have a / at the end, like "C:/Users/name/simulationName/".
 	# Parses a simulation location at
 	# the `ldir` parameter. The simulation
 	# needs to be properly structured.
@@ -474,6 +486,18 @@ def parseSimulationFile(ldir, infotext=False): # ldir must have a / at the end, 
 		finally:
 			print(" |-> Located master subroutine data file.")
 			
+		try:
+			tf = open(sfile("datafiles/auxiliary_data.ke4.dat"), "x")
+			tf.close()
+			os.remove(sfile("datafiles/auxiliary_data.ke4.dat"), "x")
+			raise ParsingError("33-404] Master auxiliary data file not found.")
+		except FileExistsError:
+			pass
+		except Exception as e:
+			raise ParsingError(f"34] Error during parsing: {e}")
+		finally:
+			if it: print(" |-> Located master auxiliary data file.")
+			
 	except ParsingError as pe:
 		raise ParsingError(f"[ERROR CODE 41-{pe}")
 		
@@ -488,4 +512,102 @@ def parseSimulationFile(ldir, infotext=False): # ldir must have a / at the end, 
 			print(f"[parsing @{ldir}] Simulation structure check complete.")
 		else:
 			print("simulation structure check complete.")
+	
+	data = {
+		"unfiled": {}
+	}
+	
+	def loadData(sdir):
+		print(f"[parsing @{ldir}] Parsing {sdir} ...", end="")
+		first = 0
+		
+		with open(sfile(sdir), "r") as data:
+			currentDataSubject = "unfiled"
+			for line in data.split("\n"):
+				cmd = line.split(" ")
+				if cmd[0] == "?":
+					if len(cmd) < 3: # Error state
+						if len(cmd) == 1:
+							raise Keeneyed4SyntaxError(f"[ERROR CODE 43] Invalid syntax: \n  {line}\nNo data declared.")
+						elif len(cmd) == 2:
+							raise Keeneyed4SyntaxError(f"[ERROR CODE 44] Invalid syntax: \n  {line}\nVariable '{cmd[1]}' has no value assigned.")
+						elif len(cmd) == 3:
+							raise UnreachableStateError(death_message)
+						else:
+							raise UnreachableStateError(death_message)
+					else:
+						try:
+							if it:
+								if first == 0:
+									first ++
+									print(f"\n |-> Loading from category {currentDataSubject} data {cmd[1]} ...")
+								else:
+									print(f" |-> Loading from category {currentDataSubject} data {cmd[1]} ...")
+							else:
+								pass
+							data[currentDataSubject][cmd[1]] = stringify(cmd[2:-1])
+							print("complete.")
+						except Exception as e:
+							raise Keeneyed4ParsingError(f"[ERROR CODE 45] Error occurred during parsing: {e}")
+				if list(cmd[0])[0] == "[":
+					if list(cmd[0])[-1] != "]":
+						raise Keeneyed4SyntaxError(f"[ERROR CODE 46] Invalid syntax: \n  {line}\nSubject name left trailing.")
+					else:
+						try:
+							currentDataSubject = list(cmd[0])[1:-2]
+						except:
+							raise Keeneyed4ParsingError(f"[ERROR CODE 47] Error occurred during parsing: {e}")
+							
+		if it:
+			print(f"[parsing @{ldir}] Data parse complete.")	
+		else:
+			print("complete.")
+	
+	loadData(sdir + "simulation_data.ke4.dat")
+	
+	print(f"[parsing @{ldir}] Loading auxiliary data files ...\n")
+	
+	for datafile in os.listdir(sdir("datafiles/")):
+		if datafile.endswith(".ke4.dat"):
+			try:
+				loadData(sdir + datafile)
+			except Exception as e:
+				raise Keeneyed4ParsingError(f"[ERROR CODE 48] Error during auxiliary datafile loading: {e}")
+		else:
+			print(f"[parsing @{ldir}] File {datafile} not marked as loadable, continuing ...")
+			continue
+		print("\n")
+		
+	def loadSector(sectorName):
+		for file in os.listdir(sdir(f"{sectorName}/")):
+			if datafile.endswith(".ke4.exec"):
+				try:
+					print(f"[parsing @{ldir}] Loading function file {datafile} ...", end="")
+					exec(sdir + datafile)
+					print("complete.")
+				except Exception as e:
+					raise Keeneyed4ParsingError(f"[ERROR CODE 49] Error during function file execution: {e}")
+			elif datafile.endswith(".ke4.dat"):
+				try:
+					loadData(sdir + datafile)
+				except Exception as e:
+					raise Keeneyed4ParsingError(f"[ERROR CODE 50] Error during datafile loading: {e}")
+	
+	print(f"\n[parsing @{ldir}] Loading physics engine ...")
+	loadSector("physics")
+	print(f"complete.\n[parsing @{ldir}] Loading assets ...")
+	loadSector("assets")
+	
+	print("[parsing @{ldir}] Data load complete, loading master function file ...", end="")
+	
+	exec(sdir + "master.ke4.exec") # Necessary that a sim named 'SIMULATION' be created.
+	
+	print("complete, simulation loaded.")
+
+	try:
+		return SIMULATION
+	except NameError:
+		raise Keeneyed4SyntaxError("[ERROR CODE 51] Parent simulation named 'SIMULATION' not defined in any files, loading failed.")
+	except Exception as e:
+		raise Keeneyed4ParsingError(f"[ERROR CODE 52] Error occurred in simulation load completion: {e}")
 	
