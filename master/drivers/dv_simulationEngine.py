@@ -318,7 +318,9 @@ class Asset:
 					if z not in buildupVectorAxes.keys():
 						buildupVectorAxes[z] = 0
 
-		asset.vector = Vector(**buildupVectorAxes)
+		asset.rotationalVector
+
+		asset.linearVector = Vector(**buildupVectorAxes)
 
 		del buildupVectorAxes
 
