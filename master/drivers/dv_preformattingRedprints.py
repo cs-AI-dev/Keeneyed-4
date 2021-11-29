@@ -27,7 +27,7 @@ class implicit_return_type:
 	method = "sentinel_irt_method"
 	time = "sentinel_irt_time"
 	reason = "sentinel_irt_reason"
-	bool = "sentinel_irt_bool"
+	boolean = "sentinel_irt_bool"
 	opinion = "sentinel_irt_opinion"
 	object = "sentinel_irt_object"
 
@@ -106,126 +106,236 @@ class install:
 				raise InvalidVersionNumber(f"'{version}' is not a valid version for the Keeneyed AGI system.")
 
 			if version == 4:
-				print("[ke4_install] beginning preformatted installation of the Keeneyed-4 AGI system ...", end="")
+				print("[ke4_install] beginning preformatted installation of the Keeneyed-4 AGI system ...")
 				print(" > beginning neural network instantiation ...")
-				parent.TextInputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList  = [
-					# I
-					nns.neuron.input(
-						name = "text",
-						evolvingArgumentsDictionary = {}, # Nothing, since this is an input neuron
-						function = function.keeneyed_4.PassFunction,
-						layer = 0,
-					),
+				
+				print("        text input neural network ...", end="")
+				
+				try: 
+					
+					parent.TextInputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList  = [
+						# I
+						nns.neuron.input(
+							name = "text",
+							evolvingArgumentsDictionary = {}, # Nothing, since this is an input neuron
+							function = function.keeneyed_4.PassFunction,
+							layer = 0,
+						),
 
-					# H1
-					nns.neuron.hidden(
-						name = "subject_predicate_detection",
-						evolvingArgumentsDictionary = { # ISP measures how far back to check for objects
-							"intuitive_span_length": 0
-						},
-						function = function.keeneyed_4.SubjectPredicateDetection,
-						layer = 1,
-					),
+						# H1
+						nns.neuron.hidden(
+							name = "subject_predicate_detection",
+							evolvingArgumentsDictionary = { # ISP measures how far back to check for objects
+								"intuitive_span_length": 0
+							},
+							function = function.keeneyed_4.SubjectPredicateDetection,
+							layer = 1,
+						),
 
-					nns.neuron.hidden(
-						name = "nltk_tokenization",
-						evolvingArgumentsDictionary = {}, # Nothing, since NLTK has linear tokenization
-						function = function.keeneyed_4.TokenizeByNLTK,
-						layer = 1
-					),
+						nns.neuron.hidden(
+							name = "nltk_tokenization",
+							evolvingArgumentsDictionary = {}, # Nothing, since NLTK has linear tokenization
+							function = function.keeneyed_4.TokenizeByNLTK,
+							layer = 1
+						),
 
-					# H2
-					nns.neuron.hidden(
-						name = "emphasis_level_detection",
-						evolvingArgumentsDictionary = { # Threshold values for emphasis lv detection
-							"emphasis_threshold_l2": 20,
-							"emphasis_threshold_l1": 40,
-							"emphasis_threshold_l0": 60,
-							"emphasis_threshold_h1": 80,
-							"emphasis_threshold_h2": 100
-						},
-						function = function.keeneyed_4.EmphasisLevelDetection,
-						layer = 2
-					),
+						# H2
+						nns.neuron.hidden(
+							name = "emphasis_level_detection",
+							evolvingArgumentsDictionary = { # Threshold values for emphasis lv detection
+								"emphasis_threshold_l2": 20,
+								"emphasis_threshold_l1": 40,
+								"emphasis_threshold_l0": 60,
+								"emphasis_threshold_h1": 80,
+								"emphasis_threshold_h2": 100
+							},
+							function = function.keeneyed_4.EmphasisLevelDetection,
+							layer = 2
+						),
 
-					nns.neuron.hidden(
-						name = "start_finish_token_detection",
-						evolvingArgumentsDictionary = {
-							"start": {
+						nns.neuron.hidden(
+							name = "start_finish_token_detection",
+							evolvingArgumentsDictionary = {
+								"start": {
+									"when": [implicit_return_type.time],
+									"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.object],
+									"how": [implicit_return_type.method],
+									"why": [implicit_return_type.reason],
+									"who": [implicit_return_type.object]
+								},
+								"end": {
+									".": None,
+									"!": None
+								}
+							},
+							function = function.keeneyed_4.StartFinishTokenDetection,
+							layer = 2
+						),
+
+						nns.neuron.hidden(
+							name = "keeneyed_4_forward_tokenization",
+							evolvingArgumentsDictionary = {
+								"rigidity": 50 # Range between 1 and 100
+							},
+							function = function.keeneyed_4.Keeneyed4Tokenization,
+							layer = 2
+						),
+
+						nns.neuron.hidden(
+							name = "tone_analysis",
+							evolvingArgumentsDictionary = {
+								"rigidity": 50 # Range between 1 and 100
+							},
+							function = function.keeneyed_4.ToneDetection,
+							layer = 3
+						),
+
+						nns.neuron.hidden(
+							name = "sentence_construction_analysis",
+							evolvingArgumentsDictionary = {},
+							function = function.keeneyed_4.SentenceConstruction,
+							layer = 3
+						),
+
+						nns.neuron.hidden(
+							name = "syntactic_analysis",
+							evolvingArgumentsDictionary = {
+								"specificity": 50 # Range between 1 and 100
+							},
+							function = function.keeneyed_4.SyntacticLanguageConstruction,
+							layer = 4
+						),
+
+						nns.neuron.hidden(
+							name = "implicit_return_type_analysis",
+							evolvingArgumentsDictionary = {
 								"when": [implicit_return_type.time],
 								"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.object],
 								"how": [implicit_return_type.method],
 								"why": [implicit_return_type.reason],
 								"who": [implicit_return_type.object]
 							},
-							"end": {
-								".": None,
-								"!": None
-							}
-						},
-						function = function.keeneyed_4.StartFinishTokenDetection,
-						layer = 2
-					),
-					
-					nns.neuron.hidden(
-						name = "keeneyed_4_forward_tokenization",
-						evolvingArgumentsDictionary = {
-							"rigidity": 50 # Range between 1 and 100
-						},
-						function = function.keeneyed_4.Keeneyed4Tokenization,
-						layer = 2
-					),
-					
-					nns.neuron.hidden(
-						name = "tone_analysis",
-						evolvingArgumentsDictionary = {
-							"rigidity": 50 # Range between 1 and 100
-						},
-						function = function.keeneyed_4.ToneDetection,
-						layer = 3
-					),
-					
-					nns.neuron.hidden(
-						name = "sentence_construction_analysis",
-						evolvingArgumentsDictionary = {},
-						function = function.keeneyed_4.SentenceConstruction,
-						layer = 3
-					),
-					
-					nns.neuron.hidden(
-						name = "syntactic_analysis",
-						evolvingArgumentsDictionary = {
-							"specificity": 50 # Range between 1 and 100
-						},
-						function = function.keeneyed_4.SyntacticLanguageConstruction,
-						layer = 4
-					),
-					
-					nns.neuron.hidden(
-						name = "implicit_return_type_analysis",
-						evolvingArgumentsDictionary = {
-							"when": [implicit_return_type.time],
-							"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.object],
-							"how": [implicit_return_type.method],
-							"why": [implicit_return_type.reason],
-							"who": [implicit_return_type.object]
-						},
-						function = function.keeneyed_4.ImplicitReturnTypeDetection,
-						layer = 4
-					),
-					
-					nns.neuron.output(
-						name = "output",
-						evolvingArgumentsDictionary = {},
-						function = function.keeneyed_4.PassFunction,
-						layer = 5
-					),
-					])
-				parent.TextOutputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
-					])
-				parent.MemoryGenerationNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
-					])
-				parent.MemoryRetrievalNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
-					])
+							function = function.keeneyed_4.ImplicitReturnTypeDetection,
+							layer = 4
+						),
+
+						nns.neuron.output(
+							name = "output",
+							evolvingArgumentsDictionary = {},
+							function = function.keeneyed_4.PassFunction,
+							layer = 5
+						),
+						])
+				
+				except Exception as e:
+					raise FormattingError(f"[ERROR CODE 53] Error occurred during Keeneyed-4 AGI setup: {e}")
+				
+				print("complete.\n        omni-output neural network ...", end="")
+				
+				try:
+				
+					parent.TextOutputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
+						nns.neuron.input(
+							name = "syntactic_nlp",
+							evolvingArgumentsDictionary = {},
+							function = function.keeneyed_4.PassFunction,
+							layer = 0
+						),
+
+						nns.neuron.hidden(
+							name = "reverse_keeneyed_4_tokenization",
+							evolvingArgumentsDictionary = {},
+							function = function.keeneyed_4.ReverseKeeneyed4Tokenization,
+							layer = 1
+						),
+
+						nns.neuron.hidden(
+							name = "reverse_nltk_tokenization",
+							evolvingArgumentsDictionary = {},
+							function = function.keeneyed_4.ReverseNLTKTokenization,
+							layer = 1
+						),
+
+						nns.neuron.hidden(
+							name = "reverse_implicit_return_type",
+							evolvingArgumentsDictionary = {
+								"when": [implicit_return_type.time],
+								"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.object],
+								"how": [implicit_return_type.method],
+								"why": [implicit_return_type.reason],
+								"who": [implicit_return_type.object]
+							},
+							function = function.keeneyed_4.ReverseImplicitReturnType,
+							layer = 1
+						),
+
+						nns.neuron.hidden(
+							name = "punctuation_synthesis",
+							evolvingArgumentsDictionary = {},
+							function = function.keeneyed_4.PunctuationSynthesis,
+							layer = 2
+						),
+
+						nns.neuron.hidden(
+							name = "start_end_synthesis",
+							evolvingArgumentsDictionary = {
+								"when": [implicit_return_type.time],
+								"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.object],
+								"how": [implicit_return_type.method],
+								"why": [implicit_return_type.reason],
+								"who": [implicit_return_type.object]
+							},
+							function = function.keeneyed_4.StartEndTokenSynthesis,
+							layer = 2
+						),
+
+						nns.neuron.hidden(
+							name = "list_sentence_synthesis",
+							evolvingArgumentsDictionary = {
+								"grammattical_harshness": 50,
+							},
+							function = function.keeneyed_4.WordListingSynthesis,
+							layer = 3
+						),
+
+						nns.neuron.hidden(
+							name = "associated_outputs_synthesis",
+							evolvingArgumentsDictionary = {
+								"enable_hardware_output": False,
+								"enable_audible_outputs": False
+							},
+							function = function.keeneyed_4.AssociatedOutputsSynthesis,
+							layer = 3
+						),
+
+						nns.neuron.hidden(
+							name = "textual_output_synthesis",
+							evolvingArgumentsDictionary = {
+								"enable_asterisk_notation": True,
+								"enable_visual_notation": False
+							},
+							function = function.keeneyed_4.TextualOutputsSynthesis,
+							layer = 4
+						),
+
+						nns.neuron.hidden(
+							name = "non_textual_outputs_synthesis",
+							evolvingArgumentsDictionary = {},
+							function = function.keeneyed_4.NonTextualOutputsSynthesis,
+							layer = 4
+						),
+
+						nns.neuron.output(
+							name = "output",
+							evolvingArgumentsDictionary = {},
+							function = function.keeneyed_4.PassFunction,
+							layer = 5
+						),
+						])
+				
+				except Exception as e:
+					raise FormattingError(f"[ERROR CODE 54] Error occurred during Keeneyed-4 AGI setup: {e}")
+				
+				print("complete.")
 	class preformattedAGIModules:
 		pass
