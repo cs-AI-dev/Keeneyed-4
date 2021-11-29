@@ -1,4 +1,4 @@
-# End-User License Agreement (EULA) For the Keeneyed-4 Artificial General Intelligence System Software v2.3
+# End-User License Agreement (EULA) For the Keeneyed-4 Artificial General Intelligence System Software v2.4
 This End-User License Agreement ("EULA") is a legal agreement between You and the Developers of the Keeneyed-4 artificial intelligence system.
 This EULA governs Your acquisition and use of Our Keeneyed-4 artificial intelligence system directly from the Developers or indirectly through a reseller or distributor authorized by the Developers.
 Please read this EULA carefully before completing the installation process and using the Keeneyed-4 artificial intelligence system software. It provides a license to use the Keeneyed-4 artificial intelligence system’s software and contains warranty information and liability disclaimers.
@@ -34,8 +34,8 @@ You are permitted to load the System's software (for example on a PC, laptop, mo
 Under only the circumstance that the Developers dictate You must for any reason and under no other circumstances are You permitted to:
 - Article 3.3.1: Edit, alter, modify, adapt, translate or otherwise change the whole or any part of the Software nor permit the whole or any part of the System’s software components to be combined with or become incorporated in any other software, nor decompile, disassemble or reverse engineer the System’s software or attempt to do any such things so long as you have not received written permission from the Developers stating that you must;
 - Article 3.3.2: Reproduce, copy, distribute, resell (as a Reseller) or otherwise use the System’s software for any purpose which is not authorized by means of written permission by the Developers;
-- Article 3.3.3: Allow any third party to use the System’s software on behalf of or for the benefit of any third party that is not authorized to receive any such benefit by the Developers;
-- Article 3.3.4: Use the System in any way which breaches any applicable local, national or international law; and
+- Article 3.3.3: Allow any third party to use the System’s software on behalf of or for the benefit of any third party that is not authorized to receive any such benefit by the Developers*;
+- Article 3.3.4: Use the System in any way which breaches any applicable local, national or international law; or
 - Article 3.3.5: Use the System for any purpose that the Developers consider is a breach of this EULA for any reason.
 
 ### Section 3.4 - Responsibilities
@@ -44,7 +44,7 @@ Except in violation of Section 3.3 of this EULA, You are permitted by the Develo
 - Article 3.4.2: Ensure that at all times Your copy of the System's software component has received and properly installed all updates, fixes, patches, and modifications officially created by the Developers;
 - Article 3.4.3: Ensure that no redistribution, usage, editing, nor any other interaction with the System's software or hardware components violates any term of this EULA;
 - Article 3.4.4: Ensure the safety and stability of any entity created by or being simulated by the System's software, as well as any other artifacts;
-- Article 3.4.5: Ensure that any entity created by or being simulated by the System's software does not violate any of the terms described in Section 3.3 of this EULA, or any terms of this EULA other than those described in Section 3.4 of this EULA; and
+- Article 3.4.5: Ensure that any entity created by or being simulated by the System's software does not violate any of the terms described in Section 3.3 of this EULA, or any terms of this EULA other than those described in Section 3.4 of this EULA*; and
 - Article 3.4.6: Ensure that the System’s hardware and software components comply with all applicable local, national, and international laws, state and federal policies, and any other applicable legal restrictions including other end-user license agreements separate from this document.
 
 ### Section 3.5 - Conditions of Permissions Grant
@@ -123,4 +123,6 @@ If the System's software components are improperly installed, then both You and 
 The Developers grant you a revocable, personal, non-transferable right to require the Developers at any time to grant You an additional and undamaged copy of the System's software components so that You can install that copy of the System's software components on the computer or other device which you attempted to load a damaged copy of the System's software components on ("Your Device") if:
 - Article 10.3.1: Your Device's software components were damaged by the attempt made by You to install the System onto Your Device;
 - Article 10.3.2: Your Device was for an unforeseeable reason unable to properly complete the installation of the System onto Your Device; or
-- Article 10.3.3: Your Device was for an unforeseeable reason already performing another task which required the same prerequisite softwares as the System's software components, which caused Your installed copy of the System's software components to become corrupted or damaged.
+- Article 10.3.3: Your Device was for an unforeseeable reason already performing another task which required the same prerequisite softwares as the System's software components, which caused Your installed copy of the System's software components to become corrupted or damaged.  
+
+* except in a way which is sanctioned by the Developers or any person or legal entities authorized by the Developers.
