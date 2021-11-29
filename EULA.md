@@ -71,7 +71,7 @@ This EULA, and any dispute arising out of or in connection with this EULA, shall
 
 ### Article 7.1 - System Product Liability
 
-The System’s software components can create or simulate the creation of sentient or non-sentient entities. No damage caused directly or indirectly by any of these such entities or any other output created by the System’s software components shall grant You the right to hold responsible for any such damage any one or more of the Developers, legally, personally, or otherwise.
+No damage to person, property, legal entity, or otherwise caused directly or indirectly by any product of the System's artificial intelligence software or any other output created by the System’s software components shall grant You the right to hold responsible for any such damage any one or more of the Developers, legally, personally, or otherwise.
 
 ### Article 7.2 - System Software Liability
 No damage caused directly or indirectly by the System’s software components shall grant You the right to hold responsible for such damages any one or more of the Developers, legally, personally, or otherwise.
