@@ -125,7 +125,7 @@ class FeedforwardNeuralNetwork:
 					if neuron.type == INPUT:
 						odict[neuron.name] = neuron.GetInitialData()
 					else:
-						odict[neuron.name] = neuron.GetInitialData(inputValuesDictionary = ldict)
+						odict[neuron.name] = neuron.GetInitialData(standardArguments = ldict)
 				else:
 					return neuron.GetFinalData()
 
