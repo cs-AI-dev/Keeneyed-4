@@ -125,5 +125,6 @@ The Developers grant you a revocable, personal, non-transferable right to requir
 - Article 10.3.1: Your Device's software components were damaged by the attempt made by You to install the System onto Your Device;
 - Article 10.3.2: Your Device was for an unforeseeable reason unable to properly complete the installation of the System onto Your Device; or
 - Article 10.3.3: Your Device was for an unforeseeable reason already performing another task which required the same prerequisite softwares as the System's software components, which caused Your installed copy of the System's software components to become corrupted or damaged.  
+and for no other reasons*.
 
 * except in a way which is sanctioned by the Developers or any person or legal entities authorized by the Developers.
