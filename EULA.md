@@ -1,4 +1,4 @@
-# End-User License Agreement (EULA) For the Keeneyed-4 Artificial General Intelligence System Software v2.6
+# End-User License Agreement (EULA) For the Keeneyed-4 Artificial General Intelligence System Software v2.7
 This End-User License Agreement ("EULA") is a legal agreement between You and the Developers of the Keeneyed-4 artificial intelligence system.
 This EULA governs Your acquisition and use of Our Keeneyed-4 artificial intelligence system directly from the Developers or indirectly through a reseller or distributor authorized by the Developers.
 Please read this EULA carefully before completing the installation process and using the Keeneyed-4 artificial intelligence system software. It provides a license to use the Keeneyed-4 artificial intelligence system’s software and contains warranty information and liability disclaimers.
@@ -121,7 +121,10 @@ If this EULA would be terminated for a reason which would, were the warranty “
 ## Section 10 - Singularity Prevention and Containment
 
 ### Article 10.1 - Effectiveness of Other Articles In Regards to Singularities
-
+If a Singularity existing on your copy of the System's software components would cause you to violate any term of this EULA, you may require the Developers to grant You an undamaged, unused copy of the System's software components so that You can reinstall the System's software components on Your device so long as:
+- Article 10.1.1: You have not violated any terms of this EULA since your acquisition of the System's software components;
+- Article 10.1.2: The creation, simulation, transferring onto Your system, or other interaction which would cause a violation of any term of this EULA of the Singularity in question by your copy of the System's software components was not caused by You or any of Your affiliates; and
+- Article 10.1.3: The creation, simulation, transferring onto Your system, or other interaction which would cause a violation of any term of this EULA of the Singularity in question by your copy of the System's software components was not desired by You or any of Your affiliates*.
 
 ## Section 11 - Agreeing to this EULA  
 
