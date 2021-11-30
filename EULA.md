@@ -8,8 +8,9 @@ The following terms in this end-user license agreement, when the first letter of
 - Article 1.1: "We", "Our", "Us", and "the Developers" shall all refer to the registered contributors to the development of the Keeneyed-4 artificial intelligence system;
 - Article 1.2: "You" and "Your" shall both refer to the user, distributor, reseller, or any other person entering into this EULA who is in possession of the Keeneyed-4 artificial intelligence system;
 - Article 1.3: "the System" shall refer to the Keeneyed-4 artificial intelligence system's software in its entirety as well as any associated hardware or other software;
-- Article 1.4: "EULA agreement", "EULA", "License", and "Agreement" shall all refer to this end-user license agreement; and
-- Article 1.5: "Reseller" and "Distributor" shall both refer to sources of indirect reception of the Keeneyed-4 artificial intelligence system's hardware or software components that have received written authorization from the Developers to resell and/or distribute the hardware or software components.
+- Article 1.4: "EULA agreement", "EULA", "License", and "Agreement" shall all refer to this end-user license agreement;
+- Article 1.5: "Reseller" and "Distributor" shall both refer to sources of indirect reception of the Keeneyed-4 artificial intelligence system's hardware or software components that have received written authorization from the Developers to resell and/or distribute the hardware or software components; and
+- Article 1.6: "Singularity State", "Singularity", and "Uncontrollable Digital Entity" shall all refer to any state of an entity created by or being simulated by this Keeneyed-4 artificial intelligence engine's software components where the entity gains the ability to (but does not necessarily) modify its own program in ways which would a) trigger any and/or all Theseus limiter programs installed on the entity and/or b) allow the entity to perform or prevent the performance of a task which it was not originally capable of or designed to perform or prevent the performance of.
 
 ## Section 2 - Applications of This EULA
 
@@ -35,8 +36,10 @@ Under only the circumstance that the Developers dictate You must for any reason 
 - Article 3.3.1: Edit, alter, modify, adapt, translate or otherwise change the whole or any part of the Software nor permit the whole or any part of the System’s software components to be combined with or become incorporated in any other software, nor decompile, disassemble or reverse engineer the System’s software or attempt to do any such things so long as You have not received written permission from the Developers stating that you must;
 - Article 3.3.2: Reproduce, copy, distribute, resell (as a Reseller) or otherwise use the System’s software for any purpose which is not authorized by means of written permission by the Developers;
 - Article 3.3.3: Allow any third party to use the System’s software on behalf of or for the benefit of any third party that is not authorized to receive any such benefit by the Developers*;
-- Article 3.3.4: Use the System in any way which breaches any applicable local, national or international law; or
-- Article 3.3.5: Use the System for any purpose that the Developers consider is a breach of this EULA for any reason.
+- Article 3.3.4: Use the System in any way which breaches any applicable local, national or international law;
+- Article 3.3.5: Use the System for any purpose that the Developers consider is a breach of this EULA for any reason;
+- Article 3.3.6: Allow the System to simulate, create, or otherwise interact with an entity which at any point becomes an Uncontrollable Digital Entity; or
+- Article 3.3.7: Allow the existence of any Singularities on Your copy of the System's software components.
 
 ### Section 3.4 - Responsibilities
 Except in violation of Section 3.3 of this EULA, You are permitted by the Developers to and required by the Developers to:
@@ -44,8 +47,10 @@ Except in violation of Section 3.3 of this EULA, You are permitted by the Develo
 - Article 3.4.2: Ensure that at all times Your copy of the System's software component has received and properly installed all updates, fixes, patches, and modifications officially created by the Developers;
 - Article 3.4.3: Ensure that no redistribution, usage, editing, nor any other interaction with the System's software or hardware components violates any term of this EULA;
 - Article 3.4.4: Ensure the safety and stability of any entity created by or being simulated by the System's software, as well as any other artifacts;
-- Article 3.4.5: Ensure that any entity created by or being simulated by the System's software does not violate any of the terms described in Section 3.3 of this EULA, or any terms of this EULA other than those described in Section 3.4 of this EULA*; and
-- Article 3.4.6: Ensure that the System’s hardware and software components comply with all applicable local, national, and international laws, state and federal policies, and any other applicable legal restrictions including other end-user license agreements separate from this document.
+- Article 3.4.5: Ensure that any entity created by or being simulated by the System's software does not violate any of the terms described in Section 3.3 of this EULA, or any terms of this EULA other than those described in Section 3.4 of this EULA*;
+- Article 3.4.6: Ensure that the System’s hardware and software components comply with all applicable local, national, and international laws, state and federal policies, and any other applicable legal restrictions including other end-user license agreements separate from this document;
+- Article 3.4.7: Ensure that no Singularities exist on Your copy of the System's software components, are being simulated by these components, are being created by these components, are being transferred onto or off of these components, or are otherwise able to interact with these components; and
+- Article 3.4.8: Alert the Developers of the existence of and terminate and delete any Singularities whose existence would cause you to violate Article 3.4.7 of this EULA.
 
 ### Section 3.5 - Conditions of Permissions Grant
 You cannot accept, enter into, and be legally bound by the terms of this EULA if You:
@@ -113,19 +118,24 @@ The “renewal” of Section 9.1 of this EULA shall occur when, after at least s
 ### Article 9.3 - Retainment of the Software during Warranty Extension
 If this EULA would be terminated for a reason which would, were the warranty “renewal” completed, be nullified by Articles 9.1.1 or 9.1.2 of this EULA while you have requested the renewal of the warranty, you may continue your use of the System's software components and any associated hardware components as though Articles 9.1.1 and 9.1.2 were still in effect.
 
-## Section 10 - Agreeing to this EULA  
+## Section 10 - Singularity Prevention and Containment
 
-### Article 10.1 - Agreement  
+### Article 10.1 - Effectiveness of Other Articles In Regards to Singularities
+
+
+## Section 11 - Agreeing to this EULA  
+
+### Article 11.1 - Agreement  
 To agree to this EULA, please check any box which describes an article or section of this EULA which You would like to be exempt of (effectively but not literally or legally removing it from the EULA), mark the check-box confirming Your understanding of this EULA, then begin proper usage of the System's software components.
 
-### Article 10.2 - Improper Installation  
+### Article 11.2 - Improper Installation  
 If the System's software components are improperly installed, then both You and the Developers are exempt from all terms described in all subsections of Section 8 of this EULA.
 
-### Article 10.3 - Repairing an Improper Installation  
+### Article 11.3 - Repairing an Improper Installation  
 The Developers grant you a revocable, personal, non-transferable right to require the Developers at any time to grant You an additional and undamaged copy of the System's software components so that You can install that copy of the System's software components on the computer or other device which you attempted to load a damaged copy of the System's software components on ("Your Device") if:
 - Article 10.3.1: Your Device's software components were damaged by the attempt made by You to install the System onto Your Device;
 - Article 10.3.2: Your Device was for an unforeseeable reason unable to properly complete the installation of the System onto Your Device; or
 - Article 10.3.3: Your Device was for an unforeseeable reason already performing another task which required the same prerequisite softwares as the System's software components, which caused Your installed copy of the System's software components to become corrupted or damaged.  
 and for no other reasons*.
 
-* except in a way which is sanctioned by the Developers or any person or legal entities authorized by the Developers.
+*except in a way which is sanctioned by the Developers or any person or legal entities authorized by the Developers.
