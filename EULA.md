@@ -120,11 +120,14 @@ If this EULA would be terminated for a reason which would, were the warranty “
 
 ## Section 10 - Singularity Prevention and Containment
 
-### Article 10.1 - Effectiveness of Other Articles In Regards to Singularities
+### Section 10.1 - Reparations for Singularity Occurences
 If a Singularity existing on your copy of the System's software components would cause you to violate any term of this EULA, you may require the Developers to grant You an undamaged, unused copy of the System's software components so that You can reinstall the System's software components on Your device so long as:
 - Article 10.1.1: You have not violated any terms of this EULA since your acquisition of the System's software components;
-- Article 10.1.2: The creation, simulation, transferring onto Your system, or other interaction which would cause a violation of any term of this EULA of the Singularity in question by your copy of the System's software components was not caused by You or any of Your affiliates; and
-- Article 10.1.3: The creation, simulation, transferring onto Your system, or other interaction which would cause a violation of any term of this EULA of the Singularity in question by your copy of the System's software components was not desired by You or any of Your affiliates*.
+- Article 10.1.2: The creation, simulation, transferring onto Your system, or other interaction which would cause a violation of any term of this EULA of the Singularity in question by Your copy of the System's software components was not caused by You or any of Your affiliates; and
+- Article 10.1.3: The creation, simulation, transferring onto Your system, or other interaction which would cause a violation of any term of this EULA of the Singularity in question by Your copy of the System's software components was not desired by You or any of Your affiliates*.  
+
+### Article 10.2 - Liability Disclaimers Regarding Singularity Occurences
+If a Singularity is created, simulated, or otherwise interacted with by Your copy of the System's software components, and the entity which has achieved a Singularity State and interacted with by Your copy of the System's software components causes harm or damage to person, property, legal entity, or harm or damage to any other object or entity which would allow You or any third party to take legal action against the Developers or You, You are wholly responsible for these damages and neither You nor any third party may take any legal action against the Developers
 
 ## Section 11 - Agreeing to this EULA  
 
