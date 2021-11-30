@@ -9,9 +9,53 @@
 
 import sys
 import os
+import time
 
 true = True
 false = False
+
+class AGITerminationError(Exception):
+	pass
+
+class subroutineObject:
+	def __init__(this, pagi):
+		this.pagi = pagi
+	
+	def terminate(this):
+		print("[SR_01:TERMINATE] AGI TERMINATION IMMINENT ...", end="")
+		try:
+			del this.pagi
+			print("AGI TERMINATION COMPLETE.")
+		except Exception as e:
+			print(f"[SR_01:TERMINATE] AGI TERMINATION ERROR: {e}. ", end="")
+			time.sleep(0.5)
+			print("FORCE EXITING ...", end="")
+			try:
+				exit()
+			except:
+				print("FORCE EXIT FAILED, EXECUTING EMERGENCY TERMINATION.")
+				this.emergency_singularity_termination()
+			
+	def emergency_singularity_termination(this):
+		print("[SR_02:SINGULARITY_TERMINATION] AGI EMERGENCY TERMINATION INITIATED. SYSTEM SHUTDOWN IMMINENT.")
+		print("[SR_02:SINGULARITY_TERMINATION] SYSTEM SHUTDOWN IN 3")
+		time.sleep(1)
+		print("                                                   2")
+		time.sleep(1)
+		print("                                                   1")
+		time.sleep(1)
+		
+		for x in range(10):
+			try:
+				os.system("shutdown /s /t 1")
+			except:
+				continue
+		
+		while True:
+			print("\033[F[SR_02:SINGULARITY_TERMINATION] CRITICAL ERROR, AGI TERMINATION FAILED. DISCONNECT POWER IMMEDIATELY.")
+			time.sleep(0.75)
+			print("                                                                                                     ")
+			time.sleep(0.5)
 
 class routinesObject:
 	def __init__(this):
@@ -64,13 +108,8 @@ class routinesObject:
 							pfr.install.preformattedAGIs.keeneyed(this, preformatKey)
 						elif preformattingRedprint == "sharpclawed":
 							pfr.install.preformattedAGIs.sharpclawed(this, preformatKey)
-						elif preformattingRedprint == "allknowing":
-							pfr.install.
 					else:
 						raise pfr.InvalidPreformat(f"'{preformattingRedprint}' is not a valid preformat.")
-				  
-			def terminate():
-				  
 
 executeRoutine = routinesObject()
 
