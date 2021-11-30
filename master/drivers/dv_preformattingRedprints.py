@@ -11,6 +11,9 @@ import sys
 import os
 import dv_neuralNetworking as nns
 
+import nltk
+from nltk.corpus import wordnet as wn
+
 class InvalidPreformat(Exception):
 	pass
 
@@ -29,7 +32,7 @@ class implicit_return_type:
 	reason = "sentinel_irt_reason"
 	boolean = "sentinel_irt_bool"
 	opinion = "sentinel_irt_opinion"
-	object = "sentinel_irt_object"
+	obj = "sentinel_irt_object"
 
 class function:
 	class keeneyed_4:
@@ -37,7 +40,10 @@ class function:
 			return standardArguments
 
 		def SubjectPredicateDetection(evolvingArguments, standardArguments, activationFunction, parent):
-			pass
+			return [
+				[x for x in nltk.pos_tag(standardArguments["inputText"]) if x[1] == "NN" or x[1] == "NNP" or x[1] == "NNS" or x[1] == "PRP"],
+				[x for x in nltk.pos_tag(standardArguments["inputText"]) if x[1] == 
+				]
 
 		def TokenizeByNLTK(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
@@ -158,10 +164,10 @@ class install:
 							evolvingArgumentsDictionary = {
 								"start": {
 									"when": [implicit_return_type.time],
-									"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.object],
+									"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.obj],
 									"how": [implicit_return_type.method],
 									"why": [implicit_return_type.reason],
-									"who": [implicit_return_type.object]
+									"who": [implicit_return_type.obj]
 								},
 								"end": {
 									".": None,
@@ -210,10 +216,10 @@ class install:
 							name = "implicit_return_type_analysis",
 							evolvingArgumentsDictionary = {
 								"when": [implicit_return_type.time],
-								"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.object],
+								"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.obj],
 								"how": [implicit_return_type.method],
 								"why": [implicit_return_type.reason],
-								"who": [implicit_return_type.object]
+								"who": [implicit_return_type.obj]
 							},
 							function = function.keeneyed_4.ImplicitReturnTypeDetection,
 							layer = 4
@@ -260,10 +266,10 @@ class install:
 							name = "reverse_implicit_return_type",
 							evolvingArgumentsDictionary = {
 								"when": [implicit_return_type.time],
-								"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.object],
+								"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.obj],
 								"how": [implicit_return_type.method],
 								"why": [implicit_return_type.reason],
-								"who": [implicit_return_type.object]
+								"who": [implicit_return_type.obj]
 							},
 							function = function.keeneyed_4.ReverseImplicitReturnType,
 							layer = 1
@@ -280,10 +286,10 @@ class install:
 							name = "start_end_synthesis",
 							evolvingArgumentsDictionary = {
 								"when": [implicit_return_type.time],
-								"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.object],
+								"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.obj],
 								"how": [implicit_return_type.method],
 								"why": [implicit_return_type.reason],
-								"who": [implicit_return_type.object]
+								"who": [implicit_return_type.obj]
 							},
 							function = function.keeneyed_4.StartEndTokenSynthesis,
 							layer = 2
