@@ -40,16 +40,32 @@ class function:
 			return standardArguments
 
 		def SubjectPredicateDetection(evolvingArguments, standardArguments, activationFunction, parent):
-			return [
-				[x for x in nltk.pos_tag(standardArguments["inputText"]) if x[1] == "NN" or x[1] == "NNP" or x[1] == "NNS" or x[1] == "PRP"],
-				[x for x in nltk.pos_tag(standardArguments["inputText"]) if x[1] == 
-				]
+			return {
+				"subj": [x for x in nltk.pos_tag(standardArguments["inputText"]) if x[1] == "NN" or x[1] == "NNP" or x[1] == "NNS" or x[1] == "PRP"], 
+				"pred": [x for x in nltk.pos_tag(standardArguments["inputText"]) if x[1] == "VBD" or x[1] == "VBG" or x[1] == "VBP" or x[1] == "VBZ"]
+			}
 
 		def TokenizeByNLTK(evolvingArguments, standardArguments, activationFunction, parent):
-			pass
+			return {
+				"raw": standardArguments,
+				"pos_tag": nltk.pos_tag(standardArguments),
+				"word_tk": nltk.word_tokenize(standardArguments),
+				"sent_tk": nltk.sent_tokenize(standardArguments),
+				"sub_pre": function.keeneyed_4.SubjectPredicateDetection({}, standardArguments, SCALAR, parent)
+			}
 
 		def EmphasisLevelDetection(evolvingArguments, standardArguments, activationFunction, parent):
-			pass
+			o = 0
+			o -= 7 * len(standardArguments["subject_predicate_detection"]["subj"])
+			for word in standardArguments["nltk_tokenization"]["pos_tag"]:
+				if word[1] == "RBS":
+					o += 20
+				if word[1] == "RBR":
+					o += 10
+				if word[1] == "RB":
+					o += 5
+				if word[1]
+			return o
 
 		def StartFinishTokenDetection(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
@@ -131,9 +147,7 @@ class install:
 						# H1
 						nns.neuron.hidden(
 							name = "subject_predicate_detection",
-							evolvingArgumentsDictionary = { # ISP measures how far back to check for objects
-								"intuitive_span_length": 0
-							},
+							evolvingArgumentsDictionary = {},
 							function = function.keeneyed_4.SubjectPredicateDetection,
 							layer = 1,
 						),
