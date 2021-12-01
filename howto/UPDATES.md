@@ -1,5 +1,11 @@
 # Keeneyed-4 AGI and Simulation Engine Update Log
 
+## 12/1/2021 - Version 4.1.0.1 BETA
+> **WARNING: BETA VERSION**.  
+> This version will likely have bugs and will be unstable.  
+1.0.1 B is functionally identical to 1.0.0 B; however, some bad bugs were found in the master, preformatting, and neural network drivers which were patched. Simple errors were fixed that originally caused the system to crash immediately, but the Keeneyed-4 redprint is still a WIP. This version is still fully backwards compatible.
+
+
 ## 11/25/2021 - Version 4.1.0.0 BETA
 > **WARNING: BETA VERSION**.  
 > This version will likely have bugs and will be unstable.  
