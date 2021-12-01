@@ -25,6 +25,16 @@ class FormattingError(Exception):
 
 preformats = ["keeneyed", "sharpclawed", "ozymandias"]
 maximum = "sentinel_maximum"
+unknown = "sentinel_unknown"
+
+class sentence_type:
+	imperative = "sentinel_imperative"
+	interrogative = "sentinel_interrogative"
+	declarative = "sentinel_declarative"
+	exclamatory = "sentinel_exclamatory"
+	
+	imperative_exclamation = "sentinel_imperative_exclamation"
+	interrogative_exclamation = "sentinel_interrogative_exclamation"
 
 class implicit_return_type:
 	method = "sentinel_irt_method"
@@ -57,6 +67,7 @@ class function:
 		def EmphasisLevelDetection(evolvingArguments, standardArguments, activationFunction, parent):
 			o = 0
 			o -= 7 * len(standardArguments["subject_predicate_detection"]["subj"])
+			o -= 5 * len(standardArguments["subject_predicate_detection"]["pred"])
 			for word in standardArguments["nltk_tokenization"]["pos_tag"]:
 				if word[1] == "RBS":
 					o += 20
@@ -64,10 +75,77 @@ class function:
 					o += 10
 				if word[1] == "RB":
 					o += 5
-			return o
+			if o < 0:
+				o = 0
+			elif o > 100:
+				o = 100
+			
+			if o < evolvingArguments["emphasis_threshold_h2"]:
+				if o < evolvingArguments["emphasis_threshold_h1"]:
+					if o < evolvingArguments["emphasis_threshold_l0"]:
+						if o < evolvingArguments["emphasis_threshold_l1"]:
+							if o < evolvingArguments["emphasis_threshold_l2"]:
+								return "l3"
+							else:
+								return "l2
+						else:
+							return "l1"
+					else:
+						return "l0"
+				else:
+					return "h1"
+			else:
+				return "h2"
 
 		def StartFinishTokenDetection(evolvingArguments, standardArguments, activationFunction, parent):
-			pass
+			
+			initialToken = []
+			it_imperative = ["go", "do", "don't", "stop", "start", "should", "need"]
+			it_interrogative = ["who", "what", "when", "where", "why", "how"]
+			
+			for sent in standardArguments["nltk_tokenization"]["sent_tk"]:
+				sentenceInitial = sent.split(" ")[0:4]
+
+				identified = False
+				for tok in it_imperative:
+					if tok in sentenceInitial:
+						initialToken.append(sentence_type.imperative)
+						identified = True
+						break
+
+				if identified == False:
+					for tok in it_interrogative:
+						if tok in sentenceInitial:
+							initialToken.append(sentence_type.interrogative)
+							break
+			
+			sentenceType = []
+			
+			for sentence in standardArguments["nltk_tokenization"]["raw"]:
+				if list(sentence)[-3:-1] == "...":
+					sentenceType.append(sentence_type.declarative)
+					continue
+				
+				if list(sentence)[-3:-1] == "..?" or list(sentence)[-3:-1] == "?.." or list(sentence)[-1] == "?":
+					sentenceType.append(sentence_type.interrogative)
+					continue
+					
+				if list(sentence)[-2:-1] == "?!" or list(sentence)[-2:-1] == "!?":
+					sentenceType.append(sentence_type.interrogative_exclamation)
+					continue
+										
+				if list(sentence)[-1] == ".":
+					if initialToken != unknown:
+						sentenceType.append(initialToken)
+						continue
+					else:
+						sentenceType.append(sentence_type.declarative)
+						
+			i = -1
+			o = []
+			for i in range(len(standardArguments["nltk_tokenization"]["sent_tk"])):
+				i += 1
+				o.append( ( standardArguments["nltk_tokenization"]["sent_tk"][i] , sentenceType[i] , initialToken[i] ) )
 
 		def Keeneyed4Tokenization(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
@@ -174,19 +252,7 @@ class install:
 
 						nns.neuron.hidden(
 							name = "start_finish_token_detection",
-							evolvingArgumentsDictionary = {
-								"start": {
-									"when": [implicit_return_type.time],
-									"what": [implicit_return_type.reason, implicit_return_type.method, implicit_return_type.opinion, implicit_return_type.obj],
-									"how": [implicit_return_type.method],
-									"why": [implicit_return_type.reason],
-									"who": [implicit_return_type.obj]
-								},
-								"end": {
-									".": None,
-									"!": None
-								}
-							},
+							evolvingArgumentsDictionary = {},
 							function = function.keeneyed_4.StartFinishTokenDetection,
 							layer = 2
 						),
