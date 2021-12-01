@@ -41,7 +41,7 @@ class function:
 
 		def SubjectPredicateDetection(evolvingArguments, standardArguments, activationFunction, parent):
 			return {
-				"subj": [x for x in nltk.pos_tag(standardArguments["inputText"]) if x[1] == "NN" or x[1] == "NNP" or x[1] == "NNS" or x[1] == "PRP"], 
+				"subj": [x for x in nltk.pos_tag(standardArguments["inputText"]) if x[1] == "NN" or x[1] == "NNP" or x[1] == "NNS" or x[1] == "PRP"],
 				"pred": [x for x in nltk.pos_tag(standardArguments["inputText"]) if x[1] == "VBD" or x[1] == "VBG" or x[1] == "VBP" or x[1] == "VBZ"]
 			}
 
@@ -64,7 +64,6 @@ class function:
 					o += 10
 				if word[1] == "RB":
 					o += 5
-				if word[1]
 			return o
 
 		def StartFinishTokenDetection(evolvingArguments, standardArguments, activationFunction, parent):
@@ -130,11 +129,11 @@ class install:
 			if version == 4:
 				print("[ke4_install] beginning preformatted installation of the Keeneyed-4 AGI system ...")
 				print(" > beginning neural network instantiation ...")
-				
+
 				print("        text input neural network ...", end="")
-				
-				try: 
-					
+
+				try:
+
 					parent.TextInputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList  = [
 						# I
 						nns.neuron.input(
@@ -246,14 +245,14 @@ class install:
 							layer = 5
 						),
 						])
-				
+
 				except Exception as e:
 					raise FormattingError(f"[ERROR CODE 53] Error occurred during Keeneyed-4 AGI setup: {e}")
-				
+
 				print("complete.\n        omni-output neural network ...", end="")
-				
+
 				try:
-				
+
 					parent.TextOutputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
 						nns.neuron.input(
 							name = "syntactic_nlp",
@@ -352,10 +351,11 @@ class install:
 							layer = 5
 						),
 						])
-				
+
 				except Exception as e:
 					raise FormattingError(f"[ERROR CODE 54] Error occurred during Keeneyed-4 AGI setup: {e}")
-				
+
 				print("complete.")
+
 	class preformattedAGIModules:
 		pass

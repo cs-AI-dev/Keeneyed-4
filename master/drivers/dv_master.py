@@ -20,7 +20,7 @@ class AGITerminationError(Exception):
 class subroutineObject:
 	def __init__(this, pagi):
 		this.pagi = pagi
-	
+
 	def terminate(this):
 		print("[SR_01:TERMINATE] AGI TERMINATION IMMINENT ...", end="")
 		try:
@@ -35,7 +35,7 @@ class subroutineObject:
 			except:
 				print("FORCE EXIT FAILED, EXECUTING EMERGENCY TERMINATION.")
 				this.emergency_singularity_termination()
-			
+
 	def emergency_singularity_termination(this):
 		print("[SR_02:SINGULARITY_TERMINATION] AGI EMERGENCY TERMINATION INITIATED. SYSTEM SHUTDOWN IMMINENT.")
 		print("[SR_02:SINGULARITY_TERMINATION] SYSTEM SHUTDOWN IN 3")
@@ -44,13 +44,13 @@ class subroutineObject:
 		time.sleep(1)
 		print("                                                   1")
 		time.sleep(1)
-		
+
 		for x in range(10):
 			try:
 				os.system("shutdown /s /t 1")
 			except:
 				continue
-		
+
 		while True:
 			print("\033[F[SR_02:SINGULARITY_TERMINATION] CRITICAL ERROR, AGI TERMINATION FAILED. DISCONNECT POWER IMMEDIATELY.")
 			time.sleep(0.75)
@@ -82,7 +82,7 @@ class routinesObject:
 			print("[ke4_master_driver] executing secondary routine ...", end="")
 			this.s_first = False
 		else:
-			print("[ke4_master_driver] reloading primary routine ...", end=""
+			print("[ke4_master_driver] reloading primary routine ...", end="")
 		# Secondary routine prepares the AGI
 		# class. Should be treated with caution!
 		# Also instantiates some other tools.
@@ -97,9 +97,9 @@ class routinesObject:
 						 preformatKey = pfr.maximum
 						):
 				print("[AGI_INSTANTIATION] INITIALIZING ARTIFICIAL GENERAL INTELLIGENCE INSTANTIATION PROCESS.")
-				if debug == true: 
+				if debug == true:
 					print("[AGI_INSTANTIATION] DEBUG MODE ENABLED.")
-				
+
 				if preformattingRedprint == None:
 					pfr.install.preformattedAGIs.keeneyed_4(this)
 				else:

@@ -10,6 +10,8 @@
 print("Keeneyed-4 engine internal access")
 print("   Type 'q' or 'quit' to exit")
 
+import os
+
 import sys
 from sys import argv
 
@@ -22,23 +24,33 @@ from tqdm import tqdm
 import time
 from time import sleep as wait
 
-drivers = ["cacheGeneration", "master", "neuralNetworking", "preformattingRedprints", "simulationEngine"]
+drivers = ["cacheGeneration", "master", "neuralNetworking", "preformattingRedprints", "simulationEngine", "languageProcessing"]
 
 def process(args):
 	if args[0] == "test":
 		if args[1] == "dv":
 			if args[2] == "all":
-				print("[ke4_acc] testing all drivers ...")
-				for driver in drivers:
-					process(["test", "dv", driver])
+				if not "-q" in args:
+					print("[ke4_acc] testing all drivers ...")
+					for driver in drivers:
+						process(["test", "dv", driver])
+				else:
+					for driver in tqdm(drivers, desc = "[ke4_acc] testing all drivers ..."): process(["test", "dv", driver, "-q"])
 			else:
-				print("[ke4_acc] testing compilation of driver under " + args[2] + " ...")
-				try:
-					exec(open(sys.argv[0].split("acc.py")[0] + "master/drivers/dv_" + args[2] + ".py", "r").read())
-					print("[ke4_acc] testing successful, no errors found in driver.")
-				except Exception as e:
-					print("[ke4_acc] testing failed due to error:")
-					print(" > " + str(e))
+				if not "-q" in args:
+					print("[ke4_acc] testing compilation of driver under " + args[2] + " ...")
+					try:
+						os.system("python " + sys.argv[0].split("acc.py")[0] + "master/drivers/dv_" + args[2] + ".py -q")
+						print("[ke4_acc] testing successful, no errors found in driver.\n")
+					except Exception as e:
+						print("[ke4_acc] testing failed due to error:")
+						print(" > " + str(e))
+				else:
+					try:
+						os.system("python " + sys.argv[0].split("acc.py")[0] + "master/drivers/dv_" + args[2] + ".py -q")
+					except Exception as e:
+						print("[ke4_acc] testing failed due to error:")
+						print(" > " + str(e))
 		else:
 			print(f"[ke4_acc] invalid command argument '{args[1]}'.")
 
