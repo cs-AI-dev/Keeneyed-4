@@ -10,6 +10,7 @@
 import sys
 import os
 import dv_neuralNetworking as nns
+import dv_languageProcessing as nlp
 
 import nltk
 from nltk.corpus import wordnet as wn
