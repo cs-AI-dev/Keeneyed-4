@@ -101,7 +101,7 @@ class FeedforwardNeuralNetwork:
 		this.availableLayers = []
 		for neuron in neuronObjectsList:
 			if not type(neuron.layer) == type(1):
-				raise NeuronError("Neuron layer must be an integer")
+				raise NeuronError("[ERROR CODE 53] Neuron layer must be an integer")
 			if not (neuron.layer in this.neurons.keys()):
 				this.neurons[neuron.layer] = []
 			this.neurons[neuron.layer].append(neuron)
