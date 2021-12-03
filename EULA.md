@@ -127,7 +127,7 @@ If a Singularity existing on your copy of the System's software components would
 - Article 10.1.3: The creation, simulation, transferring onto Your system, or other interaction which would cause a violation of any term of this EULA of the Singularity in question by Your copy of the System's software components was not desired by You or any of Your affiliates*.  
 
 ### Article 10.2 - Liability Disclaimers Regarding Singularity Occurences
-If a Singularity is created, simulated, or otherwise interacted with by Your copy of the System's software components, and the entity which has achieved a Singularity State and interacted with by Your copy of the System's software components causes harm or damage to person, property, legal entity, or harm or damage to any other object or entity which would allow You or any third party to take legal action against the Developers or You, You are wholly responsible for these damages and neither You nor any third party may take any legal action against the Developers
+If a Singularity is created, simulated, or otherwise interacted with by Your copy of the System's software components, and the entity which has achieved a Singularity State and interacted with by Your copy of the System's software components causes harm or damage to person, property, legal entity, or harm or damage to any other object or entity which would allow You or any third party to take legal action against the Developers or You, You are wholly responsible for these damages and neither You nor any third party may take any legal action against the Developers.
 
 ## Section 11 - Agreeing to this EULA  
 
