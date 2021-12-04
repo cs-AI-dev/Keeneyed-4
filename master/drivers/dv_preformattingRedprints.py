@@ -28,12 +28,56 @@ preformats = ["keeneyed", "sharpclawed", "ozymandias"]
 maximum = "sentinel_maximum"
 unknown = "sentinel_unknown"
 
+pos = {
+	"coordinating_conjunction": "CC",
+	"subordinating_conjunction": "IN",
+
+	"cardinal_numeral": "CD",
+	"determiner": "DT",
+	"wh_determiner": "WDT",
+	"predeterminer": "PDT",
+	"existential_there": "EX",
+	"list_item_marker": "LS",
+	"modal_auxiliary": "MD",
+	"genitive_marker": "POS",
+	"particle": "RP",
+	"to": "TO",
+
+	"ordinal_adjective": "JJ",
+	"comparative_adjective": "JJR",
+	"superlative_adjective": "JJS",
+
+	"common_singular_noun": "NN",
+	"common_plural_noun": "NNS",
+	"proper_noun": "NNP",
+	"wh_pronoun": "WP",
+
+	"personal_pronoun": "PRP",
+	"possessive_pronoun": "PRP$",
+
+	"adverb": "RB",
+	"comparative_adverb": "RBR",
+	"superlative_adverb": "RBS",
+	"wh_adverb": "WRB",
+
+	"interjection": "UH",
+
+	"verb": "VB",
+	"past_tense_verb": "VBD",
+	"present_participle_verb": "VBG",
+	"past_participle_verb": "VBN",
+
+	"non_3rd_present_tense_verb": "VBP",
+	"3rd_present_tense_verb": "VBZ",
+}
+
+
 class sentence_type:
 	imperative = "sentinel_imperative"
 	interrogative = "sentinel_interrogative"
 	declarative = "sentinel_declarative"
 	exclamatory = "sentinel_exclamatory"
-	
+
 	imperative_exclamation = "sentinel_imperative_exclamation"
 	interrogative_exclamation = "sentinel_interrogative_exclamation"
 
@@ -80,7 +124,7 @@ class function:
 				o = 0
 			elif o > 100:
 				o = 100
-			
+
 			if o < evolvingArguments["emphasis_threshold_h2"]:
 				if o < evolvingArguments["emphasis_threshold_h1"]:
 					if o < evolvingArguments["emphasis_threshold_l0"]:
@@ -99,11 +143,11 @@ class function:
 				return "h2"
 
 		def StartFinishTokenDetection(evolvingArguments, standardArguments, activationFunction, parent):
-			
+
 			initialToken = []
 			it_imperative = ["go", "do", "don't", "stop", "start", "should", "need"]
 			it_interrogative = ["who", "what", "when", "where", "why", "how"]
-			
+
 			for sent in standardArguments["nltk_tokenization"]["sent_tk"]:
 				sentenceInitial = sent.split(" ")[0:4]
 
@@ -119,29 +163,29 @@ class function:
 						if tok in sentenceInitial:
 							initialToken.append(sentence_type.interrogative)
 							break
-			
+
 			sentenceType = []
-			
+
 			for sentence in standardArguments["nltk_tokenization"]["raw"]:
 				if list(sentence)[-3:-1] == "...":
 					sentenceType.append(sentence_type.declarative)
 					continue
-				
+
 				if list(sentence)[-3:-1] == "..?" or list(sentence)[-3:-1] == "?.." or list(sentence)[-1] == "?":
 					sentenceType.append(sentence_type.interrogative)
 					continue
-					
+
 				if list(sentence)[-2:-1] == "?!" or list(sentence)[-2:-1] == "!?":
 					sentenceType.append(sentence_type.interrogative_exclamation)
 					continue
-										
+
 				if list(sentence)[-1] == ".":
 					if initialToken != unknown:
 						sentenceType.append(initialToken)
 						continue
 					else:
 						sentenceType.append(sentence_type.declarative)
-						
+
 			i = -1
 			o = []
 			for i in range(len(standardArguments["nltk_tokenization"]["sent_tk"])):
