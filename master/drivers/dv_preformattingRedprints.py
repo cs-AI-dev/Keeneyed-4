@@ -132,16 +132,26 @@ class function:
 					if o < evolvingArguments["emphasis_threshold_l0"]:
 						if o < evolvingArguments["emphasis_threshold_l1"]:
 							if o < evolvingArguments["emphasis_threshold_l2"]:
+								parent.evolvingArguments["emphasis_threshold_l2"] += 1
 								return "l3"
 							else:
+								parent.evolvingArguments["emphasis_threshold_l2"] -= 1
+								parent.evolvingArguments["emphasis_threshold_l1"] += 1
 								return "l2"
 						else:
+							parent.evolvingArguments["emphasis_threshold_l1"] -= 1
+							parent.evolvingArguments["emphasis_threshold_l0"] += 1
 							return "l1"
 					else:
+						parent.evolvingArguments["emphasis_threshold_l0"] -= 1
+						parent.evolvingArguments["emphasis_threshold_h1"] += 1
 						return "l0"
 				else:
+					parent.evolvingArguments["emphasis_threshold_h1"] -= 1
+					parent.evolvingArguments["emphasis_threshold_h2"] += 1
 					return "h1"
 			else:
+				parent.evolvingArguments["emphasis_threshold_h1"] -= 1
 				return "h2"
 
 		def StartFinishTokenDetection(evolvingArguments, standardArguments, activationFunction, parent): # Input perceptron hidden layer 2
