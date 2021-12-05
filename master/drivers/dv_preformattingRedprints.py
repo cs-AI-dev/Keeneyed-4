@@ -94,13 +94,15 @@ class function:
 		def PassFunction(evolvingArguments, standardArguments, activationFunction, parent):
 			return standardArguments
 
-		def SubjectPredicateDetection(evolvingArguments, standardArguments, activationFunction, parent):
+		# Input perceptron
+
+		def SubjectPredicateDetection(evolvingArguments, standardArguments, activationFunction, parent): # Input perceptron hidden layer 1
 			return {
 				"subj": [x for x in nltk.pos_tag(standardArguments["inputText"]) if x[1] == "NN" or x[1] == "NNP" or x[1] == "NNS" or x[1] == "PRP"],
 				"pred": [x for x in nltk.pos_tag(standardArguments["inputText"]) if x[1] == "VBD" or x[1] == "VBG" or x[1] == "VBP" or x[1] == "VBZ"]
 			}
 
-		def TokenizeByNLTK(evolvingArguments, standardArguments, activationFunction, parent):
+		def TokenizeByNLTK(evolvingArguments, standardArguments, activationFunction, parent): # Input perceptron hidden layer 1
 			return {
 				"raw": standardArguments,
 				"pos_tag": nltk.pos_tag(standardArguments),
@@ -109,7 +111,7 @@ class function:
 				"sub_pre": function.keeneyed_4.SubjectPredicateDetection({}, standardArguments, SCALAR, parent)
 			}
 
-		def EmphasisLevelDetection(evolvingArguments, standardArguments, activationFunction, parent):
+		def EmphasisLevelDetection(evolvingArguments, standardArguments, activationFunction, parent): # Input perceptron hidden layer 2
 			o = 0
 			o -= 7 * len(standardArguments["subject_predicate_detection"]["subj"])
 			o -= 5 * len(standardArguments["subject_predicate_detection"]["pred"])
@@ -132,7 +134,7 @@ class function:
 							if o < evolvingArguments["emphasis_threshold_l2"]:
 								return "l3"
 							else:
-								return "l2
+								return "l2"
 						else:
 							return "l1"
 					else:
@@ -142,7 +144,7 @@ class function:
 			else:
 				return "h2"
 
-		def StartFinishTokenDetection(evolvingArguments, standardArguments, activationFunction, parent):
+		def StartFinishTokenDetection(evolvingArguments, standardArguments, activationFunction, parent): # Input perceptron hidden layer 2
 
 			initialToken = []
 			it_imperative = ["go", "do", "don't", "stop", "start", "should", "need"]
@@ -192,7 +194,7 @@ class function:
 				i += 1
 				o.append( ( standardArguments["nltk_tokenization"]["sent_tk"][i] , sentenceType[i] , initialToken[i] ) )
 
-		def Keeneyed4Tokenization(evolvingArguments, standardArguments, activationFunction, parent):
+		def Keeneyed4Tokenization(evolvingArguments, standardArguments, activationFunction, parent): # Input perceptron hidden layer 2
 			pass
 
 		def ToneDetection(evolvingArguments, standardArguments, activationFunction, parent):
@@ -206,6 +208,8 @@ class function:
 
 		def ImplicitReturnTypeDetection(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
+
+		# Output perceptron
 
 		def ReverseKeeneyed4Tokenization(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
@@ -258,7 +262,7 @@ class install:
 				try:
 
 					parent.TextInputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList  = [
-						# I
+						# Input
 						nns.neuron.input(
 							name = "text",
 							evolvingArgumentsDictionary = {}, # Nothing, since this is an input neuron
@@ -311,6 +315,7 @@ class install:
 							layer = 2
 						),
 
+						# H3
 						nns.neuron.hidden(
 							name = "tone_analysis",
 							evolvingArgumentsDictionary = {
@@ -327,6 +332,7 @@ class install:
 							layer = 3
 						),
 
+						# H4
 						nns.neuron.hidden(
 							name = "syntactic_analysis",
 							evolvingArgumentsDictionary = {
@@ -349,6 +355,7 @@ class install:
 							layer = 4
 						),
 
+						# Output
 						nns.neuron.output(
 							name = "output",
 							evolvingArgumentsDictionary = {},
@@ -365,6 +372,7 @@ class install:
 				try:
 
 					parent.TextOutputNeuralNetwork = nns.FeedforwardNeuralNetwork(neuronObjectsList = [
+						# Input
 						nns.neuron.input(
 							name = "syntactic_nlp",
 							evolvingArgumentsDictionary = {},
@@ -372,6 +380,7 @@ class install:
 							layer = 0
 						),
 
+						# H1
 						nns.neuron.hidden(
 							name = "reverse_keeneyed_4_tokenization",
 							evolvingArgumentsDictionary = {},
@@ -399,6 +408,7 @@ class install:
 							layer = 1
 						),
 
+						# H2
 						nns.neuron.hidden(
 							name = "punctuation_synthesis",
 							evolvingArgumentsDictionary = {},
@@ -419,6 +429,7 @@ class install:
 							layer = 2
 						),
 
+						# H3
 						nns.neuron.hidden(
 							name = "list_sentence_synthesis",
 							evolvingArgumentsDictionary = {
@@ -438,6 +449,7 @@ class install:
 							layer = 3
 						),
 
+						# H4
 						nns.neuron.hidden(
 							name = "textual_output_synthesis",
 							evolvingArgumentsDictionary = {
@@ -455,6 +467,7 @@ class install:
 							layer = 4
 						),
 
+						# Output
 						nns.neuron.output(
 							name = "output",
 							evolvingArgumentsDictionary = {},
@@ -466,7 +479,7 @@ class install:
 				except Exception as e:
 					raise FormattingError(f"[ERROR CODE 54] Error occurred during Keeneyed-4 AGI setup: {e}")
 
-				print("complete.")
+				print("complete.\n        central neural neocortext ...", end="")
 
 	class preformattedAGIModules:
 		pass
