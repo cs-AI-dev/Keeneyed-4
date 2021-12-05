@@ -583,7 +583,7 @@ def parse(ldir, infotext=False): # ldir must have a / at the end, like "C:/Users
 		print("\n")
 		
 	def loadSector(sectorName):
-		for file in os.listdir(sdir(f"{sectorName}/")):
+		for datafile in os.listdir(sdir(f"{sectorName}/")):
 			if datafile.endswith(".ke4.exec"):
 				try:
 					print(f"[parsing @{ldir}] Loading function file {datafile} ...", end="")
