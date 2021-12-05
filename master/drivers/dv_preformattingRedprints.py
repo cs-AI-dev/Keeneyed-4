@@ -194,8 +194,10 @@ class function:
 				i += 1
 				o.append( ( standardArguments["nltk_tokenization"]["sent_tk"][i] , sentenceType[i] , initialToken[i] ) )
 
+			return o
+
 		def Keeneyed4Tokenization(evolvingArguments, standardArguments, activationFunction, parent): # Input perceptron hidden layer 2
-			pass
+			r = rigidity
 
 		def ToneDetection(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
@@ -239,13 +241,13 @@ class function:
 			pass
 
 class install:
-	class preformattedAGIs:
+	class preformattedAGI:
 		class versions:
 			keeneyed = [4]
 		def keeneyed(parent, version):
 
 			# The namesake of this entire engine, the Keeneyed-4 general intelligence is
-			# designed to support several neural nets, each leading into a central cortex which
+			# designed to support several neural nets, each leading into a central neocortex which
 			# controls the thought of the system. For a text-only interface, only 4 neural
 			# nets are functional, the input and output nets for the text interface and the
 			# simulacrum's memory drive.
