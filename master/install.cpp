@@ -9,14 +9,19 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 
 // Running this program, once compiled with an official
-// C++ 
+// C++ compiler, will allow you to install a working
+// Keeneyed-4 artificial intelligence and simulation
+// engine environment.
 
 int main() {
 	cout << "     KEENEYED-4 ARTIFICIAL INTELLIGENCE AND SIMULATION ENGINE ENVIRONMENT SETUP     \n";
 	cout << "____________________________________________________________________________________\n";
+	cout << "                                                                                    \n";
+	cout << " (Step 1 of 4) Agreeing to the Software's EULA.                                     \n";
 	cout << "                                                                                    \n";
 	cout << " This program is designed to allow You to begin proper installation of the System's \n";
 	cout << " software components. By using this program, even if You do not complete the proper \n";
@@ -32,10 +37,45 @@ int main() {
 	cout << " with the proper installation of the System's software components.                  \n";
 	cout << "____________________________________________________________________________________\n";
 	cout << "                                                                                    \n";
-	cout << " Do you agree to the terms described within the System's software component's EULA ?\n";
-	cout << " (y\n) ";
+	cout << " Do you agree to the terms described within the System's software component's EULA? \n";
+	cout << " (y/n) ";
 	
 	string response;
-	getline(cin, response);
+	cin >> response;
+	cout << "\n";
 	
+	while (true) {
+		if (response == "y") {
+			cout << " Excellent. Beginning installation of Keeneyed-4 engine environment ...\n";
+			break;
+		} else {
+			cout << " Confirmed. Please terminate your use of this software immediately.\n";
+		}
+	}
+	
+	cout << "____________________________________________________________________________________\n";
+	cout << "                                                                                    \n";
+	cout << " (Step 2 of 4) Installation Directory.                                              \n";
+	cout << "                                                                                    \n";
+	cout << " Please select a directory where You would like to have your copy installed to here \n";
+	cout << " on this device.                                                                    \n";
+	cout << "                                                                                    \n";
+	
+	while (true) {
+		cout << " C:/";
+		cin >> response;
+		string targetDirectory = response;
+		cout << "\nPlease confirm the directory: " + response + "\n";
+		cout << " (y/n) ";
+		cin >> response;
+		if (response == "y") {
+			cout << " Target directory confirmed.\n";
+		} else {
+			cout << " Retry directory entry: ";
+		}
+	}
+	
+	cout << " Constructing environmnet ...";
+	ofstream File_README(targetDirectory + "/keeneyed4_env/README.md");
+	File_README
 }
