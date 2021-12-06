@@ -14,6 +14,7 @@ import dv_languageProcessing as nlp
 
 import nltk
 from nltk.corpus import wordnet as wn
+from nltk.corpus import words
 
 class InvalidPreformat(Exception):
 	pass
@@ -88,6 +89,8 @@ class implicit_return_type:
 	boolean = "sentinel_irt_bool"
 	opinion = "sentinel_irt_opinion"
 	obj = "sentinel_irt_object"
+	
+all_words = words.words()
 
 class function:
 	class keeneyed_4:
@@ -207,7 +210,22 @@ class function:
 			return o
 
 		def Keeneyed4Tokenization(evolvingArguments, standardArguments, activationFunction, parent): # Input perceptron hidden layer 2
-			r = rigidity
+			r = evolvingArguments["rigidity"]
+			
+			o = [] # List of lists
+			so = []
+			
+			for sent in standardArguments["nltk_tokenization"]["sent_tk"]:
+				for word in sent:
+					# Compile a syntactic language data packet
+					emphasisInfo = None
+					toneInfo = None
+					wnSynsetKey = None
+					contextInfo = {}
+					
+					
+					
+					so.append(nls.SemanticLanguageData(emphasisInfo, toneInfo, wnSynsetKey, **contextInfo))
 
 		def ToneDetection(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
