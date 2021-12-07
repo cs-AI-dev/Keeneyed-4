@@ -75,7 +75,7 @@ int main() {
 		}
 	}
 	
-	cout << " Constructing environmnet ...";
+	cout << " Constructing environment ...";
 	ofstream File_README(targetDirectory + "/keeneyed4_env/README.md");
 	File_README << "# Keeneyed-4\n### An AGI engine heavily rewritten but based on the KE3 system.  \nThis is the *fourth* iteration of my artificial general intelligence software. It's not actually my first attempt at an AI; the original CS AIs all failed, there were 5 of those, and I wrote several spinoff tests that worked decently well, but this is my first fully functional AGI engine.  \nNot only does this engine incorporate the science-fiction concept of AGI, but it also includes a simulation engine with which to allow your AGI to understand the three-dimensional world even if you don't have incredibly complex animatronica to plug it into. Information on how to work both the AGI and simulation engine can be found under 'howto', as well as information on how to install this package. If you're reading this inside the package folders, you can go to the [Github page](https://github.com/cs-AI-dev/Keeneyed-4) and check there.  \n> WARNING: BY USING THIS SOFTWARE YOU AGREE TO THE EULA WHICH GOVERNS ITS USE!  ";
 	File_README.close();
