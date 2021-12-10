@@ -38,14 +38,68 @@ def begin():
 	dire.grid(row=2, column=1)
 	
 	def install_ke4_environment(): # Defined in here to ensure that users must agree to the EULA before using the software
+		w_inst.destroy()
+		print("Installing non-essentials ...", end="")
 		wd = dire["text"]
 		with open(wd + "/keeneyed_4/README.md", "w") as f:
-			f.write(requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/README.md?token=ATFFVVO2QONUGH3JO3PMWE3BWET72").text)
+			print(" | Installing readme file ...", end="")
+			fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/README.md").text
+			f.write(fd)
+			fd.close()
+			print("complete.")
 		with open(wd + "/keeneyed_4/EULA.md", "w") as f:
-			f.write(requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/EULA.md?token=ATFFVVKJPPPNDNIY6EJDVO3BWEUD4").text)
-		with open(wd + "/keeneyed_4/acc.py", "w") as f:
-			f.write(requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/acc.py?token=ATFFVVL3XSKOJGABE5XE2T3BWEUIU").text)
+			print(" | Installing EULA copy ...", end="")
+			fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/EULA.md").text
+			f.write(fd)
+			fd.close()
+			print("complete.")
 			
+		print("Non-essential installations complete.\nInstalling environment CLI access program ...", end="")
+		with open(wd + "/keeneyed_4/acc.py", "w") as f:
+			fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/acc.py").text
+			f.write(fd)
+			fd.close()
+			
+		print("CLI access installation complete.\n\nInstalling drivers...")
+		with open(wd + "/keeneyed_4/master/drivers/dv_master.py",  "w") as f:
+			print(" | Installing master driver ...", end="")
+			fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_master.py").text
+			f.write(fd)
+			fd.close()
+			print("complete.")
+		with open(wd + "/keeneyed_4/master/drivers/dv_cacheGeneration.py", "w") as f:
+			print(" | Installing cache generation driver ...", end="")
+			fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_cacheGeneration.py").text
+			f.write(fd)
+			fd.close()
+			print("complete.")
+		with open(wd + "/keeneyed_4/master/drivers/dv_languageProcessing.py", "w") as f:
+			print(" | Installing language processing driver ...", end="")
+			fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_languageProcessing.py")
+			f.write(fd)
+			fd.close()
+			print("complete.")
+		with open(wd + "/keeneyed_4/master/drivers/dv_neuralNetworking.py", "w") as f:
+			print(" | Installing neural networking driver ...", end="")
+			fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_neuralNetworking.py")
+			f.write(fd)
+			fd.close()
+			print("complete.")
+		with open(wd + "/keeneyed_4/master/drivers/dv_preformattingRedprints", "w") as f:
+			print(" | Installing preformatting driver ...", end="")
+			fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_preformattingRedprints.py")
+			f.write(fd)
+			fd.close()
+			print("complete.")
+		with open(wd + "/keeneyed_4/master/drivers/dv_simulationEngine", "w") as f:
+			print(" | Installing simulation engine driver ...", end="")
+			fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_simulationEngine.py")
+			f.write(fd)
+			fd.close()
+			print("complete.")
+		print("Driver installation complete.")
+		print("Environment setup complete.")
+		print(f"\nTo access your environment, type 'python {wd}/keeneyed_4/acc.py' into your command prompt.")
 	
 	go = Button(w_inst, text="Install", bg="black", fg="white", font=("OCR A Extended", 12), command=install_ke4_environment)
 	go.grid(row=2, column=2)
@@ -72,6 +126,5 @@ d("proceed with the installation of the Keeneyed-4 engine environment.")
 d("If You do not agree with any of the terms or conditions described within the EULA,")
 d("then You must immediately discontinue your use of this program and cannot continue")
 d("with the proper installation of the System's software components.")
-d("Do you agree to the terms described within the System's software components' EULA?")
 
 w_eula.mainloop()
