@@ -54,8 +54,18 @@ def process(args):
 		else:
 			print(f"[ke4_acc] invalid command argument '{args[1]}'.")
 
-	elif args[0] == "load":
-		pass
+	elif args[0] == "e" or args[0] == "exec" or args[0] == "execute":
+		process(["test", "dv", "all", "-q"])
+		if len(args) == 2:
+			try:
+				os.system("python " + sys.argv[0].split("acc.py")[0] + "projects/" + args[1])
+			except FileNotFoundError:
+				print(f"[ke4_acc] 404: no project at {args[1]}.")
+			except Exception as e:
+				print(f"[ke4_acc] error occurred in project execution: {e}")
+		else:
+			print("[ke4_acc] invalid command syntax.")
+					  
 
 	elif args[0] == "q" or args[0] == "quit":
 		exit()
