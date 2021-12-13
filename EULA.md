@@ -139,9 +139,9 @@ If the System's software components are improperly installed, then both You and 
 
 ### Article 11.3 - Repairing an Improper Installation  
 The Developers grant you a revocable, personal, non-transferable right to require the Developers at any time to grant You an additional and undamaged copy of the System's software components so that You can install that copy of the System's software components on the computer or other device which you attempted to load a damaged copy of the System's software components on ("Your Device") if:
-- Article 10.3.1: Your Device's software components were damaged by the attempt made by You to install the System onto Your Device;
-- Article 10.3.2: Your Device was for an unforeseeable reason unable to properly complete the installation of the System onto Your Device; or
-- Article 10.3.3: Your Device was for an unforeseeable reason already performing another task which required the same prerequisite softwares as the System's software components, which caused Your installed copy of the System's software components to become corrupted or damaged.  
+- Article 11.3.1: Your Device's software components were damaged by the attempt made by You to install the System onto Your Device;
+- Article 11.3.2: Your Device was for an unforeseeable reason unable to properly complete the installation of the System onto Your Device; or
+- Article 11.3.3: Your Device was for an unforeseeable reason already performing another task which required the same prerequisite softwares as the System's software components, which caused Your installed copy of the System's software components to become corrupted or damaged.  
 and for no other reasons*.
 
 *except in a way which is sanctioned by the Developers or any person or legal entities authorized by the Developers.
