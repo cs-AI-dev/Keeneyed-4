@@ -69,69 +69,69 @@ if not os.path.exists(wd + "/keeneyed_4/"):
 print("complete.")
 
 print("Installing non-essentials ...")
-open(wd + "/keeneyed_4/README.md", "x").close()
-f = open(wd + "/keeneyed_4/README.md", "w+")
+f = open(wd + "/keeneyed_4/README.md", "w")
 print(" | Installing readme file ...", end="")
 fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/README.md").text
 f.write(fd)
 f.close()
 print("complete.")
-open(wd + "/keeneyed_4/EULA.md", "x").close()
-f = open(wd + "/keeneyed_4/EULA.md", "w+")
+f = open(wd + "/keeneyed_4/EULA.md", "w")
 print(" | Installing EULA copy ...", end="")
 fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/EULA.md").text
 f.write(fd)
 f.close()
 
 print("complete.\n | Installing environment CLI access program ...", end="")
-open(wd + "/keeneyed_4/acc.py", "x").close()
-f = open(wd + "/keeneyed_4/acc.py", "w+")
+f = open(wd + "/keeneyed_4/acc.py", "w")
 fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/acc.py").text
 f.write(fd)
 f.close()
-print("cpmplete.\nNon-essential installations complete.\n")
+print("complete.\nNon-essential installations complete.\n")
 
 print("\nInstalling drivers...")
-os.mkdir(wd + "/keeneyed_4/master/")
-os.mkdir(wd + "/keeneyed_4/master/drivers/")
-os.mkdir(wd + "/keeneyed_4/master/projects/")
-open(wd + "/keeneyed_4/master/drivers/dv_master.py", "x").close()
-f = open(wd + "/keeneyed_4/master/drivers/dv_master.py",  "w+")
+try:
+	os.mkdir(wd + "/keeneyed_4/master/")
+except:
+	pass
+try:
+	os.mkdir(wd + "/keeneyed_4/master/drivers/")
+except:
+	pass
+try:
+	os.mkdir(wd + "/keeneyed_4/master/projects/")
+except:
+	pass
+f = open(wd + "/keeneyed_4/master/drivers/dv_master.py",  "w")
 print(" | Installing master driver ...", end="")
 fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_master.py").text
 f.write(fd)
 f.close()
 print("complete.")
-open(wd + "/keeneyed_4/master/drivers/dv_cacheGeneration.py", "x").close()
-f = open(wd + "/keeneyed_4/master/drivers/dv_cacheGeneration.py", "w+")
+f = open(wd + "/keeneyed_4/master/drivers/dv_cacheGeneration.py", "w")
 print(" | Installing cache generation driver ...", end="")
 fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_cacheGeneration.py").text
 f.write(fd)
 f.close()
 print("complete.")
-open(wd + "/keeneyed_4/master/drivers/dv_languageProcessing.py", "x").close()
-f = open(wd + "/keeneyed_4/master/drivers/dv_languageProcessing.py", "w+")
+f = open(wd + "/keeneyed_4/master/drivers/dv_languageProcessing.py", "w")
 print(" | Installing language processing driver ...", end="")
 fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_languageProcessing.py").text
 f.write(fd)
 f.close()
 print("complete.")
-open(wd + "/keeneyed_4/master/drivers/dv_neuralNetworking.py", "x").close()
-f = open(wd + "/keeneyed_4/master/drivers/dv_neuralNetworking.py", "w+")
+f = open(wd + "/keeneyed_4/master/drivers/dv_neuralNetworking.py", "w")
 print(" | Installing neural networking driver ...", end="")
 fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_neuralNetworking.py").text
 f.write(fd)
 f.close()
 print("complete.")
-open(wd + "/keeneyed_4/master/drivers/dv_preformattingRedprints.py", "x").close()
-f = open(wd + "/keeneyed_4/master/drivers/dv_preformattingRedprints", "w+")
+f = open(wd + "/keeneyed_4/master/drivers/dv_preformattingRedprints", "w")
 print(" | Installing preformatting driver ...", end="")
 fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_preformattingRedprints.py").text
 f.write(fd)
 f.close()
 print("complete.")
-open(wd + "/keeneyed_4/master/drivers/dv_simulationEngine.py", "x").close()
-f = open(wd + "/keeneyed_4/master/drivers/dv_simulationEngine", "w+")
+f = open(wd + "/keeneyed_4/master/drivers/dv_simulationEngine", "w")
 print(" | Installing simulation engine driver ...", end="")
 fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_simulationEngine.py").text
 f.write(fd)
