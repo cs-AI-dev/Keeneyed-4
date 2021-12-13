@@ -127,6 +127,10 @@ class function:
 					o += 10
 				if word[1] == "RB":
 					o += 5
+			for sentence in standardArguments["nltk_tokenization"]["sent_tk"]:
+				if list(sentence)[-1] == "!":
+					o += 25
+				
 			if o < 0:
 				o = 0
 			elif o > 100:
@@ -225,9 +229,66 @@ class function:
 					wnSynsetKey = None
 					contextInfo = {}
 					
+					emphasisInfo = 0
+					emphasisInfo -= 7 * len(standardArguments["subject_predicate_detection"]["subj"])
+					emphasisInfo -= 5 * len(standardArguments["subject_predicate_detection"]["pred"])
+					if word[1] == "RBS":
+						emphasisInfo += 20
+					if word[1] == "RBR":
+						emphasisInfo += 10
+					if word[1] == "RB":
+						emphasisInfo += 5
+					for sentence in standardArguments["nltk_tokenization"]["sent_tk"]:
+						if list(sentence)[-1] == "!":
+							emphasisInfo += 25
+							
+					if emphasisInfo < 0:
+						emphasisInfo = 0
+					if emphasisInfo > 100:
+						emphasisInfo = 100
+						
+					if list(sent)[-3:-1] == "...":
+						toneInfo.append(sentence_type.declarative)
+						break
+
+					if list(sent)[-3:-1] == "..?" or list(sentence)[-3:-1] == "?.." or list(sentence)[-1] == "?":
+						toneInfo.append(sentence_type.interrogative)
+						break
+
+					if list(sent)[-2:-1] == "?!" or list(sentence)[-2:-1] == "!?":
+						toneInfo.append(sentence_type.interrogative_exclamation)
+						break
+
+					if list(sent)[-1] == ".":
+						if initialToken != unknown:
+							toneInfo.append(initialToken)
+							break
+						else:
+							toneInfo.append(sentence_type.declarative)
+							
+					wnSynsetKey = [x for x in wn.synsets(word)]
+					contextInfo["sentenceEmphasis"] = emphasisInfo
+					contextInfo["hypernyms"] = []
+					for x in wn.synsets(word):
+						if x.path_similarity(wn.synsets(word)[1]) < rigidity:
+							contextInfo["hypernyms"].append(x.hypernyms())
+							parent.evolvingArgumentsDictionary["rigidity"] += 1
+						else:
+							parent.evolvingArgumentsDictionary["rigidity"] -= 1
+					contextInfo["hyponyms"] = []
+					for x in wn.synsets(word):
+						if x.path_similarity(wn.synsets(word)[1]) < rigidity:
+							contextInfo["hyponyms"].append(x.hyponyms())
+							parent.evolvingArgumentsDictionary["rigidity"] -= 1
+						else:
+							parent.evolvingArgumentsDictionary["rigidity"] += 1
+
+					so.append(nlp.SemanticLanguageData(emphasisInfo, toneInfo, wnSynsetKey, **contextInfo))
 					
+				o.append(so)
+				so = []
+			return o
 					
-					so.append(nls.SemanticLanguageData(emphasisInfo, toneInfo, wnSynsetKey, **contextInfo))
 
 		def ToneDetection(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
