@@ -56,7 +56,7 @@ def process(args):
 
 	elif args[0] == "e" or args[0] == "exec" or args[0] == "execute":
 		for dv in [x for x in drivers if x != "master"]:
-			with open(sys.argv[0].split("acc.py")[0] + "master/drivers/dv_" + dv, "r") as f: exec(f.read())
+			with open(sys.argv[0].split("acc.py")[0] + "master/drivers/dv_" + dv + ".py", "r") as f: exec(f.read())
 		if len(args) == 2:
 			try:
 				os.system("python " + sys.argv[0].split("acc.py")[0] + "projects/" + args[1])
@@ -76,7 +76,7 @@ def process(args):
 
 	elif args[0] == "q" or args[0] == "quit":
 		exit()
-		
+
 	else:
 		print(f"[ke4_acc] invalid command '{args[0]}'.")
 
