@@ -61,7 +61,7 @@ def process(args):
 			with open(sys.argv[0].split("acc.py")[0] + "master/drivers/dv_" + dv + ".py", "r") as f: exec(f.read())
 		if len(args) == 2:
 			try:
-				os.system("python " + sys.argv[0].split("acc.py")[0] + "projects/" + args[1])
+				os.system("python " + sys.argv[0].split("acc.py")[0] + "projects/" + args[1] + "/master.py")
 			except FileNotFoundError:
 				print(f"[ke4_acc] 404: no project at {args[1]}.")
 			except Exception as e:
