@@ -34,7 +34,7 @@ class neuron:
 	# Input layer neuron has GetInput function
 	# Necessarily feeds into hidden neuron
 	class input:
-		def __init__(this, name, evolvingArgumentsDictionary, function, layer=None, feedto=NEXT_LAYER, activationFunction=SCALAR):
+		def __init__(this, name, evolvingArgumentsDictionary, function, layer=None, feedto="sentinel_next_layer", activationFunction=SCALAR):
 			this.type = INPUT
 			this.name = name
 			this.target = feedto
@@ -137,16 +137,16 @@ class FeedforwardNeuralNetwork:
 class TheseusLimiter:
 	def __init__(this, targetNeuron):
 		pass
-	
+
 	def log():
 		pass
-	
+
 	def limit():
 		pass
-	
+
 class TheseusLimitationModule:
 	def __init__(this, theseusLimiters):
 		pass
-	
+
 	def regulate():
 		pass

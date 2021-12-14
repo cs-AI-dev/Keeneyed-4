@@ -75,7 +75,7 @@ def process(args):
 		except Exception as e:
 			print(f"[ke4_acc] error occurred during backup: {e}")
 
-	elif args[0] == "q" or args[0] == "quit":
+	elif args[0] == "q" or args[0] == "quit" or args[0] == "exit":
 		exit()
 
 	else:
