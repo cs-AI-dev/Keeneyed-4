@@ -70,7 +70,8 @@ def process(args):
 	elif args[0] == "backup" or args[0] == "bu":
 		print("[ke4_acc] starting backup ...")
 		try:
-			os.system(f"xcopy /e /i /q {sys.argv[0].split("acc.py")[0]} {args[1]}")
+			d = sys.argv[0].split("acc.py")[0]
+			os.system(f"xcopy /e /i /q {d} {args[1]}")
 		except Exception as e:
 			print(f"[ke4_acc] error occurred during backup: {e}")
 
