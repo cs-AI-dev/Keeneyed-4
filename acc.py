@@ -72,6 +72,24 @@ def process(args):
 		try:
 			d = sys.argv[0].split("acc.py")[0]
 			os.system(f"xcopy /e /i /q {d} {args[1]}")
+			print(f"[ke4_acc] backup to {args[1]} complete.")
+		except Exception as e:
+			print(f"[ke4_acc] error occurred during backup: {e}")
+
+	elif args[0] == "version" or args[0] == "v":
+		print("[ke4_acc] Keeneyed Artificial Intelligence and Physics Simulation Engine Version 4.1.0.2")
+		print("          Rework number:                 4")
+		print("          API Change Number:             1")
+		print("          Alteration/Addition Number:    0")
+		print("          Patch Number:                  2")
+		print("          Version supported:             YES")
+
+	elif args[0] == "pull" or args[0] == "pullbackup" or args[0] == "pullbu" or args[0] == "pbu":
+		print("attempting backup retrieval ...")
+		try:
+			d = sys.argv[0].split("acc.py")[0]
+			os.system(f"xcopy /e /i /q {args[1]} {d}")
+			print("[ke4_acc] data successfully pulled.")
 		except Exception as e:
 			print(f"[ke4_acc] error occurred during backup: {e}")
 
