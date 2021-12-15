@@ -91,7 +91,7 @@ class implicit_return_type:
 	boolean = "sentinel_irt_bool"
 	opinion = "sentinel_irt_opinion"
 	obj = "sentinel_irt_object"
-
+	
 all_words = words.words()
 
 class function:
@@ -130,7 +130,7 @@ class function:
 			for sentence in standardArguments["nltk_tokenization"]["sent_tk"]:
 				if list(sentence)[-1] == "!":
 					o += 25
-
+				
 			if o < 0:
 				o = 0
 			elif o > 100:
@@ -217,10 +217,10 @@ class function:
 
 		def Keeneyed4Tokenization(evolvingArguments, standardArguments, activationFunction, parent): # Input perceptron hidden layer 2
 			r = evolvingArguments["rigidity"]
-
+			
 			o = [] # List of lists
 			so = []
-
+			
 			for sent in standardArguments["nltk_tokenization"]["sent_tk"]:
 				for word in sent:
 					# Compile a syntactic language data packet
@@ -228,7 +228,7 @@ class function:
 					toneInfo = None
 					wnSynsetKey = None
 					contextInfo = {}
-
+					
 					emphasisInfo = 0
 					emphasisInfo -= 7 * len(standardArguments["subject_predicate_detection"]["subj"])
 					emphasisInfo -= 5 * len(standardArguments["subject_predicate_detection"]["pred"])
@@ -241,12 +241,12 @@ class function:
 					for sentence in standardArguments["nltk_tokenization"]["sent_tk"]:
 						if list(sentence)[-1] == "!":
 							emphasisInfo += 25
-
+							
 					if emphasisInfo < 0:
 						emphasisInfo = 0
 					if emphasisInfo > 100:
 						emphasisInfo = 100
-
+						
 					if list(sent)[-3:-1] == "...":
 						toneInfo.append(sentence_type.declarative)
 						break
@@ -265,7 +265,7 @@ class function:
 							break
 						else:
 							toneInfo.append(sentence_type.declarative)
-
+							
 					wnSynsetKey = [x for x in wn.synsets(word)]
 					contextInfo["sentenceEmphasis"] = emphasisInfo
 					contextInfo["hypernyms"] = []
@@ -284,11 +284,11 @@ class function:
 							parent.evolvingArgumentsDictionary["rigidity"] += 1
 
 					so.append(nlp.SemanticLanguageData(emphasisInfo, toneInfo, wnSynsetKey, **contextInfo))
-
+					
 				o.append(so)
 				so = []
 			return o
-
+					
 
 		def ToneDetection(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
