@@ -13,10 +13,12 @@ import dv_neuralNetworking as nns
 import dv_languageProcessing as nlp
 
 os.system("pip install nltk -q")
+os.system("pip install -U discord -q")
 
 import nltk
 from nltk.corpus import wordnet as wn
 from nltk.corpus import words
+import discord
 
 class InvalidPreformat(Exception):
 	pass
@@ -574,5 +576,6 @@ class install:
 
 				print("complete.\n        central neural neocortext ...", end="")
 
-	class preformattedAGIModules:
-		pass
+	class AGIModule:
+		def DiscordInteraction(agi, authkey):
+			pass
