@@ -182,6 +182,26 @@ def process(args):
 		f.close()
 		print("complete.")
 		print("\n[ke4_acc] update successful.")
+		
+	elif args[0] == "createproject" or args[0] == "createproj" or args[0] == "create" or args[0] == "c":
+		if len(args) == 3:
+			print("[ke4_acc] creating project ...")
+			try:
+				os.mkdir(args[1])
+				f = open(args[1] + "/project-info.ke4.dat", "w+")
+				f.write("? name " + args[2])
+				f.close()
+				f = open(args[1] + "/master.py", "w+")
+				f.write(f"# {args[2]} master callback")
+			except FileExistsError:
+				print("[ke4_acc] a directory already exists at that directory.")
+			except FileNotFoundError:
+				print("[ke4_acc] 404: file not found. see error handling docs on the Keeneyed-4 wiki.")
+			except Exception as e:
+				print(f"[ke4_acc] error occurred: {e}")
+		else:
+			print("[ke4_acc] invalid syntax.")
+			
 
 	elif args[0] == "q" or args[0] == "quit" or args[0] == "exit":
 		exit()
