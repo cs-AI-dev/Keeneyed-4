@@ -345,8 +345,6 @@ class function:
 				return o
 
 		def SentenceConstruction(evolvingArguments, standardArguments, activationFunction, parent):
-			# Calculate standard deviation of the linked words to check if any of them should be added
-			# Everything within standard deviation of highest will be put in
 			tk = function.keeneyed_4.TokenizeByNLTK({}, """all original data""", SCALAR, parent)
 			alldata = {}
 
@@ -356,11 +354,8 @@ class function:
 				else:
 					alldata[x[1]] = 1
 
-			deviation = math.sqrt(
-				(
-					sum([x - () for x in alldata.values()]) ^ 2
-				) /
-			)
+			# Might look like random garbage but it's standard deviation
+			deviation = math.sqrt( (sum([x - (sum(alldata.values()) / len(alldata.values())) for x in alldata.values()]) ^ 2) / len(alldata.values()) )
 
 		def SyntacticLanguageConstruction(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
