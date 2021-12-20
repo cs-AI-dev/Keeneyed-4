@@ -11,7 +11,6 @@ Simply download a `tar` or `zip` file and execute the `... /master/install.py` P
 See the up-and-coming [Wiki](https://github.com/cs-AI-dev/Keeneyed-4/wiki) for more on how to use the engine, as well as commands that you can use to work it.
 
 ### In the Next Update:
-- Easy environment installation.  
 - KE4 preformat progress.  
 
 > WARNING: BY USING THIS SOFTWARE YOU AGREE TO THE EULA WHICH GOVERNS ITS USE!  
