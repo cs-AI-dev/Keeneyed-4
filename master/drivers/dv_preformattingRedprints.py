@@ -231,40 +231,41 @@ class function:
 					wnSynsetKey = None
 					contextInfo = {}
 					
-					emphasisInfo = 0
-					emphasisInfo -= 7 * len(standardArguments["subject_predicate_detection"]["subj"])
-					emphasisInfo -= 5 * len(standardArguments["subject_predicate_detection"]["pred"])
+					emphasisInfo = [0, 0]
+					emphasisInfo[0] -= 7 * len(standardArguments["subject_predicate_detection"]["subj"])
+					emphasisInfo[0] -= 5 * len(standardArguments["subject_predicate_detection"]["pred"])
 					if word[1] == "RBS":
-						emphasisInfo += 20
+						emphasisInfo[0] += 20
 					if word[1] == "RBR":
-						emphasisInfo += 10
+						emphasisInfo[0] += 10
 					if word[1] == "RB":
-						emphasisInfo += 5
+						emphasisInfo[0] += 5
 					for sentence in standardArguments["nltk_tokenization"]["sent_tk"]:
 						if list(sentence)[-1] == "!":
-							emphasisInfo += 25
+							emphasisInfo[0] += 25
 							
-					if emphasisInfo < 0:
-						emphasisInfo = 0
-					if emphasisInfo > 100:
-						emphasisInfo = 100
+					if emphasisInfo[0] < 0:
+						emphasisInfo[0] = 0
+					if emphasisInfo[0] > 100:
+						emphasisInfo[0] = 100
+						
+					if len(so) == 0:
+						emphasisInfo[1] = 0
+					else:
+						emphasisInfo[1] += int((so[-1].emphasisInfo[1] + emphasisInfo[0]) / 2)
 						
 					if list(sent)[-3:-1] == "...":
 						toneInfo.append(sentence_type.declarative)
-						break
 
 					if list(sent)[-3:-1] == "..?" or list(sentence)[-3:-1] == "?.." or list(sentence)[-1] == "?":
 						toneInfo.append(sentence_type.interrogative)
-						break
 
 					if list(sent)[-2:-1] == "?!" or list(sentence)[-2:-1] == "!?":
 						toneInfo.append(sentence_type.interrogative_exclamation)
-						break
 
 					if list(sent)[-1] == ".":
 						if initialToken != unknown:
 							toneInfo.append(initialToken)
-							break
 						else:
 							toneInfo.append(sentence_type.declarative)
 							
@@ -290,10 +291,45 @@ class function:
 				o.append(so)
 				so = []
 			return o
-					
 
 		def ToneDetection(evolvingArguments, standardArguments, activationFunction, parent):
-			pass
+			tok_ke4 = standardArguments["keeneyed_4_forward_tokenization"]
+			
+			toneEmphasisLevel = None
+			
+			for sent in tok_ke4:
+				o = 0 
+				
+				for word in sent:
+					o += word.emphasisInfo[0]
+					o += word.emphasisInfo[1]
+					
+				if o < evolvingArguments["emphasis_threshold_h2"]:
+					if o < evolvingArguments["emphasis_threshold_h1"]:
+						if o < evolvingArguments["emphasis_threshold_l0"]:
+							if o < evolvingArguments["emphasis_threshold_l1"]:
+								if o < evolvingArguments["emphasis_threshold_l2"]:
+									parent.evolvingArguments["emphasis_threshold_l2"] += 5
+									toneEmphasisLevel = "l3"
+								else:
+									parent.evolvingArguments["emphasis_threshold_l2"] -= 5
+									parent.evolvingArguments["emphasis_threshold_l1"] += 5
+									toneEmphasisLevel = "l2"
+							else:
+								parent.evolvingArguments["emphasis_threshold_l1"] -= 5
+								parent.evolvingArguments["emphasis_threshold_l0"] += 5
+								toneEmphasisLevel = "l1"
+						else:
+							parent.evolvingArguments["emphasis_threshold_l0"] -= 5
+							parent.evolvingArguments["emphasis_threshold_h1"] += 5
+							toneEmphasisLevel = "l0"
+					else:
+						parent.evolvingArguments["emphasis_threshold_h1"] -= 5
+						parent.evolvingArguments["emphasis_threshold_h2"] += 5
+						toneEmphasisLevel = "h1"
+				else:
+					parent.evolvingArguments["emphasis_threshold_h1"] -= 5
+					toneEmphasisLevel = "h2"
 
 		def SentenceConstruction(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
@@ -413,8 +449,12 @@ class install:
 						# H3
 						nns.neuron.hidden(
 							name = "tone_analysis",
-							evolvingArgumentsDictionary = {
-								"rigidity": 50 # Range between 1 and 100
+							evolvingArgumentsDictionary = { # Threshold values for emphasis lv detection
+								"emphasis_threshold_l2": 2000,
+								"emphasis_threshold_l1": 4000,
+								"emphasis_threshold_l0": 6000,
+								"emphasis_threshold_h1": 8000,
+								"emphasis_threshold_h2": 10000
 							},
 							function = function.keeneyed_4.ToneDetection,
 							layer = 3
