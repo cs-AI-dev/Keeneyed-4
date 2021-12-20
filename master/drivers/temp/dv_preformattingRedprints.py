@@ -13,10 +13,13 @@ import dv_neuralNetworking as nns
 import dv_languageProcessing as nlp
 
 os.system("pip install nltk -q")
+os.system("pip install -U discord -q")
 
 import nltk
 from nltk.corpus import wordnet as wn
 from nltk.corpus import words
+import discord
+import math
 
 class InvalidPreformat(Exception):
 	pass
@@ -91,7 +94,7 @@ class implicit_return_type:
 	boolean = "sentinel_irt_bool"
 	opinion = "sentinel_irt_opinion"
 	obj = "sentinel_irt_object"
-	
+
 all_words = words.words()
 
 class function:
@@ -130,7 +133,7 @@ class function:
 			for sentence in standardArguments["nltk_tokenization"]["sent_tk"]:
 				if list(sentence)[-1] == "!":
 					o += 25
-				
+
 			if o < 0:
 				o = 0
 			elif o > 100:
@@ -217,10 +220,10 @@ class function:
 
 		def Keeneyed4Tokenization(evolvingArguments, standardArguments, activationFunction, parent): # Input perceptron hidden layer 2
 			r = evolvingArguments["rigidity"]
-			
+
 			o = [] # List of lists
 			so = []
-			
+
 			for sent in standardArguments["nltk_tokenization"]["sent_tk"]:
 				for word in sent:
 					# Compile a syntactic language data packet
@@ -228,44 +231,45 @@ class function:
 					toneInfo = None
 					wnSynsetKey = None
 					contextInfo = {}
-					
-					emphasisInfo = 0
-					emphasisInfo -= 7 * len(standardArguments["subject_predicate_detection"]["subj"])
-					emphasisInfo -= 5 * len(standardArguments["subject_predicate_detection"]["pred"])
+
+					emphasisInfo = [0, 0]
+					emphasisInfo[0] -= 7 * len(standardArguments["subject_predicate_detection"]["subj"])
+					emphasisInfo[0] -= 5 * len(standardArguments["subject_predicate_detection"]["pred"])
 					if word[1] == "RBS":
-						emphasisInfo += 20
+						emphasisInfo[0] += 20
 					if word[1] == "RBR":
-						emphasisInfo += 10
+						emphasisInfo[0] += 10
 					if word[1] == "RB":
-						emphasisInfo += 5
+						emphasisInfo[0] += 5
 					for sentence in standardArguments["nltk_tokenization"]["sent_tk"]:
 						if list(sentence)[-1] == "!":
-							emphasisInfo += 25
-							
-					if emphasisInfo < 0:
-						emphasisInfo = 0
-					if emphasisInfo > 100:
-						emphasisInfo = 100
-						
+							emphasisInfo[0] += 25
+
+					if emphasisInfo[0] < 0:
+						emphasisInfo[0] = 0
+					if emphasisInfo[0] > 100:
+						emphasisInfo[0] = 100
+
+					if len(so) == 0:
+						emphasisInfo[1] = 0
+					else:
+						emphasisInfo[1] += int((so[-1].emphasisInfo[1] + emphasisInfo[0]) / 2)
+
 					if list(sent)[-3:-1] == "...":
 						toneInfo.append(sentence_type.declarative)
-						break
 
 					if list(sent)[-3:-1] == "..?" or list(sentence)[-3:-1] == "?.." or list(sentence)[-1] == "?":
 						toneInfo.append(sentence_type.interrogative)
-						break
 
 					if list(sent)[-2:-1] == "?!" or list(sentence)[-2:-1] == "!?":
 						toneInfo.append(sentence_type.interrogative_exclamation)
-						break
 
 					if list(sent)[-1] == ".":
 						if initialToken != unknown:
 							toneInfo.append(initialToken)
-							break
 						else:
 							toneInfo.append(sentence_type.declarative)
-							
+
 					wnSynsetKey = [x for x in wn.synsets(word)]
 					contextInfo["sentenceEmphasis"] = emphasisInfo
 					contextInfo["hypernyms"] = []
@@ -284,23 +288,87 @@ class function:
 							parent.evolvingArgumentsDictionary["rigidity"] += 1
 
 					so.append(nlp.SemanticLanguageData(emphasisInfo, toneInfo, wnSynsetKey, **contextInfo))
-					
+
 				o.append(so)
 				so = []
 			return o
-					
 
 		def ToneDetection(evolvingArguments, standardArguments, activationFunction, parent):
-			pass
+			tok_ke4 = standardArguments["keeneyed_4_forward_tokenization"]
+
+			toneEmphasisLevel = None
+
+			for sent in tok_ke4:
+				o = 0
+
+				for word in sent:
+					o += word.emphasisInfo[0]
+					o += word.emphasisInfo[1]
+
+				if o / len(sent) < evolvingArguments["emphasis_threshold_h2"]:
+					if o / len(sent) < evolvingArguments["emphasis_threshold_h1"]:
+						if o / len(sent) < evolvingArguments["emphasis_threshold_l0"]:
+							if o / len(sent) < evolvingArguments["emphasis_threshold_l1"]:
+								if o / len(sent) < evolvingArguments["emphasis_threshold_l2"]:
+									if parent.evolvingArguments["emphasis_threshold_l2"] < 100:
+										parent.evolvingArguments["emphasis_threshold_l2"] += 1
+									toneEmphasisLevel = "l3"
+								else:
+									if parent.evolvingArguments["emphasis_threshold_l2"] > 0:
+										parent.evolvingArguments["emphasis_threshold_l2"] -= 1
+									if parent.evolvingArguments["emphasis_threshold_l1"] < 100:
+										parent.evolvingArguments["emphasis_threshold_l1"] += 1
+									toneEmphasisLevel = "l2"
+							else:
+								if parent.evolvingArguments["emphasis_threshold_l1"] > 0:
+									parent.evolvingArguments["emphasis_threshold_l1"] -= 1
+								if parent.evolvingArguments["emphasis_threshold_l0"] < 100:
+									parent.evolvingArguments["emphasis_threshold_l0"] += 1
+								toneEmphasisLevel = "l1"
+						else:
+							if parent.evolvingArguments["emphasis_threshold_l0"] > 0:
+								parent.evolvingArguments["emphasis_threshold_l0"] -= 1
+							if parent.evolvingArguments["emphasis_threshold_h1"] < 100:
+								parent.evolvingArguments["emphasis_threshold_h1"] += 1
+							toneEmphasisLevel = "l0"
+					else:
+						if parent.evolvingArguments["emphasis_threshold_h1"] > 0:
+							parent.evolvingArguments["emphasis_threshold_h1"] -= 1
+						if parent.evolvingArguments["emphasis_threshold_h2"] < 100:
+							parent.evolvingArguments["emphasis_threshold_h2"] += 1
+						toneEmphasisLevel = "h1"
+				else:
+					if parent.evolvingArguments["emphasis_threshold_h1"] > 0:
+						parent.evolvingArguments["emphasis_threshold_h1"] -= 1
+					toneEmphasisLevel = "h2"
+
+				return o
 
 		def SentenceConstruction(evolvingArguments, standardArguments, activationFunction, parent):
-			pass
+			# Calculate standard deviation of the linked words to check if any of them should be added
+			# Everything within standard deviation of highest will be put in
+			tk = function.keeneyed_4.TokenizeByNLTK({}, """all original data""", SCALAR, parent)
+			alldata = {}
+
+			for x in tk["pos_tag"]:
+				if x[1] in alldata.keys():
+					alldata[x[1]] += 1
+				else:
+					alldata[x[1]] = 1
+
+			deviation = math.sqrt(
+				(
+					sum([x - () for x in alldata.values()]) ^ 2
+				) /
+			)
 
 		def SyntacticLanguageConstruction(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
 
 		def ImplicitReturnTypeDetection(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
+
+		# Central neocortex (unfinished?)
 
 		# Output perceptron
 
@@ -411,8 +479,12 @@ class install:
 						# H3
 						nns.neuron.hidden(
 							name = "tone_analysis",
-							evolvingArgumentsDictionary = {
-								"rigidity": 50 # Range between 1 and 100
+							evolvingArgumentsDictionary = { # Threshold values for emphasis lv detection
+								"emphasis_threshold_l2": 20,
+								"emphasis_threshold_l1": 40,
+								"emphasis_threshold_l0": 60,
+								"emphasis_threshold_h1": 80,
+								"emphasis_threshold_h2": 100
 							},
 							function = function.keeneyed_4.ToneDetection,
 							layer = 3
@@ -574,5 +646,6 @@ class install:
 
 				print("complete.\n        central neural neocortext ...", end="")
 
-	class preformattedAGIModules:
-		pass
+	class AGIModule:
+		def DiscordInteraction(agi, authkey):
+			pass
