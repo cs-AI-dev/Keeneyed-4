@@ -19,6 +19,7 @@ import nltk
 from nltk.corpus import wordnet as wn
 from nltk.corpus import words
 import discord
+import math
 
 class InvalidPreformat(Exception):
 	pass
@@ -304,41 +305,70 @@ class function:
 					o += word.emphasisInfo[0]
 					o += word.emphasisInfo[1]
 					
-				if o < evolvingArguments["emphasis_threshold_h2"]:
-					if o < evolvingArguments["emphasis_threshold_h1"]:
-						if o < evolvingArguments["emphasis_threshold_l0"]:
-							if o < evolvingArguments["emphasis_threshold_l1"]:
-								if o < evolvingArguments["emphasis_threshold_l2"]:
-									parent.evolvingArguments["emphasis_threshold_l2"] += 5
+				if o / len(sent) < evolvingArguments["emphasis_threshold_h2"]:
+					if o / len(sent) < evolvingArguments["emphasis_threshold_h1"]:
+						if o / len(sent) < evolvingArguments["emphasis_threshold_l0"]:
+							if o / len(sent) < evolvingArguments["emphasis_threshold_l1"]:
+								if o / len(sent) < evolvingArguments["emphasis_threshold_l2"]:
+									if parent.evolvingArguments["emphasis_threshold_l2"] < 100: 
+										parent.evolvingArguments["emphasis_threshold_l2"] += 1
 									toneEmphasisLevel = "l3"
 								else:
-									parent.evolvingArguments["emphasis_threshold_l2"] -= 5
-									parent.evolvingArguments["emphasis_threshold_l1"] += 5
+									if parent.evolvingArguments["emphasis_threshold_l2"] > 0: 
+										parent.evolvingArguments["emphasis_threshold_l2"] -= 1
+									if parent.evolvingArguments["emphasis_threshold_l1"] < 100: 
+										parent.evolvingArguments["emphasis_threshold_l1"] += 1
 									toneEmphasisLevel = "l2"
 							else:
-								parent.evolvingArguments["emphasis_threshold_l1"] -= 5
-								parent.evolvingArguments["emphasis_threshold_l0"] += 5
+								if parent.evolvingArguments["emphasis_threshold_l1"] > 0: 
+									parent.evolvingArguments["emphasis_threshold_l1"] -= 1
+								if parent.evolvingArguments["emphasis_threshold_l0"] < 100: 
+									parent.evolvingArguments["emphasis_threshold_l0"] += 1
 								toneEmphasisLevel = "l1"
 						else:
-							parent.evolvingArguments["emphasis_threshold_l0"] -= 5
-							parent.evolvingArguments["emphasis_threshold_h1"] += 5
+							if parent.evolvingArguments["emphasis_threshold_l0"] > 0: 
+								parent.evolvingArguments["emphasis_threshold_l0"] -= 1
+							if parent.evolvingArguments["emphasis_threshold_h1"] < 100: 
+								parent.evolvingArguments["emphasis_threshold_h1"] += 1
 							toneEmphasisLevel = "l0"
 					else:
-						parent.evolvingArguments["emphasis_threshold_h1"] -= 5
-						parent.evolvingArguments["emphasis_threshold_h2"] += 5
+						if parent.evolvingArguments["emphasis_threshold_h1"] > 0: 
+							parent.evolvingArguments["emphasis_threshold_h1"] -= 1
+						if parent.evolvingArguments["emphasis_threshold_h2"] < 100: 
+							parent.evolvingArguments["emphasis_threshold_h2"] += 1
 						toneEmphasisLevel = "h1"
 				else:
-					parent.evolvingArguments["emphasis_threshold_h1"] -= 5
+					if parent.evolvingArguments["emphasis_threshold_h1"] > 0: 
+						parent.evolvingArguments["emphasis_threshold_h1"] -= 1
 					toneEmphasisLevel = "h2"
-
+				
+				return o
+			
 		def SentenceConstruction(evolvingArguments, standardArguments, activationFunction, parent):
-			pass
+			# Calculate standard deviation of the linked words to check if any of them should be added
+			# Everything within standard deviation of highest will be put in
+			tk = function.keeneyed_4.TokenizeByNLTK({}, """all original data""", SCALAR, parent)
+			alldata = {}
+			
+			for x in tk["pos_tag"]:
+				if x[1] in alldata.keys():
+					alldata[x[1]] += 1
+				else:
+					alldata[x[1]] = 1
+					
+			deviation = math.sqrt(
+				(
+					sum([x - () for x in alldata.values()]) ^ 2
+				) / 
+			)
 
 		def SyntacticLanguageConstruction(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
 
 		def ImplicitReturnTypeDetection(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
+		
+		# Central neocortex (unfinished?)
 
 		# Output perceptron
 
@@ -450,11 +480,11 @@ class install:
 						nns.neuron.hidden(
 							name = "tone_analysis",
 							evolvingArgumentsDictionary = { # Threshold values for emphasis lv detection
-								"emphasis_threshold_l2": 2000,
-								"emphasis_threshold_l1": 4000,
-								"emphasis_threshold_l0": 6000,
-								"emphasis_threshold_h1": 8000,
-								"emphasis_threshold_h2": 10000
+								"emphasis_threshold_l2": 20,
+								"emphasis_threshold_l1": 40,
+								"emphasis_threshold_l0": 60,
+								"emphasis_threshold_h1": 80,
+								"emphasis_threshold_h2": 100
 							},
 							function = function.keeneyed_4.ToneDetection,
 							layer = 3
