@@ -73,7 +73,8 @@ def process(args):
 		print("[ke4_acc] starting backup ...")
 		try:
 			d = sys.argv[0].split("acc.py")[0]
-			os.system(f"xcopy /e /i /q {d} {args[1]}")
+			e = d + " " + args[1]
+			os.system(f"xcopy /e /i /q {e}")
 			print(f"[ke4_acc] backup to {args[1]} complete.")
 		except Exception as e:
 			print(f"[ke4_acc] error occurred during backup: {e}")
@@ -90,7 +91,8 @@ def process(args):
 		print("[ke4_acc] attempting backup retrieval ...")
 		try:
 			d = sys.argv[0].split("acc.py")[0]
-			os.system(f"xcopy /e /i /q {args[1]} {d}")
+			e = args[1] + " " + d
+			os.system(f"xcopy /e /i /q {e}")
 			print("[ke4_acc] data successfully pulled.")
 		except Exception as e:
 			print(f"[ke4_acc] error occurred during backup: {e}")

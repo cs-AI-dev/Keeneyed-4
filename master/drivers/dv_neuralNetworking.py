@@ -33,6 +33,18 @@ class programs:
 class neuron:
 	# Input layer neuron has GetInput function
 	# Necessarily feeds into hidden neuron
+
+	global OUTPUT
+	global INPUT
+	global HIDDEN
+	global NEXT_LAYER
+	
+	global SIGMOID
+	global LINEAR
+	global LIMITING
+	global SPIKING
+	global SCALAR
+
 	class input:
 		def __init__(this, name, evolvingArgumentsDictionary, function, layer=None, feedto="sentinel_next_layer", activationFunction=SCALAR):
 			this.type = INPUT
