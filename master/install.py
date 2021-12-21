@@ -53,6 +53,7 @@ while True:
 	else:
 		pass
 
+os.system("cls")
 wd = input("Please enter a directory to install the environment to: ")
 print("Creating directory ...", end="")
 try:

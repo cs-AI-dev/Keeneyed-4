@@ -94,16 +94,16 @@ def process(args):
 			print("[ke4_acc] data successfully pulled.")
 		except Exception as e:
 			print(f"[ke4_acc] error occurred during backup: {e}")
-			
+
 	elif args[0] == "load" or args[0] == "l" or args[0] == "loadproj" or args[0] == "loadproject":
 		print("[ke4_acc] attempting to load project into environment ...")
 		try:
 			d = sys.argv[0].split("acc.py")[0]
-			os.system(f"xcopy /e /i /q {args[1]} {d + "/master/projects/"}")
+			os.system(f"xcopy /e /i /q {args[1] + " " + d + "/master/projects/"}")
 			print("[ke4_acc] data successfully pulled.")
 		except Exception as e:
 			print(f"[ke4_acc] error occurred during project loading: {e}")
-			
+
 	elif args[0] == "update" or args[0] == "u" or args["installupdate"]:
 		print("[ke4_acc] attempting to update environment...")
 		if len(args) > 1:
@@ -182,7 +182,7 @@ def process(args):
 		f.close()
 		print("complete.")
 		print("\n[ke4_acc] update successful.")
-		
+
 	elif args[0] == "createproject" or args[0] == "createproj" or args[0] == "create" or args[0] == "c":
 		if len(args) == 3:
 			print("[ke4_acc] creating project ...")
@@ -201,7 +201,7 @@ def process(args):
 				print(f"[ke4_acc] error occurred: {e}")
 		else:
 			print("[ke4_acc] invalid syntax.")
-			
+
 
 	elif args[0] == "q" or args[0] == "quit" or args[0] == "exit":
 		exit()
