@@ -99,7 +99,8 @@ def process(args):
 		print("[ke4_acc] attempting to load project into environment ...")
 		try:
 			d = sys.argv[0].split("acc.py")[0]
-			os.system(f"xcopy /e /i /q {args[1] + " " + d + "/master/projects/"}")
+			e = args[1] + " " + d + "/master/projects/"
+			os.system(f"xcopy /e /i /q {e}")
 			print("[ke4_acc] data successfully pulled.")
 		except Exception as e:
 			print(f"[ke4_acc] error occurred during project loading: {e}")
@@ -112,21 +113,22 @@ def process(args):
 		else:
 			print("[ke4_acc] no backup location noticed in command, continuing...")
 		print(" -- KEENEYED-4 ENVIRONMENT UPDATE PROCESS -- ")
+
 		print("reinstalling non-essentials ...")
-		f = open(wd + "/keeneyed_4/README.md", "w")
+		f = open(sys.argv[0].split("/keeneyed_4/acc.py")[0] + "/keeneyed_4/README.md", "w")
 		print(" | reinstalling readme file ...", end="")
 		fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/README.md").text
 		f.write(fd)
 		f.close()
 		print("complete.")
-		f = open(wd + "/keeneyed_4/EULA.md", "w")
+		f = open(sys.argv[0].split("/keeneyed_4/acc.py")[0] + "/keeneyed_4/EULA.md", "w")
 		print(" | reinstalling EULA copy ...", end="")
 		fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/EULA.md").text
 		f.write(fd)
 		f.close()
 
 		print("complete.\n | reinstalling environment CLI access program ...", end="")
-		f = open(wd + "/keeneyed_4/acc.py", "w")
+		f = open(sys.argv[0].split("/keeneyed_4/acc.py")[0] + "/keeneyed_4/acc.py", "w")
 		fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/acc.py").text
 		f.write(fd)
 		f.close()
@@ -134,48 +136,48 @@ def process(args):
 
 		print("\nreinstalling drivers...")
 		try:
-			os.mkdir(wd + "/keeneyed_4/master/")
+			os.mkdir(sys.argv[0].split("/keeneyed_4/acc.py")[0] + "/keeneyed_4/master/")
 		except:
 			pass
 		try:
-			os.mkdir(wd + "/keeneyed_4/master/drivers/")
+			os.mkdir(sys.argv[0].split("/keeneyed_4/acc.py")[0] + "/keeneyed_4/master/drivers/")
 		except:
 			pass
 		try:
-			os.mkdir(wd + "/keeneyed_4/master/projects/")
+			os.mkdir(sys.argv[0].split("/keeneyed_4/acc.py")[0] + "/keeneyed_4/master/projects/")
 		except:
 			pass
-		f = open(wd + "/keeneyed_4/master/drivers/dv_master.py",  "w")
+		f = open(sys.argv[0].split("/keeneyed_4/acc.py")[0] + "/keeneyed_4/master/drivers/dv_master.py",  "w")
 		print(" | reinstalling master driver ...", end="")
 		fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_master.py").text
 		f.write(fd)
 		f.close()
 		print("complete.")
-		f = open(wd + "/keeneyed_4/master/drivers/dv_cacheGeneration.py", "w")
+		f = open(sys.argv[0].split("/keeneyed_4/acc.py")[0] + "/keeneyed_4/master/drivers/dv_cacheGeneration.py", "w")
 		print(" | reinstalling cache generation driver ...", end="")
 		fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_cacheGeneration.py").text
 		f.write(fd)
 		f.close()
 		print("complete.")
-		f = open(wd + "/keeneyed_4/master/drivers/dv_languageProcessing.py", "w")
+		f = open(sys.argv[0].split("/keeneyed_4/acc.py")[0] + "/keeneyed_4/master/drivers/dv_languageProcessing.py", "w")
 		print(" | reinstalling language processing driver ...", end="")
 		fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_languageProcessing.py").text
 		f.write(fd)
 		f.close()
 		print("complete.")
-		f = open(wd + "/keeneyed_4/master/drivers/dv_neuralNetworking.py", "w")
+		f = open(sys.argv[0].split("/keeneyed_4/acc.py")[0] + "/keeneyed_4/master/drivers/dv_neuralNetworking.py", "w")
 		print(" | reinstalling neural networking driver ...", end="")
 		fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_neuralNetworking.py").text
 		f.write(fd)
 		f.close()
 		print("complete.")
-		f = open(wd + "/keeneyed_4/master/drivers/dv_preformattingRedprints", "w")
+		f = open(sys.argv[0].split("/keeneyed_4/acc.py")[0] + "/keeneyed_4/master/drivers/dv_preformattingRedprints", "w")
 		print(" | reinstalling preformatting driver ...", end="")
 		fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_preformattingRedprints.py").text
 		f.write(fd)
 		f.close()
 		print("complete.")
-		f = open(wd + "/keeneyed_4/master/drivers/dv_simulationEngine", "w")
+		f = open(sys.argv[0].split("/keeneyed_4/acc.py")[0] + "/keeneyed_4/master/drivers/dv_simulationEngine", "w")
 		print(" | reinstalling simulation engine driver ...", end="")
 		fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_simulationEngine.py").text
 		f.write(fd)
