@@ -107,7 +107,7 @@ def process(args):
 		except Exception as e:
 			print(f"[ke4_acc] error occurred during project loading: {e}")
 
-	elif args[0] == "update" or args[0] == "u" or args["installupdate"]:
+	elif args[0] == "update" or args[0] == "u" or args[0] == "installupdate":
 		print("[ke4_acc] attempting to update environment...")
 		if len(args) > 1:
 			print("[ke4_acc] backing up projects before reinstalling ...")
