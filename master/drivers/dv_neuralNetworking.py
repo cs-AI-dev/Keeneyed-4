@@ -38,7 +38,7 @@ class neuron:
 	global INPUT
 	global HIDDEN
 	global NEXT_LAYER
-	
+
 	global SIGMOID
 	global LINEAR
 	global LIMITING
@@ -109,6 +109,7 @@ class neuron:
 
 class FeedforwardNeuralNetwork:
 	def __init__(this, neuronObjectList):
+		this.currentInput = None
 		this.neurons = {}
 		this.availableLayers = []
 		for neuron in neuronObjectsList:
@@ -123,6 +124,7 @@ class FeedforwardNeuralNetwork:
 			[this.availableLayers.append(x) for x in pal if x not in this.availableLayers]
 
 	def SetInputs(this, stdin):
+		this.currentInput = stdin
 		for neuron in this.neurons[this.availableLayers[0]]:
 			neuron.standardInputs = stdin
 

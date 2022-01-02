@@ -8,12 +8,12 @@
 # before using this system.
 
 import sys
-import os
+import os as operatingSystem
 import dv_neuralNetworking as nns
 import dv_languageProcessing as nlp
 
-os.system("pip install nltk -q")
-os.system("pip install -U discord -q")
+operatingSystem.system("py -m pip install nltk -q")
+operatingSystem.system("py -m pip install -U discord -q")
 
 import nltk
 from nltk.corpus import wordnet as wn
@@ -94,7 +94,7 @@ class implicit_return_type:
 	boolean = "sentinel_irt_bool"
 	opinion = "sentinel_irt_opinion"
 	obj = "sentinel_irt_object"
-	
+
 all_words = words.words()
 
 class function:
@@ -133,7 +133,7 @@ class function:
 			for sentence in standardArguments["nltk_tokenization"]["sent_tk"]:
 				if list(sentence)[-1] == "!":
 					o += 25
-				
+
 			if o < 0:
 				o = 0
 			elif o > 100:
@@ -220,10 +220,10 @@ class function:
 
 		def Keeneyed4Tokenization(evolvingArguments, standardArguments, activationFunction, parent): # Input perceptron hidden layer 2
 			r = evolvingArguments["rigidity"]
-			
+
 			o = [] # List of lists
 			so = []
-			
+
 			for sent in standardArguments["nltk_tokenization"]["sent_tk"]:
 				for word in sent:
 					# Compile a syntactic language data packet
@@ -231,7 +231,7 @@ class function:
 					toneInfo = None
 					wnSynsetKey = None
 					contextInfo = {}
-					
+
 					emphasisInfo = [0, 0]
 					emphasisInfo[0] -= 7 * len(standardArguments["subject_predicate_detection"]["subj"])
 					emphasisInfo[0] -= 5 * len(standardArguments["subject_predicate_detection"]["pred"])
@@ -244,17 +244,17 @@ class function:
 					for sentence in standardArguments["nltk_tokenization"]["sent_tk"]:
 						if list(sentence)[-1] == "!":
 							emphasisInfo[0] += 25
-							
+
 					if emphasisInfo[0] < 0:
 						emphasisInfo[0] = 0
 					if emphasisInfo[0] > 100:
 						emphasisInfo[0] = 100
-						
+
 					if len(so) == 0:
 						emphasisInfo[1] = 0
 					else:
 						emphasisInfo[1] += int((so[-1].emphasisInfo[1] + emphasisInfo[0]) / 2)
-						
+
 					if list(sent)[-3:-1] == "...":
 						toneInfo.append(sentence_type.declarative)
 
@@ -269,7 +269,7 @@ class function:
 							toneInfo.append(initialToken)
 						else:
 							toneInfo.append(sentence_type.declarative)
-							
+
 					wnSynsetKey = [x for x in wn.synsets(word)]
 					contextInfo["sentenceEmphasis"] = emphasisInfo
 					contextInfo["hypernyms"] = []
@@ -288,86 +288,81 @@ class function:
 							parent.evolvingArgumentsDictionary["rigidity"] += 1
 
 					so.append(nlp.SemanticLanguageData(emphasisInfo, toneInfo, wnSynsetKey, **contextInfo))
-					
+
 				o.append(so)
 				so = []
 			return o
 
 		def ToneDetection(evolvingArguments, standardArguments, activationFunction, parent):
 			tok_ke4 = standardArguments["keeneyed_4_forward_tokenization"]
-			
+
 			toneEmphasisLevel = None
-			
+
 			for sent in tok_ke4:
-				o = 0 
-				
+				o = 0
+
 				for word in sent:
 					o += word.emphasisInfo[0]
 					o += word.emphasisInfo[1]
-					
+
 				if o / len(sent) < evolvingArguments["emphasis_threshold_h2"]:
 					if o / len(sent) < evolvingArguments["emphasis_threshold_h1"]:
 						if o / len(sent) < evolvingArguments["emphasis_threshold_l0"]:
 							if o / len(sent) < evolvingArguments["emphasis_threshold_l1"]:
 								if o / len(sent) < evolvingArguments["emphasis_threshold_l2"]:
-									if parent.evolvingArguments["emphasis_threshold_l2"] < 100: 
+									if parent.evolvingArguments["emphasis_threshold_l2"] < 100:
 										parent.evolvingArguments["emphasis_threshold_l2"] += 1
 									toneEmphasisLevel = "l3"
 								else:
-									if parent.evolvingArguments["emphasis_threshold_l2"] > 0: 
+									if parent.evolvingArguments["emphasis_threshold_l2"] > 0:
 										parent.evolvingArguments["emphasis_threshold_l2"] -= 1
-									if parent.evolvingArguments["emphasis_threshold_l1"] < 100: 
+									if parent.evolvingArguments["emphasis_threshold_l1"] < 100:
 										parent.evolvingArguments["emphasis_threshold_l1"] += 1
 									toneEmphasisLevel = "l2"
 							else:
-								if parent.evolvingArguments["emphasis_threshold_l1"] > 0: 
+								if parent.evolvingArguments["emphasis_threshold_l1"] > 0:
 									parent.evolvingArguments["emphasis_threshold_l1"] -= 1
-								if parent.evolvingArguments["emphasis_threshold_l0"] < 100: 
+								if parent.evolvingArguments["emphasis_threshold_l0"] < 100:
 									parent.evolvingArguments["emphasis_threshold_l0"] += 1
 								toneEmphasisLevel = "l1"
 						else:
-							if parent.evolvingArguments["emphasis_threshold_l0"] > 0: 
+							if parent.evolvingArguments["emphasis_threshold_l0"] > 0:
 								parent.evolvingArguments["emphasis_threshold_l0"] -= 1
-							if parent.evolvingArguments["emphasis_threshold_h1"] < 100: 
+							if parent.evolvingArguments["emphasis_threshold_h1"] < 100:
 								parent.evolvingArguments["emphasis_threshold_h1"] += 1
 							toneEmphasisLevel = "l0"
 					else:
-						if parent.evolvingArguments["emphasis_threshold_h1"] > 0: 
+						if parent.evolvingArguments["emphasis_threshold_h1"] > 0:
 							parent.evolvingArguments["emphasis_threshold_h1"] -= 1
-						if parent.evolvingArguments["emphasis_threshold_h2"] < 100: 
+						if parent.evolvingArguments["emphasis_threshold_h2"] < 100:
 							parent.evolvingArguments["emphasis_threshold_h2"] += 1
 						toneEmphasisLevel = "h1"
 				else:
-					if parent.evolvingArguments["emphasis_threshold_h1"] > 0: 
+					if parent.evolvingArguments["emphasis_threshold_h1"] > 0:
 						parent.evolvingArguments["emphasis_threshold_h1"] -= 1
 					toneEmphasisLevel = "h2"
-				
+
 				return o
-			
+
 		def SentenceConstruction(evolvingArguments, standardArguments, activationFunction, parent):
-			# Calculate standard deviation of the linked words to check if any of them should be added
-			# Everything within standard deviation of highest will be put in
 			tk = function.keeneyed_4.TokenizeByNLTK({}, """all original data""", SCALAR, parent)
 			alldata = {}
-			
+
 			for x in tk["pos_tag"]:
 				if x[1] in alldata.keys():
 					alldata[x[1]] += 1
 				else:
 					alldata[x[1]] = 1
-					
-			deviation = math.sqrt(
-				(
-					sum([x - () for x in alldata.values()]) ^ 2
-				) / 
-			)
+
+			# Might look like random garbage but it's standard deviation
+			deviation = math.sqrt( (sum([x - (sum(alldata.values()) / len(alldata.values())) for x in alldata.values()]) ^ 2) / len(alldata.values()) )
 
 		def SyntacticLanguageConstruction(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
 
 		def ImplicitReturnTypeDetection(evolvingArguments, standardArguments, activationFunction, parent):
 			pass
-		
+
 		# Central neocortex (unfinished?)
 
 		# Output perceptron
