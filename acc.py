@@ -18,11 +18,15 @@ from sys import argv
 import math
 from math import sqrt
 
+os.system("py -m pip install tqdm -q")
+
 import tqdm
 from tqdm import tqdm
 
 import time
 from time import sleep as wait
+
+os.system("py -m pip install requests -q")
 
 import requests
 
