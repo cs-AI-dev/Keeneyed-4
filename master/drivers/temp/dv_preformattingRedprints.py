@@ -12,8 +12,8 @@ import os
 import dv_neuralNetworking as nns
 import dv_languageProcessing as nlp
 
-os.system("pip install nltk -q")
-os.system("pip install -U discord -q")
+os.system("py -m pip install nltk -q")
+os.system("py -m pip install -U discord -q")
 
 import nltk
 from nltk.corpus import wordnet as wn
