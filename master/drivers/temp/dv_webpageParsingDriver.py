@@ -18,15 +18,66 @@ import requests
 import bs4
 from bs4 import BeautifulSoup as bs4_content
 
+class TopLevelDomainError(Exception):
+	pass
+
 google = "sentinel_google"
 bing = "sentinel_bing"
 yahoo = "sentinel_yahoo"
 
 websearch_number = 0
 
+def getTripleDigit(i):
+	if i < 10:
+		return "00" + str(i)
+	elif i < 100:
+		return "0" + str(i)
+	else:
+		return str(i)
+	
+class WebsearchReturn:
+	def __init__(wsr, searchEngineName, searchEngineTerms, links):
+		wsr.engine = searchEngineName
+		wsr.terms = searchEngineTerms
+		wsr.urls = {
+			".net": [url for url in links if url.split("/")[2].split(".")[1] == "net"],
+			".com": [url for url in links if url.split("/")[2].split(".")[1] == "com"],
+			".org": [url for url in links if url.split("/")[2].split(".")[1] == "org"],
+			".edu": [url for url in links if url.split("/")[2].split(".")[1] == "edu"],
+			".int": [url for url in links if url.split("/")[2].split(".")[1] == "int"],
+			".gov": [url for url in links if url.split("/")[2].split(".")[1] == "gov"],
+		}
+		wsr.tlds = [tld for tld in wsr.urls.keys() if tld != []]
+		
+	def getByTopLevelDomains(wsr, tld):
+		if tld in wsr.tlds:
+			return wsr.urls[tld]
+		else:
+			raise TopLevelDomainError(str(tld) + " is not a TLD recognized by the webpage parsing driver.")
+	
+	def getByTLD(wsr, tld):
+		if tld in wsr.tlds:
+			return wsr.urls[tld]
+		else:
+			raise TopLevelDomainError(str(tld) + " is not a TLD recognized by the webpage parsing driver.")
+			
+	def getByReputableTopLevelDomain(wsr):
+		return wsr.urls[".gov"].append(wsr.urls[".int"].append(wsr.urls[".edu"].append(wsr.urls[".org"])))
+	
+	def getByReputable(wsr):
+		return wsr.urls[".gov"].append(wsr.urls[".int"].append(wsr.urls[".edu"].append(wsr.urls[".org"])))
+	
+	def getNumberOfLinksByTld(wsr, tld):
+		if tld in wsr.tlds:
+			return len(wsr.urls[tld])
+		else:
+			raise TopLevelDomainError(str(tld) + " is not a TLD recognized by the webpage parsing driver.")
+
 def runWebSearch(searchEngineName, searchTerms):
 	print(f"[websearch_{str(websearchNumber)}] starting search.")
 	resultsPage = None
+	returnedLinks = []
+	output = None
 	match searchEngineName:
 		case google:
 			print(" | formatting search terms ...", end="")
@@ -39,7 +90,21 @@ def runWebSearch(searchEngineName, searchTerms):
 			print(" | loading DNS soup ...", end="")
 			dnsSoup = bs4_content(resultsPage.content)
 			print("done.")
-			print(" | getting 1st-page URLs ...", end="")
-			urls = dnsSoup
+			print(" | getting 1st-page URLs ...")
+			urls = dnsSoup.findAll("a")
+			for link in dnsSoup.find_all("a",href=re.compile("(?<=/url\?q=)(htt.*://.*)")):
+				print(" | | URL retrieved: " + str(re.split(":(?=http)",urls["href"].replace("/url?q=",""))) )
+				returnedLinks.append( re.split(":(?=http)",urls["href"].replace("/url?q=","")) )
+			print(" | complete, stored in microdatabase.")
+			output = WebsearchReturn(google, searchTerms, returnedLinks)
 		case _:
 			raise NameError(f"search engine {searchEngineName} is not available (currently only Google is supported).")
+	print(f"[websearch_{str(websearchNumber)}] search complete.")
+	print(f"[websearch_{str(websearchNumber)}] returned URLs: {str(len(returnedLinks))}")
+	print(f" | .net | {getTripleDigit(output.getNumberOfLinksByTld(".net"))} |")
+	print(f" | .com | {getTripleDigit(output.getNumberOfLinksByTld(".com"))} |")
+	print(f" | .org | {getTripleDigit(output.getNumberOfLinksByTld(".org"))} |")
+	print(f" | .edu | {getTripleDigit(output.getNumberOfLinksByTld(".edu"))} |")
+	print(f" | .int | {getTripleDigit(output.getNumberOfLinksByTld(".int"))} |")
+	print(f" | .gov | {getTripleDigit(output.getNumberOfLinksByTld(".gov"))} |")
+	
