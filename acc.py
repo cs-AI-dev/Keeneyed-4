@@ -30,7 +30,7 @@ os.system("py -m pip install requests -q")
 
 import requests
 
-drivers = ["cacheGeneration", "master", "neuralNetworking", "preformattingRedprints", "simulationEngine", "languageProcessing"]
+drivers = ["cacheGeneration", "master", "neuralNetworking", "preformattingRedprints", "simulationEngine", "languageProcessing", "webpageParsing"]
 
 def process(args):
 	if args[0] == "test":
