@@ -7,6 +7,7 @@
 | 4.1.0.0 ALPHA | :white_check_mark: |
 | 4.1.0.1 ALPHA | :white_check_mark: |
 | 4.1.0.2 BETA  | :white_check_mark: |
+| 4.1.1.0 BETA  | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
