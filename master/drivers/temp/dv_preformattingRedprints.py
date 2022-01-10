@@ -345,7 +345,7 @@ class function:
 				return o
 
 		def SentenceConstruction(evolvingArguments, standardArguments, activationFunction, parent):
-			tk = function.keeneyed_4.TokenizeByNLTK({}, """all original data""", SCALAR, parent)
+			tk = function.keeneyed_4.TokenizeByNLTK({}, parent.currentInput, SCALAR, parent)
 			alldata = {}
 
 			for x in tk["pos_tag"]:
