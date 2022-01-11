@@ -32,7 +32,7 @@ def getTripleDigit(i):
 	elif i < 100:
 		return "0" + str(i)
 	else:
-		return str(i)
+		return "99+"
 
 class WebsearchReturn:
 	def __init__(wsr, searchEngineName, searchEngineTerms, links):
