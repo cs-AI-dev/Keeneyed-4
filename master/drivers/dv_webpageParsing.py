@@ -19,6 +19,8 @@ from bs4 import BeautifulSoup as bs4_content
 
 class TopLevelDomainError(Exception):
 	pass
+class InvalidQueryArguments(Exception):
+	pass
 
 google = "sentinel_google"
 bing = "sentinel_bing"
@@ -39,12 +41,12 @@ class WebsearchReturn:
 		wsr.engine = searchEngineName
 		wsr.terms = searchEngineTerms
 		wsr.urls = {
-			"net": [url for url in links if url[0].split("/")[2].split(".")[1] == "net"],
-			"com": [url for url in links if url[0].split("/")[2].split(".")[1] == "com"],
-			"org": [url for url in links if url[0].split("/")[2].split(".")[1] == "org"],
-			"edu": [url for url in links if url[0].split("/")[2].split(".")[1] == "edu"],
-			"int": [url for url in links if url[0].split("/")[2].split(".")[1] == "int"],
-			"gov": [url for url in links if url[0].split("/")[2].split(".")[1] == "gov"],
+			"net": [url for url in links if url[0].split("/")[2].split(".")[-1] == "net"],
+			"com": [url for url in links if url[0].split("/")[2].split(".")[-1] == "com"],
+			"org": [url for url in links if url[0].split("/")[2].split(".")[-1] == "org"],
+			"edu": [url for url in links if url[0].split("/")[2].split(".")[-1] == "edu"],
+			"int": [url for url in links if url[0].split("/")[2].split(".")[-1] == "int"],
+			"gov": [url for url in links if url[0].split("/")[2].split(".")[-1] == "gov"],
 		}
 		wsr.tlds = [tld for tld in wsr.urls.keys() if tld != []]
 
@@ -72,8 +74,24 @@ class WebsearchReturn:
 		else:
 			raise TopLevelDomainError(str(tld) + " is not a TLD recognized by the webpage parsing driver.")
 			
-	def getPageData(wsr, tld=None, name=None):
-		pass
+	def getDataFromPages(wsr, name=None, tld=None):
+		if (name == None and tld == None): 
+			raise InvalidQueryArguments("No query arguments were defined; search by TLD or a website name.")
+		if (name != None and tld != None):
+			raise InvalidQueryArguments("Illegal specification of both website name and TLDs.")
+		pageData = []
+		if name != None:
+			for tld in wsr.urls.keys():
+				for url in wsr.urls[tld]:
+					if name[0:2] == "www":
+						if url.split("/")[2] == name:
+							currentRequest = requests.get(url)
+							pageData.append(currentRequest.content)
+						else:
+							pass
+					else:
+						pass
+	
 
 def runWebSearch(searchEngineName, searchTerms):
 	print(f"[websearch_{str(websearchNumber)}] starting search.")
