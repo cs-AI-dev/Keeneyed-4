@@ -71,6 +71,9 @@ class WebsearchReturn:
 			return len(wsr.urls[tld])
 		else:
 			raise TopLevelDomainError(str(tld) + " is not a TLD recognized by the webpage parsing driver.")
+			
+	def getPageData(wsr, tld=None, name=None):
+		pass
 
 def runWebSearch(searchEngineName, searchTerms):
 	print(f"[websearch_{str(websearchNumber)}] starting search.")
