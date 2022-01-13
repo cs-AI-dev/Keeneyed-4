@@ -49,6 +49,7 @@ class WebsearchReturn:
 			"gov": [url for url in links if url[0].split("/")[2].split(".")[-1] == "gov"],
 		}
 		wsr.tlds = [tld for tld in wsr.urls.keys() if tld != []]
+		wsr.allXMLContent = [requests.get(url).content for url in wsr.urls["net"] + wsr.urls["com"] + wsr.urls["org"] + wsr.urls["edu"] + wsr.urls["int"] + wsr.urls["gov"]]
 
 	def getByTopLevelDomains(wsr, tld):
 		if tld in wsr.tlds:
@@ -91,6 +92,9 @@ class WebsearchReturn:
 							pass
 					else:
 						pass
+					
+	def getAllContent(wsr):
+		return wsr.allXMLContent
 	
 
 def runWebSearch(searchEngineName, searchTerms):
