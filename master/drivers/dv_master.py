@@ -116,3 +116,10 @@ executeRoutine = routinesObject()
 def MasterRoutine():
 	executeRoutine.Primary()
 	executeRoutine.Secondary()
+
+if len(sys.argv) > 1:
+    if sys.argv[1] == "test":
+        while True:
+            exec(input(">>> "))
+    if sys.argv[1] == "version":
+        print("Keeneyed-4 Master Driver version 4.1.1.0.")

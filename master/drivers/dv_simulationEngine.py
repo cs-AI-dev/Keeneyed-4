@@ -91,11 +91,11 @@ class Vector:
 
 	def clearHistory(vector):
 		vector.history = []
-		
+
 class physicsObject:
 	def __init__(physics):
 		pass
-	
+
 	def euclidean(physics, parentSpace):
 		try:
 			# Iterates through all rendered assets.
@@ -113,7 +113,7 @@ class physicsObject:
 					translationVector = {}
 					for key in asset.vector.velocity.keys():
 						translationVector[key] = asset.vector.velocity[key] + ( parentSpace.gravityVector.velocity[key] / parentSpace.ticksPerSecond )
-					
+
 					asset.translate(**translationVector)
 				else:
 					raise UnreachableStateError(death_message)
@@ -145,9 +145,9 @@ class UnboundEuclideanSpace:
 				 timeDilationEnabled = False,
 				internalSeconds = 1000):
 		space.name = name
-		
+
 		space.ticksPerSecond = internalSeconds
-		
+
 		if space.dimensionNames == "sentinel_default":
 			space.dimensionNames = ["x", "y", "z"]
 		else:
@@ -158,7 +158,7 @@ class UnboundEuclideanSpace:
 			vsv[name] = 0
 		space.ZeroVector = Vector(**vsv)
 		del vsv
-		
+
 		space.gravityVector = gravityVector
 
 		space.lightspeed = lightspeed
@@ -298,7 +298,7 @@ class Asset:
 			raise AssetError("[ERROR CODE 19] Asset rigid-bind toggle is not a Boolean.")
 		if type(immovable) != type(True):
 			raise AssetError("[ERROR CODE 20] Asset immovability toggle is not a Boolean.")
-		
+
 		# Remove when inelastic collisions supported
 		if elastic == False:
 			raise AssetError("[ERROR CODE 21-501] Inelasticity not yet supported.")
@@ -369,11 +369,11 @@ class Asset:
 			raise AssetError("[ERROR CODE 25] Rendering operations can't be completed from an unnamed assert.")
 		else:
 			parentSpace.unrenderAsset(asset.name)
-			
+
 class SimulationOperationObject:
 	def __init__(operations, spacesList):
 		pass
-	
+
 	def operateSimulation(operations, parent):
 		try:
 			for space in parent.spaces:
@@ -383,7 +383,7 @@ class SimulationOperationObject:
 					raise SimulationError(f"[ERROR CODE 26] Error in simulation operation: {e}")
 		except Exception as e:
 			raise SimulationError(f"[ERROR CODE 27] Error in simulation operation: {e}")
-			
+
 class Simulation:
 	def __init__(simulation, simulationName, *spaces):
 		simulation.name = simulationName
@@ -392,20 +392,20 @@ class Simulation:
 			if str(type(space)).split("'")[1].split(".")[1] == UnboundEuclideanSpace:
 				simulation.spaces.append(space)
 		simulation.operation = SimulationOperationObject(simulation)
-				
+
 	# Ease of access functions
 	def allSpaces(simulation):
 		return simulation.spaces
-	
+
 	def space(simulation, spaceName):
 		for space in simulation.spaces:
 			if space.name == spaceName:
 				return space
 			else:
 				continue
-				
+
 		raise SimulationError("[ERROR CODE 28] Space not found in parent simulation.")
-		
+
 	# Functionality
 	def addSpace(simulation, *spaces):
 		try:
@@ -416,19 +416,19 @@ class Simulation:
 					raise SimulationError(f"[ERROR CODE 29] Error in adding space to simulation: {e}")
 		except Exception as e:
 			raise SimulationError(f"[ERROR CODE 30] Error in adding space to simulation: {e}")
-			
+
 def parse(ldir, infotext=False): # ldir must have a / at the end, like "C:/Users/name/simulationName/".
 	# Parses a simulation location at
 	# the `ldir` parameter. The simulation
 	# needs to be properly structured.
 	# See howto for more on that.
-	
+
 	sfile = lambda fileName : ldir + fileName
 	it = infotext
-	
+
 	print(f"[parsing @{ldir}] Initializing simulation parse.\n")
 	print(f"[parsing @{ldir}] Checking simulation structure ...", end="")
-	
+
 	try:
 		try:
 			tf = open(sfile("master.ke4.exec"), "x")
@@ -489,7 +489,7 @@ def parse(ldir, infotext=False): # ldir must have a / at the end, like "C:/Users
 			raise ParsingError(f"40] Error during parsing: {e}")
 		finally:
 			print(" |-> Located master subroutine data file.")
-			
+
 		try:
 			tf = open(sfile("datafiles/auxiliary_data.ke4.dat"), "x")
 			tf.close()
@@ -501,30 +501,30 @@ def parse(ldir, infotext=False): # ldir must have a / at the end, like "C:/Users
 			raise ParsingError(f"34] Error during parsing: {e}")
 		finally:
 			if it: print(" |-> Located master auxiliary data file.")
-			
+
 	except ParsingError as pe:
 		raise ParsingError(f"[ERROR CODE 41-{pe}")
-		
+
 	except FileExistsError:
 		raise UnreachableStateError(death_message)
-			
+
 	except Exception as e:
 		raise ParsingError(f"[ERROR CODE 42] Error during parsing: {e}")
-		
+
 	finally:
 		if it:
 			print(f"[parsing @{ldir}] Simulation structure check complete.")
 		else:
 			print("simulation structure check complete.")
-	
+
 	data = {
 		"unfiled": {}
 	}
-	
+
 	def loadData(sdir):
 		print(f"[parsing @{ldir}] Parsing {sdir} ...", end="")
 		first = 0
-		
+
 		with open(sfile(sdir), "r") as data:
 			currentDataSubject = "unfiled"
 			for line in data.split("\n"):
@@ -561,16 +561,16 @@ def parse(ldir, infotext=False): # ldir must have a / at the end, like "C:/Users
 							currentDataSubject = list(cmd[0])[1:-2]
 						except:
 							raise Keeneyed4ParsingError(f"[ERROR CODE 47] Error occurred during parsing: {e}")
-							
+
 		if it:
-			print(f"[parsing @{ldir}] Data parse complete.")	
+			print(f"[parsing @{ldir}] Data parse complete.")
 		else:
 			print("complete.")
-	
+
 	loadData(sdir + "simulation_data.ke4.dat")
-	
+
 	print(f"[parsing @{ldir}] Loading auxiliary data files ...\n")
-	
+
 	for datafile in os.listdir(sdir("datafiles/")):
 		if datafile.endswith(".ke4.dat"):
 			try:
@@ -581,7 +581,7 @@ def parse(ldir, infotext=False): # ldir must have a / at the end, like "C:/Users
 			print(f"[parsing @{ldir}] File {datafile} not marked as loadable, continuing ...")
 			continue
 		print("\n")
-		
+
 	def loadSector(sectorName):
 		for datafile in os.listdir(sdir(f"{sectorName}/")):
 			if datafile.endswith(".ke4.exec"):
@@ -596,16 +596,16 @@ def parse(ldir, infotext=False): # ldir must have a / at the end, like "C:/Users
 					loadData(sdir + datafile)
 				except Exception as e:
 					raise Keeneyed4ParsingError(f"[ERROR CODE 50] Error during datafile loading: {e}")
-	
+
 	print(f"\n[parsing @{ldir}] Loading physics engine ...")
 	loadSector("physics")
 	print(f"complete.\n[parsing @{ldir}] Loading assets ...")
 	loadSector("assets")
-	
+
 	print("[parsing @{ldir}] Data load complete, loading master function file ...", end="")
-	
+
 	exec(sdir + "master.ke4.exec") # Necessary that a sim named 'SIMULATION' be created.
-	
+
 	print("complete, simulation loaded.")
 
 	try:
@@ -614,3 +614,10 @@ def parse(ldir, infotext=False): # ldir must have a / at the end, like "C:/Users
 		raise Keeneyed4SyntaxError("[ERROR CODE 51] Parent simulation named 'SIMULATION' not defined in any files, loading failed.")
 	except Exception as e:
 		raise Keeneyed4ParsingError(f"[ERROR CODE 52] Error occurred in simulation load completion: {e}")
+
+if len(sys.argv) > 1:
+    if sys.argv[1] == "test":
+        while True:
+            exec(input(">>> "))
+    if sys.argv[1] == "version":
+        print("Simulation Engine version 4.1.1.0.")

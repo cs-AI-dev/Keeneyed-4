@@ -12,6 +12,7 @@ import os
 import math
 os.system("py -m pip install tqdm -q")
 import tqdm
+import sys
 
 def stringify(l):
     o = ""
@@ -130,7 +131,7 @@ class Pattern:
 
 unnamedAis = 0
 
-class ArtificialPatternRecognitionIntelligence:
+class PatternRecognitionAI:
     def __init__(ai, name=None):
         if name != None:
             ai.name = name
@@ -207,3 +208,10 @@ class ArtificialPatternRecognitionIntelligence:
                 print(f"\n{function}\n\n[{ai.name}] returning ... ")
                 break
         return function
+
+if len(sys.argv) > 1:
+    if sys.argv[1] == "test":
+        while True:
+            exec(input(">>> "))
+    if sys.argv[1] == "version":
+        print("Pattern Recognition Driver version 4.1.1.0.")

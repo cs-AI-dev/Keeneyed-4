@@ -8,6 +8,7 @@
 # before using this system.
 
 import os
+import sys
 
 os.system("py -m pip install nltk -q")
 
@@ -87,3 +88,10 @@ def UnwrapSLD(sld):
 		"context": sld.context(),
 		"ke4_info": sld.ke4_info(),
 	}
+
+if len(sys.argv) > 1:
+    if sys.argv[1] == "test":
+        while True:
+            exec(input(">>> "))
+    if sys.argv[1] == "version":
+        print("Language Processing Driver version 4.1.1.0.")

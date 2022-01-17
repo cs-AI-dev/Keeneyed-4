@@ -8,6 +8,7 @@
 # before using this system.
 
 import os
+import sys
 
 os.system("py -m pip install bs4 -q")
 os.system("py -m pip install requests -q")
@@ -74,9 +75,9 @@ class WebsearchReturn:
 			return len(wsr.urls[tld])
 		else:
 			raise TopLevelDomainError(str(tld) + " is not a TLD recognized by the webpage parsing driver.")
-			
+
 	def getDataFromPages(wsr, name=None, tld=None):
-		if (name == None and tld == None): 
+		if (name == None and tld == None):
 			raise InvalidQueryArguments("No query arguments were defined; search by TLD or a website name.")
 		if (name != None and tld != None):
 			raise InvalidQueryArguments("Illegal specification of both website name and TLDs.")
@@ -92,10 +93,10 @@ class WebsearchReturn:
 							pass
 					else:
 						pass
-					
+
 	def getAllContent(wsr):
 		return wsr.allXMLContent
-	
+
 
 def runWebSearch(searchEngineName, searchTerms):
 	print(f"[websearch_{str(websearchNumber)}] starting search.")
@@ -139,3 +140,10 @@ def runWebSearch(searchEngineName, searchTerms):
 	print(f" | .gov | {reg_gov} |")
 	print(f"[websearch_{str(websearchNumber)}] websearch complete, returning.")
 	return output
+
+if len(sys.argv) > 1:
+    if sys.argv[1] == "test":
+        while True:
+            exec(input(">>> "))
+    if sys.argv[1] == "version":
+        print("Webpage Parsing Driver version 4.1.1.0.")

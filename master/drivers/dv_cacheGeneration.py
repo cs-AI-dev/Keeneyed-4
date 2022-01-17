@@ -29,3 +29,10 @@ class Cache:
 		f = open(directory, "w")
 		f.write(this.generateCacheContents(cacheId=cacheId))
 		f.close()
+
+if len(sys.argv) > 1:
+    if sys.argv[1] == "test":
+        while True:
+            exec(input(">>> "))
+    if sys.argv[1] == "version":
+        print("Cache Generation Driver version 4.1.1.0.")

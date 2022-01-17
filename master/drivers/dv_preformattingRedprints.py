@@ -644,3 +644,10 @@ class install:
 	class AGIModule:
 		def DiscordInteraction(agi, authkey):
 			pass
+
+if len(sys.argv) > 1:
+    if sys.argv[1] == "test":
+        while True:
+            exec(input(">>> "))
+    if sys.argv[1] == "version":
+        print("Preformatting Redprints Driver version 4.1.1.0.")
