@@ -77,6 +77,48 @@ pos = {
 	"3rd_present_tense_verb": "VBZ",
 }
 
+pos_integerization = {
+	"coordinating_conjunction": 1,
+	"subordinating_conjunction": 2,
+
+	"cardinal_numeral": 3,
+	"determiner": 4,
+	"wh_determiner": 5,
+	"predeterminer": 6,
+	"existential_there": 7,
+	"list_item_marker": 8,
+	"modal_auxiliary": 9,
+	"genitive_marker": 10,
+	"particle": 11,
+	"to": 12,
+
+	"ordinal_adjective": 13,
+	"comparative_adjective": 14,
+	"superlative_adjective": 15,
+
+	"common_singular_noun": 16,
+	"common_plural_noun": 17,
+	"proper_noun": 18,
+	"wh_pronoun": 19,
+
+	"personal_pronoun": 20,
+	"possessive_pronoun": 21,
+
+	"adverb": "RB",
+	"comparative_adverb": 22,
+	"superlative_adverb": 23,
+	"wh_adverb": 23,
+
+	"interjection": 24,
+
+	"verb": "VB",
+	"past_tense_verb": 25,
+	"present_participle_verb": 25,
+	"past_participle_verb": 26,
+
+	"non_3rd_present_tense_verb": 27,
+	"3rd_present_tense_verb": 28,
+}
 
 class sentence_type:
 	imperative = "sentinel_imperative"
