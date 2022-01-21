@@ -79,14 +79,14 @@ class Cadence:
     def generateScalarSimilarities(cadence, difference, newCadencesCount=1000):
         # Generates up to several hundred thousand per second
         newCadences = []
-        for x in tqdm.tqdm(range(newCadencesCount), desc="[scalar_similarities_generator] generating new cadences", ascii="_#"):
+        for x in tqdm.tqdm(range(newCadencesCount), desc="[scalar_similarities_generator] generating new cadences", ascii="_█"):
             newCadences.append(Cadence([item + random.randint((difference * -1), difference) for item in cadence.items]))
         return newCadences
 
     def generateGeometricSimilarities(cadence, difference, newCadencesCount=1000):
         # Generates up to several hundred thousand per second
         newCadences = []
-        for x in tqdm.tqdm(range(newCadencesCount), desc="[scalar_similarities_generator] generating new cadences", ascii="_#"):
+        for x in tqdm.tqdm(range(newCadencesCount), desc="[scalar_similarities_generator] generating new cadences", ascii="_█"):
             newCadences.append(Cadence([item * random.randint((difference * -1), difference) for item in cadence.items]))
         return newCadences
 

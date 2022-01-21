@@ -11,6 +11,7 @@ import sys
 import os
 import dv_neuralNetworking as nns
 import dv_languageProcessing as nlp
+import dv_patternRecognition as prai
 
 os.system("py -m pip install nltk -q")
 os.system("py -m pip install -U discord -q")
