@@ -7,9 +7,6 @@
 # Please read and agree to the EULA in its entirety
 # before using this system.
 
-print("Keeneyed-4 engine internal access")
-print("   Type 'q' or 'quit' to exit")
-
 import os
 
 import sys
@@ -29,6 +26,17 @@ from time import sleep as wait
 os.system("py -m pip install requests -q")
 
 import requests
+
+os.system("py -m pip install blessed -q")
+
+import blessed as gui
+
+term = gui.Terminal()
+
+print(term.clear())
+
+print(term.black_on_lime(term.center("Keeneyed-4 engine internal access")))
+print(term.black_on_lime(term.center("Type 'q' or 'quit' to exit")))
 
 drivers = ["cacheGeneration", "master", "neuralNetworking", "preformattingRedprints", "simulationEngine", "languageProcessing", "webpageParsing"]
 
