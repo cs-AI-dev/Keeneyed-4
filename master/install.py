@@ -170,6 +170,16 @@ def install():
 		fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_simulationEngine.py").text
 		f.write(fd)
 		f.close()
+		f = open(wd + "/keeneyed_4/master/drivers/dv_webpageParsing", "w")
+		print(" | Installing webpage parsing driver ...", end="")
+		fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_webpageParsing.py").text
+		f.write(fd)
+		f.close()
+		f = open(wd + "/keeneyed_4/master/drivers/dv_patternRecognition", "w")
+		print(" | Installing simulation engine driver ...", end="")
+		fd = requests.get("https://raw.githubusercontent.com/cs-AI-dev/Keeneyed-4/master/master/drivers/dv_patternRecognition.py").text
+		f.write(fd)
+		f.close()
 		print("complete.")
 		print("Driver installation complete.")
 		print("Environment setup complete.")

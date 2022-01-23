@@ -103,27 +103,26 @@ def runWebSearch(searchEngineName, searchTerms):
 	resultsPage = None
 	returnedLinks = []
 	output = None
-	match searchEngineName:
-		case "sentinel_google":
-			print(" | formatting search terms ...", end="")
-			st = searchTerms.replace(" ", "+")
-			print("done.\n | current search terms: " + str(st))
-			print(" | opening URL request ...", end="")
-			url = "https://www.google.com/search?q=" + str(st)
-			resultsPage = requests.get(url)
-			print("done.\n | current URL: " + url)
-			print(" | loading DNS soup ...", end="")
-			dnsSoup = bs4_content(resultsPage.content)
-			print("done.")
-			print(" | getting 1st-page URLs ...")
-			urls = dnsSoup.find_all("a")
-			for link in dnsSoup.find_all("a",href=re.compile("(?<=/url\?q=)(htt.*://.*)")):
-				print(" | | URL retrieved: " + str(re.split(":(?=http)",link["href"].replace("/url?q=",""))) )
-				returnedLinks.append( re.split(":(?=http)",link["href"].replace("/url?q=","")) )
-			print(" | complete, stored in microdatabase.")
-			output = WebsearchReturn(google, searchTerms, returnedLinks)
-		case _:
-			raise NameError(f"search engine {searchEngineName} is not available (currently only Google is supported).")
+	if searchEngineName == "sentinel_google":
+		print(" | formatting search terms ...", end="")
+		st = searchTerms.replace(" ", "+")
+		print("done.\n | current search terms: " + str(st))
+		print(" | opening URL request ...", end="")
+		url = "https://www.google.com/search?q=" + str(st)
+		resultsPage = requests.get(url)
+		print("done.\n | current URL: " + url)
+		print(" | loading DNS soup ...", end="")
+		dnsSoup = bs4_content(resultsPage.content)
+		print("done.")
+		print(" | getting 1st-page URLs ...")
+		urls = dnsSoup.find_all("a")
+		for link in dnsSoup.find_all("a",href=re.compile("(?<=/url\?q=)(htt.*://.*)")):
+			print(" | | URL retrieved: " + str(re.split(":(?=http)",link["href"].replace("/url?q=",""))) )
+			returnedLinks.append( re.split(":(?=http)",link["href"].replace("/url?q=","")) )
+		print(" | complete, stored in microdatabase.")
+		output = WebsearchReturn(google, searchTerms, returnedLinks)
+	else:
+		raise NameError(f"search engine {searchEngineName} is not available (currently only Google is supported).")
 	print(f"[websearch_{str(websearchNumber)}] search complete.")
 	reg_net = getTripleDigit( output.getNumberOfLinksByTld("net") )
 	reg_com = getTripleDigit( output.getNumberOfLinksByTld("com") )
